@@ -29,6 +29,7 @@ pygame.display.set_caption('Pacman')
 #Fantome_ivre_x = largeur_fenetre // 2
 #Fantome_ivre_y = hauteur_fenetre // 2
 
+
 # Carte de jeu (exemple)
 carte = [
     "############################",
@@ -77,9 +78,9 @@ while Jeu:
         if event.type == pygame.QUIT:
             running = False
 
-    # Update game logic
+    # Logique du jeu
 
-    # Draw on the screen
+    # Dessiner l'ecran
     fenetre.fill(NOIR)
 
     # Code pour dessiner Pacman les ghosts, et la map
