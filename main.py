@@ -25,7 +25,21 @@ screen = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre))
 # On nomme l'onglet crée
 pygame.display.set_caption('Pukmun')
 
+
+
+
 # Chargement des images
+def load_image(name):
+    fullname = os.path.join('image', name)
+    try:
+        image = pygame.image.load(fullname)
+    except pygame.error as message:
+        print("Impossible de charger l'image :", name)
+        raise SystemExit(message)
+    image = image.convert()
+    return image, image.get_rect()
+
+
 Pacman = pygame.image.load('pacman.png').convert()
 background = pygame.image.load('background.png').convert()
 
