@@ -18,7 +18,7 @@ BLANC = (255, 255, 255)
 pygame.init()
 
 # Création de la fenêtre
-fenetre = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre), pygame.FULLSCREEN)
+fenetre = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre))
 #fenetre = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre))
 pygame.display.set_caption('Pacman')
 
