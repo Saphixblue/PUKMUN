@@ -2,8 +2,11 @@
 import pygame
 #sert à rendre publiques certaines constantes et fonctions de Pygame
 from pygame.locals import *
-import sys
+import os,sys
 
+#si les modules de pygame 
+if not pygame.font: print('Attention, polices désactivées')
+if not pygame.mixer: print('Attention, son désactivé')
 
 # Dimensions de la fenêtre
 largeur_fenetre = 400
