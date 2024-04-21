@@ -24,7 +24,7 @@ pygame.display.set_caption("Main Menu")
 
 
 #define fonts
-font = pygame.font.SysFont("arialblack", 40)
+font = pygame.image.load("menu/ecran_menu.png")
 
 #define colours
 TEXT_COL = (255, 255, 255)
@@ -45,7 +45,7 @@ back_button = button.Button(332, 450, back_img, 1)
 
 
 def draw_text(text, font, text_col, x, y):
-  img = font.render(text, True, text_col)
+# img = font.render(text, True, text_col)
   screen.blit(img, (x, y))
 
 
