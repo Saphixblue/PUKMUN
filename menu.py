@@ -65,6 +65,27 @@ fond_langue_c = pygame.image.load("menu/ecran_langue/ecran_langue_c.png")
 fond_langue_c = pygame.transform.scale(fond_langue_c, (largeur, hauteur))
 
 
+# Fond (son)
+fond_son = pygame.image.load("menu/ecran_son/ecran_son.png")
+fond_son = pygame.transform.scale(fond_langue, (largeur, hauteur))
+
+fond_son_an = pygame.image.load("menu/ecran_son/ecran_son_an.png")
+fond_son_an = pygame.transform.scale(fond_langue_an, (largeur, hauteur))
+
+fond_son_ar = pygame.image.load("menu/ecran_son/ecran_son_ar.png")
+fond_son_ar = pygame.transform.scale(fond_langue_ar, (largeur, hauteur))
+
+fond_son_i = pygame.image.load("menu/ecran_son/ecran_son_i.png")
+fond_son_i = pygame.transform.scale(fond_langue_i, (largeur, hauteur))
+
+fond_son_e = pygame.image.load("menu/ecran_son/ecran_son_e.png")
+fond_son_e = pygame.transform.scale(fond_langue_e, (largeur, hauteur))
+
+fond_son_c = pygame.image.load("menu/ecran_son/ecran_son_c.png")
+fond_son_c = pygame.transform.scale(fond_langue_c, (largeur, hauteur))
+
+
+
 
 
 
@@ -100,8 +121,13 @@ bouton_langue_i = pygame.image.load("menu/options/langue/langue_i.png")
 bouton_langue_e = pygame.image.load("menu/options/langue/langue_e.png")
 bouton_langue_c = pygame.image.load("menu/options/langue/langue_c.png")
 
-bouton_mute = pygame.image.load("menu/options/mute.png")
-bouton_son = pygame.image.load("menu/options/son.png")
+bouton_volume = pygame.image.load("menu/options/son/son_f.png")
+bouton_volume_an = pygame.image.load("menu/options/son/son_an.png")
+bouton_volume_ar = pygame.image.load("menu/options/son/son_ar.png")
+bouton_volume_i = pygame.image.load("menu/options/son/son_i.png")
+bouton_volume_e = pygame.image.load("menu/options/son/son_e.png")
+bouton_volume_c = pygame.image.load("menu/options/son/son_c.png")
+
 bouton_retour = pygame.image.load("menu/options/retour.png")
 
 
@@ -112,6 +138,12 @@ bouton_arabe = pygame.image.load ("menu/options/francais/arabe.png")
 bouton_italien = pygame.image.load ("menu/options/francais/italien.png")
 bouton_espagnol = pygame.image.load ("menu/options/francais/espagnol.png")
 bouton_chinois = pygame.image.load ("menu/options/francais/chinois.png")
+
+
+# Chargement des images pour les boutons (volume)
+bouton_mute = pygame.image.load("menu/options/mute.png")
+bouton_plus = pygame.image.load("menu/options/plus.png")
+bouton_moins = pygame.image.load("menu/options/moins.png")
 
 
 
@@ -154,8 +186,17 @@ bouton_langue_i = pygame.transform.scale(bouton_langue_i, taille_bouton4)
 bouton_langue_e = pygame.transform.scale(bouton_langue_e, taille_bouton4)
 bouton_langue_c = pygame.transform.scale(bouton_langue_c, taille_bouton4)
 
+bouton_volume = pygame.transform.scale(bouton_volume, taille_bouton4)
+bouton_volume_an = pygame.transform.scale(bouton_volume_an, taille_bouton4)
+bouton_volume_ar = pygame.transform.scale(bouton_volume_ar, taille_bouton4)
+bouton_volume_i = pygame.transform.scale(bouton_volume_i, taille_bouton4)
+bouton_volume_e = pygame.transform.scale(bouton_volume_e, taille_bouton4)
+bouton_volume_c = pygame.transform.scale(bouton_volume_c, taille_bouton4)
+
+
 bouton_mute = pygame.transform.scale(bouton_mute, taille_bouton5)
-bouton_son = pygame.transform.scale(bouton_son, taille_bouton6)
+bouton_moins = pygame.transform.scale(bouton_moins, taille_bouton6)
+bouton_plus = pygame.transform.scale(bouton_plus, taille_bouton6)
 bouton_retour = pygame.transform.scale(bouton_retour, taille_bouton7)
 
 
@@ -199,8 +240,17 @@ pos_bouton_langue_i = (largeur // 2 - bouton_langue_i.get_width() // 2, hauteur 
 pos_bouton_langue_e = (largeur // 2 - bouton_langue_e.get_width() // 2, hauteur // 2 - 75)
 pos_bouton_langue_c = (largeur // 2 - bouton_langue_c.get_width() // 2, hauteur // 2 - 75)
 
-pos_bouton_mute = (largeur // 2 - bouton_mute.get_width() - 20, hauteur // 2 + 30)
-pos_bouton_son = (largeur // 2 + 20, hauteur // 2 + 30)
+pos_bouton_volume = (largeur // 2 - bouton_volume.get_width() // 2, hauteur // 2 + 30)
+pos_bouton_volume_an = (largeur // 2 - bouton_volume_an.get_width() // 2, hauteur // 2 + 30)
+pos_bouton_volume_ar = (largeur // 2 - bouton_volume_ar.get_width() // 2, hauteur // 2 + 30)
+pos_bouton_volume_i = (largeur // 2 - bouton_volume_i.get_width() // 2, hauteur // 2 + 30)
+pos_bouton_volume_e = (largeur // 2 - bouton_volume_e.get_width() // 2, hauteur // 2 + 30)
+pos_bouton_volume_c = (largeur // 2 - bouton_volume_c.get_width() // 2, hauteur // 2 + 30)
+
+
+pos_bouton_mute = (largeur // 2 - bouton_mute.get_width() - 20, hauteur // 2 - 75)
+pos_bouton_moins = (largeur // 2 - bouton_mute.get_width() - 20, hauteur // 2 + 30)
+pos_bouton_plus = (largeur // 2 + 20, hauteur // 2 + 30)
 pos_bouton_retour = (largeur // 6, hauteur // 4)
 
 
@@ -222,6 +272,87 @@ boutons_langues = ["français", "anglais", "arabe", "italien", "espagnol", "chin
 # Fonction pour afficher les boutons
 def afficher_bouton(image, position):
     ecran.blit(image, position)
+
+
+# Ajoutez la variable globale pour l'écran des options
+bouton_actif_volume = 0
+
+def afficher_menu_volume():
+
+    pygame.init()
+    largeur = 800
+    hauteur = 600
+    taille_fenetre = (largeur, hauteur)
+    ecran_son = pygame.display.set_mode(taille_fenetre)
+    pygame.display.set_caption("Menu son")
+
+    global bouton_actif_options  # Déclaration de la variable bouton_actif comme globale
+    bouton_actif_volume = 0
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+
+            # Si l'utilisateur appuie sur une touche
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    bouton_actif_volume = (bouton_actif_volume + 1) % len(boutons_volume)
+                elif event.key == pygame.K_UP:
+                    bouton_actif_volume = (bouton_actif_volume- 1) % len(boutons_volume)
+                elif event.key == pygame.K_RETURN:
+                    if bouton_actif_volume == 0:
+                        print("Mute")
+                    elif bouton_actif_volume == 1:
+                        print("Moins")
+                    elif bouton_actif_volume == 2:
+                        print("Plus")
+                    elif bouton_actif_volume == 3:
+                        pygame.quit()
+                        sys.exit()
+                    elif bouton_actif_volume == 4:
+                        afficher_menu_options()
+
+        ecran_volume.blit(fond_volume, (0, 0))
+
+        # Affichage des boutons
+
+        if bouton_actif_volume == 0:
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
+            afficher_bouton(bouton_mute, pos_bouton_mute)
+        else:
+            afficher_bouton(bouton_mute, pos_bouton_mute)
+
+        if bouton_actif_volume == 1:
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_moins[0] - 5, pos_bouton_moins[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
+            afficher_bouton(bouton_moins, pos_bouton_moins)
+        else:
+            afficher_bouton(bouton_moins, pos_bouton_moins)
+
+        if bouton_actif_volume == 2:
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_plus[0] - 5, pos_bouton_plus[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
+            afficher_bouton(bouton_plus, pos_bouton_plus)
+        else:
+            afficher_bouton(bouton_plus, pos_bouton_plus)
+
+        if bouton_actif_volume == 3:
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter_c[0] - 5, pos_bouton_quitter_c[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
+            afficher_bouton(bouton_quitter_c, pos_bouton_quitter_c)
+        else:
+            afficher_bouton(bouton_quitter_c, pos_bouton_quitter_c)
+
+        if bouton_actif_volume == 4:
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
+            afficher_bouton(bouton_retour, pos_bouton_retour)
+        else:
+            afficher_bouton(bouton_retour, pos_bouton_retour)
+
+        pygame.display.flip()
+
+
+
 
 
 # Ajoutez la variable globale pour l'écran des options
@@ -863,13 +994,11 @@ def afficher_menu_options_c():
                     if bouton_actif_options_c == 0:
                         afficher_menu_langue_c()
                     elif bouton_actif_options_c == 1:
-                        print("Mute")
+                        print("Volume")
                     elif bouton_actif_options_c == 2:
-                        print("Son")
-                    elif bouton_actif_options_c == 3:
                         pygame.quit()
                         sys.exit()
-                    elif bouton_actif_options_c == 4:
+                    elif bouton_actif_options_c == 3:
                         menu_c()
 
         ecran_options_c.blit(fond_options_c, (0, 0))
@@ -882,24 +1011,18 @@ def afficher_menu_options_c():
             afficher_bouton(bouton_langue_c, pos_bouton_langue_c)
 
         if bouton_actif_options_c == 1:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_volume[0] - 5, pos_bouton_volume[1] - 5, taille_bouton4[0] + 10, taille_bouton4[1] + 10), 3)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
         else:
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
 
-        if bouton_actif_options_c == 2:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_son[0] - 5, pos_bouton_son[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
-            afficher_bouton(bouton_son, pos_bouton_son)
-        else:
-            afficher_bouton(bouton_son, pos_bouton_son)
-
-        if bouton_actif_options_c == 4:
+        if bouton_actif_options_c == 3:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
             afficher_bouton(bouton_retour, pos_bouton_retour)
         else:
             afficher_bouton(bouton_retour, pos_bouton_retour)
 
-        if bouton_actif_options_c == 3:
+        if bouton_actif_options_c == 2:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter_c[0] - 5, pos_bouton_quitter_c[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
             afficher_bouton(bouton_quitter_c, pos_bouton_quitter_c)
         else:
@@ -937,13 +1060,11 @@ def afficher_menu_options_e():
                     if bouton_actif_options_e == 0:
                         afficher_menu_langue_e()
                     elif bouton_actif_options_e == 1:
-                        print("Mute")
+                        print("Volume")
                     elif bouton_actif_options_e == 2:
-                        print("Son")
-                    elif bouton_actif_options_e == 3:
                         pygame.quit()
                         sys.exit()
-                    elif bouton_actif_options_e == 4:
+                    elif bouton_actif_options_e == 3:
                         menu_e()
 
         ecran_options_e.blit(fond_options_e, (0, 0))
@@ -956,24 +1077,18 @@ def afficher_menu_options_e():
             afficher_bouton(bouton_langue_e, pos_bouton_langue_e)
 
         if bouton_actif_options_e == 1:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_volume[0] - 5, pos_bouton_volume[1] - 5, taille_bouton4[0] + 10, taille_bouton4[1] + 10), 3)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
         else:
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
 
-        if bouton_actif_options_e == 2:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_son[0] - 5, pos_bouton_son[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
-            afficher_bouton(bouton_son, pos_bouton_son)
-        else:
-            afficher_bouton(bouton_son, pos_bouton_son)
-
-        if bouton_actif_options_e == 4:
+        if bouton_actif_options_e == 3:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
             afficher_bouton(bouton_retour, pos_bouton_retour)
         else:
             afficher_bouton(bouton_retour, pos_bouton_retour)
 
-        if bouton_actif_options_e == 3:
+        if bouton_actif_options_e == 2:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter_e[0] - 5, pos_bouton_quitter_e[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
             afficher_bouton(bouton_quitter_e, pos_bouton_quitter_e)
         else:
@@ -1011,13 +1126,11 @@ def afficher_menu_options_i():
                     if bouton_actif_options_i == 0:
                         afficher_menu_langue_i()
                     elif bouton_actif_options_i == 1:
-                        print("Mute")
+                        print("Volume")
                     elif bouton_actif_options_i == 2:
-                        print("Son")
-                    elif bouton_actif_options_i == 3:
                         pygame.quit()
                         sys.exit()
-                    elif bouton_actif_options_i == 4:
+                    elif bouton_actif_options_i == 3:
                         menu_i()
 
         ecran_options_i.blit(fond_options_i, (0, 0))
@@ -1030,24 +1143,18 @@ def afficher_menu_options_i():
             afficher_bouton(bouton_langue_i, pos_bouton_langue_i)
 
         if bouton_actif_options_i == 1:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_volume[0] - 5, pos_bouton_volume[1] - 5, taille_bouton4[0] + 10, taille_bouton4[1] + 10), 3)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
         else:
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
 
-        if bouton_actif_options_i == 2:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_son[0] - 5, pos_bouton_son[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
-            afficher_bouton(bouton_son, pos_bouton_son)
-        else:
-            afficher_bouton(bouton_son, pos_bouton_son)
-
-        if bouton_actif_options_i == 4:
+        if bouton_actif_options_i == 3:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
             afficher_bouton(bouton_retour, pos_bouton_retour)
         else:
             afficher_bouton(bouton_retour, pos_bouton_retour)
 
-        if bouton_actif_options_i == 3:
+        if bouton_actif_options_i == 2:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter_i[0] - 5, pos_bouton_quitter_i[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
             afficher_bouton(bouton_quitter_i, pos_bouton_quitter_i)
         else:
@@ -1086,13 +1193,11 @@ def afficher_menu_options_ar():
                     if bouton_actif_options_ar == 0:
                         afficher_menu_langue_ar()
                     elif bouton_actif_options_ar == 1:
-                        print("Mute")
+                        print("Volume")
                     elif bouton_actif_options_ar == 2:
-                        print("Son")
-                    elif bouton_actif_options_ar == 3:
                         pygame.quit()
                         sys.exit()
-                    elif bouton_actif_options_ar == 4:
+                    elif bouton_actif_options_ar == 3:
                         menu_ar()
 
         ecran_options_ar.blit(fond_options_ar, (0, 0))
@@ -1105,24 +1210,18 @@ def afficher_menu_options_ar():
             afficher_bouton(bouton_langue_ar, pos_bouton_langue_ar)
 
         if bouton_actif_options_ar == 1:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_volume[0] - 5, pos_bouton_volume[1] - 5, taille_bouton4[0] + 10, taille_bouton4[1] + 10), 3)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
         else:
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
 
-        if bouton_actif_options_ar == 2:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_son[0] - 5, pos_bouton_son[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
-            afficher_bouton(bouton_son, pos_bouton_son)
-        else:
-            afficher_bouton(bouton_son, pos_bouton_son)
-
-        if bouton_actif_options_ar == 4:
+        if bouton_actif_options_ar == 3:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
             afficher_bouton(bouton_retour, pos_bouton_retour)
         else:
             afficher_bouton(bouton_retour, pos_bouton_retour)
 
-        if bouton_actif_options_ar == 3:
+        if bouton_actif_options_ar == 2:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter_ar[0] - 5, pos_bouton_quitter_ar[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
             afficher_bouton(bouton_quitter_ar, pos_bouton_quitter_ar)
         else:
@@ -1162,13 +1261,11 @@ def afficher_menu_options_an():
                     if bouton_actif_options_an == 0:
                         afficher_menu_langue_an()
                     elif bouton_actif_options_an == 1:
-                        print("Mute")
+                        print("Volume")
                     elif bouton_actif_options_an == 2:
-                        print("Son")
-                    elif bouton_actif_options_an == 3:
                         pygame.quit()
                         sys.exit()
-                    elif bouton_actif_options_an == 4:
+                    elif bouton_actif_options_an == 3:
                         menu_an()
 
         ecran_options_an.blit(fond_options_an, (0, 0))
@@ -1181,24 +1278,18 @@ def afficher_menu_options_an():
             afficher_bouton(bouton_langue_an, pos_bouton_langue_an)
 
         if bouton_actif_options_an == 1:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_volume[0] - 5, pos_bouton_volume[1] - 5, taille_bouton4[0] + 10, taille_bouton4[1] + 10), 3)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
         else:
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
 
-        if bouton_actif_options_an == 2:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_son[0] - 5, pos_bouton_son[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
-            afficher_bouton(bouton_son, pos_bouton_son)
-        else:
-            afficher_bouton(bouton_son, pos_bouton_son)
-
-        if bouton_actif_options_an == 4:
+        if bouton_actif_options_an == 3:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
             afficher_bouton(bouton_retour, pos_bouton_retour)
         else:
             afficher_bouton(bouton_retour, pos_bouton_retour)
 
-        if bouton_actif_options_an == 3:
+        if bouton_actif_options_an == 2:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter_an[0] - 5, pos_bouton_quitter_an[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
             afficher_bouton(bouton_quitter_an, pos_bouton_quitter_an)
         else:
@@ -1238,13 +1329,11 @@ def afficher_menu_options():
                     if bouton_actif_options == 0:
                         afficher_menu_langue()
                     elif bouton_actif_options == 1:
-                        print("Mute")
+                        print("Volume")
                     elif bouton_actif_options == 2:
-                        print("Son")
-                    elif bouton_actif_options == 3:
                         pygame.quit()
                         sys.exit()
-                    elif bouton_actif_options == 4:
+                    elif bouton_actif_options == 3:
                         menu()
 
         ecran_options.blit(fond_options, (0, 0))
@@ -1257,24 +1346,18 @@ def afficher_menu_options():
             afficher_bouton(bouton_langue, pos_bouton_langue)
 
         if bouton_actif_options == 1:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_mute[0] - 5, pos_bouton_mute[1] - 5, taille_bouton5[0] + 10, taille_bouton5[1] + 10), 3)
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_volume[0] - 5, pos_bouton_volume[1] - 5, taille_bouton4[0] + 10, taille_bouton4[1] + 10), 3)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
         else:
-            afficher_bouton(bouton_mute, pos_bouton_mute)
+            afficher_bouton(bouton_volume, pos_bouton_volume)
 
-        if bouton_actif_options == 2:
-            pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_son[0] - 5, pos_bouton_son[1] - 5, taille_bouton6[0] + 10, taille_bouton6[1] + 10), 3)
-            afficher_bouton(bouton_son, pos_bouton_son)
-        else:
-            afficher_bouton(bouton_son, pos_bouton_son)
-
-        if bouton_actif_options == 4:
+        if bouton_actif_options == 3:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_retour[0] - 5, pos_bouton_retour[1] - 5, taille_bouton7[0] + 10, taille_bouton7[1] + 10), 3)
             afficher_bouton(bouton_retour, pos_bouton_retour)
         else:
             afficher_bouton(bouton_retour, pos_bouton_retour)
 
-        if bouton_actif_options == 3:
+        if bouton_actif_options == 2:
             pygame.draw.rect(ecran, (255, 255, 255), (pos_bouton_quitter[0] - 5, pos_bouton_quitter[1] - 5, taille_bouton3[0] + 10, taille_bouton3[1] + 10), 3)
             afficher_bouton(bouton_quitter, pos_bouton_quitter)
         else:
