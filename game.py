@@ -7,7 +7,7 @@ import os
 pygame.init()
 
 # Paramètres de la fenêtre
-WINDOW_SIZE = (600, 600)
+WINDOW_SIZE = (800, 600)
 BLACK = (0, 0, 0)
 
 # Créer la fenêtre

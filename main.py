@@ -8,7 +8,7 @@ from menu import menu # pour pouvoir lancer la fonction menu de menu.py
 pygame.init()
 
 # Paramètres de la fenêtre principale
-WINDOW_SIZE = (600, 600)
+WINDOW_SIZE = (800, 600)
 BLACK = (0, 0, 0)
 
 # Créer la fenêtre principale

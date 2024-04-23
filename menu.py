@@ -8,7 +8,7 @@ from game import game
 pygame.init()
 
 # Définition de la taille de la fenêtre
-largeur = 600
+largeur = 800
 hauteur = 600
 taille_fenetre = (largeur, hauteur)
 ecran = pygame.display.set_mode(taille_fenetre)
