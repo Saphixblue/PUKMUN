@@ -1,0 +1,11 @@
+Brouillon pukmun
+
+- Faire en sorte que les fenêtres se ferment lors du passage du menu au jeu, et du jeu au menu :
+Dans la configuration actuelle du code, la fenêtre du menu principal est effectivement cachée lorsque la fenêtre de jeu se lance. Cela est dû au fait que la fonction menu() est appelée dans une boucle infinie dans main.py, et lorsque vous appuyez sur le bouton "Jouer", la boucle du menu est interrompue et la fonction game() est appelée à la place, remplaçant ainsi la boucle du menu par celle du jeu.
+
+Pour avoir une fenêtre de jeu qui se superpose à la fenêtre du menu, vous pouvez apporter quelques modifications à votre code. Voici une approche possible :
+
+Dans main.py, modifiez la fonction main() pour qu'elle ne lance pas directement le jeu, mais qu'elle reste dans une boucle infinie qui gère à la fois le menu et le jeu.
+Dans menu.py, modifiez la fonction start_game() pour qu'elle renvoie simplement un signal indiquant que le jeu doit être lancé, plutôt que de lancer directement la fonction game().
+Dans game.py, lorsque le jeu est terminé (par exemple, lorsque le joueur quitte le jeu), vous pouvez renvoyer un signal indiquant que le menu doit être réaffiché.
+Ainsi, la fenêtre du menu restera ouverte en arrière-plan et la fenêtre du jeu se superposera à celle-ci lorsqu'elle sera lancée.
