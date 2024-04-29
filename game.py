@@ -9,7 +9,7 @@ from map import Map
 pygame.init()
 
 # Paramètres de la fenêtre
-WINDOW_SIZE = (800, 600)
+WINDOW_SIZE = (600, 600)
 CELL_SIZE = 30  # Définir la taille des cellules
 
 # Créer la fenêtre
@@ -115,6 +115,7 @@ game_map.draw_rectangle_obstacle(5, 10, 5,1)  # Dessine un rectangle à la case 
 game_map.draw_angle_obstacle(2,2,3,2,1,"bas") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
 game_map.draw_angle_obstacle(10,20,3,2,3,"haut") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
 #game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle sur toute la map
+game_map.draw_rectangle_obstacle(16, 12, 1,5)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
 
 
 

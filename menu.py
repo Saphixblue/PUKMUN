@@ -8,7 +8,7 @@ from game import game
 pygame.init()
 
 # Définition de la taille de la fenêtre
-largeur = 800
+largeur = 600
 hauteur = 600
 taille_fenetre = (largeur, hauteur)
 ecran = pygame.display.set_mode(taille_fenetre)
@@ -280,7 +280,7 @@ bouton_actif_volume = 0
 def afficher_menu_volume():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_son = pygame.display.set_mode(taille_fenetre)
@@ -362,7 +362,7 @@ bouton_actif_langue = 0
 def afficher_menu_langue_c():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_langue_c = pygame.display.set_mode(taille_fenetre)
@@ -463,7 +463,7 @@ def afficher_menu_langue_c():
 def afficher_menu_langue_e():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_langue_e = pygame.display.set_mode(taille_fenetre)
@@ -565,7 +565,7 @@ def afficher_menu_langue_e():
 def afficher_menu_langue_i():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_langue_i = pygame.display.set_mode(taille_fenetre)
@@ -665,7 +665,7 @@ def afficher_menu_langue_i():
 def afficher_menu_langue_ar():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_langue_ar = pygame.display.set_mode(taille_fenetre)
@@ -765,7 +765,7 @@ def afficher_menu_langue_ar():
 def afficher_menu_langue_an():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_langue_an = pygame.display.set_mode(taille_fenetre)
@@ -866,7 +866,7 @@ def afficher_menu_langue_an():
 def afficher_menu_langue():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_langue = pygame.display.set_mode(taille_fenetre)
@@ -968,7 +968,7 @@ def afficher_menu_langue():
 def afficher_menu_options_c():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_options_c = pygame.display.set_mode(taille_fenetre)
@@ -1034,7 +1034,7 @@ def afficher_menu_options_c():
 def afficher_menu_options_e():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_options_e = pygame.display.set_mode(taille_fenetre)
@@ -1100,7 +1100,7 @@ def afficher_menu_options_e():
 def afficher_menu_options_i():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_options_i = pygame.display.set_mode(taille_fenetre)
@@ -1167,7 +1167,7 @@ def afficher_menu_options_i():
 def afficher_menu_options_ar():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_options_ar = pygame.display.set_mode(taille_fenetre)
@@ -1235,7 +1235,7 @@ def afficher_menu_options_ar():
 def afficher_menu_options_an():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_options_an = pygame.display.set_mode(taille_fenetre)
@@ -1303,7 +1303,7 @@ def afficher_menu_options_an():
 def afficher_menu_options():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_options = pygame.display.set_mode(taille_fenetre)
@@ -1371,7 +1371,7 @@ def afficher_menu_options():
 def menu_c():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_c = pygame.display.set_mode(taille_fenetre)
@@ -1428,7 +1428,7 @@ def menu_c():
 def menu_e():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_e = pygame.display.set_mode(taille_fenetre)
@@ -1485,7 +1485,7 @@ def menu_e():
 def menu_i():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_i = pygame.display.set_mode(taille_fenetre)
@@ -1542,7 +1542,7 @@ def menu_i():
 def menu_ar():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_ar = pygame.display.set_mode(taille_fenetre)
@@ -1598,7 +1598,7 @@ def menu_ar():
 def menu_an():
 
     pygame.init()
-    largeur = 800
+    largeur = 600
     hauteur = 600
     taille_fenetre = (largeur, hauteur)
     ecran_an = pygame.display.set_mode(taille_fenetre)
