@@ -26,6 +26,11 @@ pacman_image_path = os.path.join(image_path, 'pacman.png')
 Pacman = pygame.image.load(pacman_image_path).convert()
 Pacman = pygame.transform.scale(Pacman, (30, 30))  # Redimensionner à la taille souhaitée
 
+# image obstacle
+obstacle_image_path = os.path.join(image_path, 'Tile_1.png')
+obstacle = pygame.image.load(obstacle_image_path).convert()
+obstacle = pygame.transform.scale(obstacle, (30, 30))  # Redimensionner à la taille souhaitée
+
 # Position de départ de Pac-Man
 pacman_position = [300, 300]
 
@@ -114,10 +119,200 @@ def game():
 game_map.draw_rectangle_obstacle(5, 10, 5,1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
 game_map.draw_angle_obstacle(2,2,3,2,1,"bas") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
 game_map.draw_angle_obstacle(10,20,3,2,3,"haut") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-#game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle sur toute la map
-game_map.draw_rectangle_obstacle(16, 12, 1,5)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
+#game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
 
 
 
 if __name__ == "__main__":
     game()
+
+
+
+
+
+
+
+
+'''
+# game.py
+import pygame
+import sys
+import os
+from map import Map
+
+# Initialisation de Pygame
+pygame.init()
+
+# Paramètres de la fenêtre
+WINDOW_SIZE = (600, 600)
+BLACK = (0, 0, 0)
+
+# Créer la fenêtre
+screen = pygame.display.set_mode(WINDOW_SIZE)
+pygame.display.set_caption("Pac-Man")
+
+# Charger l'image de Pac-Man et redimensionner
+current_path = os.path.dirname(__file__)  # Chemin du répertoire actuel du fichier
+image_path = os.path.join(current_path, 'images')  # Chemin vers le dossier des images
+pacman_image_path = os.path.join(image_path, 'pacman.png')
+Pacman = pygame.image.load(pacman_image_path).convert()
+Pacman = pygame.transform.scale(Pacman, (40, 40))  # Redimensionner à la taille souhaitée
+
+# Position de départ de Pac-Man
+pacman_position = [300, 300]
+pacman_speed = 5
+
+# Direction de départ de Pac-Man (vers la droite)
+pacman_direction = "RIGHT"
+
+# Instance de la classe Map
+game_map = Map(WINDOW_SIZE)
+
+# Fonction pour quitter le jeu
+def quit_game():
+    pygame.quit()
+    sys.exit()
+
+# Boucle principale du jeu
+def game():
+    global pacman_direction  # Déclaration de la variable globale car elle est définie en dehors de la fonction
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit_game()
+
+            # Gérer les événements des touches directionnelles
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    pacman_direction = "LEFT"
+                elif event.key == pygame.K_RIGHT:
+                    pacman_direction = "RIGHT"
+                elif event.key == pygame.K_UP:
+                    pacman_direction = "UP"
+                elif event.key == pygame.K_DOWN:
+                    pacman_direction = "DOWN"
+
+        # Déplacer Pac-Man dans la direction actuelle
+        if pacman_direction == "LEFT":
+            pacman_position[0] -= pacman_speed
+        elif pacman_direction == "RIGHT":
+            pacman_position[0] += pacman_speed
+        elif pacman_direction == "UP":
+            pacman_position[1] -= pacman_speed
+        elif pacman_direction == "DOWN":
+            pacman_position[1] += pacman_speed
+
+        # Limitation de Pac-Man dans la fenêtre
+        pacman_position[0] = max(0, min(pacman_position[0], WINDOW_SIZE[0] - Pacman.get_width()))
+        pacman_position[1] = max(0, min(pacman_position[1], WINDOW_SIZE[1] - Pacman.get_height()))
+
+        # Affichage de la carte
+        screen.fill(BLACK)
+        game_map.draw_map(screen)
+
+        # Affichage de Pac-Man
+        screen.blit(Pacman, pacman_position)
+
+        pygame.display.flip()
+
+        # Limiter le taux de rafraîchissement de l'écran
+        pygame.time.Clock().tick(60)
+
+if __name__ == "__main__":
+    game()
+'''
+
+
+
+
+
+
+
+
+'''
+# game.py
+import pygame
+import sys
+import os
+
+# Initialisation de Pygame
+pygame.init()
+
+# Paramètres de la fenêtre
+WINDOW_SIZE = (600, 600)
+BLACK = (0, 0, 0)
+
+# Créer la fenêtre
+screen = pygame.display.set_mode(WINDOW_SIZE)
+pygame.display.set_caption("Pac-Man")
+
+# Déterminer le chemin vers le dossier des images
+current_path = os.path.dirname(__file__)  # Chemin du répertoire actuel du fichier
+image_path = os.path.join(current_path, 'images')  # Chemin vers le dossier des images
+
+# Charger l'image de Pac-Man et redimensionner
+pacman_image_path = os.path.join(image_path, 'pacman.png')
+Pacman = pygame.image.load(pacman_image_path).convert()
+Pacman = pygame.transform.scale(Pacman, (40, 40))  # Redimensionner à la taille souhaitée
+
+# Position de départ de Pac-Man
+pacman_position = [300, 300]
+pacman_speed = 5
+
+# Direction de départ de Pac-Man (vers la droite)
+pacman_direction = "RIGHT"
+
+# Fonction pour quitter le jeu
+def quit_game():
+    pygame.quit()
+    sys.exit()
+
+# Boucle principale du jeu
+def game():
+    global pacman_direction  # Déclaration de la variable globale car elle est définie en dehors de la fonctions
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit_game()
+
+            # Gérer les événements des touches directionnelles
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    pacman_direction = "LEFT"
+                elif event.key == pygame.K_RIGHT:
+                    pacman_direction = "RIGHT"
+                elif event.key == pygame.K_UP:
+                    pacman_direction = "UP"
+                elif event.key == pygame.K_DOWN:
+                    pacman_direction = "DOWN"
+
+
+        # Déplacer Pac-Man dans la direction actuelle
+        if pacman_direction == "LEFT":
+            pacman_position[0] -= pacman_speed
+        elif pacman_direction == "RIGHT":
+            pacman_position[0] += pacman_speed
+        elif pacman_direction == "UP":
+            pacman_position[1] -= pacman_speed
+        elif pacman_direction == "DOWN":
+            pacman_position[1] += pacman_speed
+
+        # Limitation de Pac-Man dans la fenêtre
+        pacman_position[0] = max(0, min(pacman_position[0], WINDOW_SIZE[0] - Pacman.get_width()))
+        pacman_position[1] = max(0, min(pacman_position[1], WINDOW_SIZE[1] - Pacman.get_height()))
+
+        # Affichage de Pac-Man et de la carte
+        screen.fill(BLACK)
+        screen.blit(Pacman, pacman_position)
+        pygame.display.flip()
+
+        # Limiter le taux de rafraîchissement de l'écran
+        pygame.time.Clock().tick(60)
+
+if __name__ == "__main__":
+    game()
+'''
