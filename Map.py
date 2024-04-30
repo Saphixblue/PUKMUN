@@ -2,6 +2,7 @@
 import pygame as pg
 import game
 
+
 class Map:
     def __init__(self, window_size, cell_size):
         self.window_size = window_size

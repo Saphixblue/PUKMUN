@@ -11,11 +11,12 @@ pygame.init()
 # Paramètres de la fenêtre
 largeur_fenetre = 600
 hauteur_fenetre = 600
-DIMENSION_MAP = (20,20)   # Nombre de cellules en (largeur,hauteur) : exemple (23,20)
+DIMENSION_MAP = (15,15)   # Nombre de cellules en (largeur,hauteur) : exemple (23,20)
 
+#WINDOW_SIZE = (DIMENSION_MAP[0]*30, DIMENSION_MAP[1]*30)
 WINDOW_SIZE = (largeur_fenetre, hauteur_fenetre)
-CELL_COLUMN_SIZE = round(WINDOW_SIZE[0] // DIMENSION_MAP[0])  # Définir la hauteur des cellules en pixels
-CELL_ROW_SIZE = round(WINDOW_SIZE[1] // DIMENSION_MAP[1])  # Définir la longueur des cellules en pixels
+CELL_COLUMN_SIZE = WINDOW_SIZE[0] // DIMENSION_MAP[0]  # Définir la hauteur des cellules en pixels
+CELL_ROW_SIZE = WINDOW_SIZE[1] // DIMENSION_MAP[1]  # Définir la longueur des cellules en pixels
 CELL_SIZE = (CELL_COLUMN_SIZE,CELL_ROW_SIZE)
 
 # Créer la fenêtre
@@ -30,7 +31,8 @@ current_path = os.path.dirname(__file__)  # Chemin du répertoire actuel du fich
 image_path = os.path.join(current_path, 'images')  # Chemin vers le dossier des images
 pacman_image_path = os.path.join(image_path, 'pacman.png')
 Pacman = pygame.image.load(pacman_image_path).convert()
-Pacman = pygame.transform.scale(Pacman, CELL_SIZE)  # Redimensionner pour que pacman fasse la taille d'une case/cellule
+Pacman = pygame.transform.scale(Pacman, CELL_SIZE)  # Redimensionner pour que pacman fasse 95% de la taille d'une case/cellule
+#Pacman = pygame.transform.scale(Pacman, (CELL_SIZE[0]-10, CELL_SIZE[1]-10))  # Redimensionner pour que pacman fasse 95% de la taille d'une case/cellule
 
 # image obstacle
 obstacle_image_path = os.path.join(image_path, 'Tile_1.png')
@@ -122,10 +124,18 @@ def game():
         pygame.time.Clock().tick(60)
 
 # Mettre en place un obstacle sur la carte
-game_map.draw_rectangle_obstacle(5, 10, 5,1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
-game_map.draw_angle_obstacle(2,2,3,2,1,"bas") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
+#game_map.draw_rectangle_obstacle(5, 10, 5,1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
 game_map.draw_angle_obstacle(10,20,3,2,3,"haut") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-#game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
+#game_map.draw_rectangle_obstacle(0, 0, 30,30)
+game_map.draw_angle_obstacle(2,2,3,2,1,"bas")
+game_map.draw_rectangle_obstacle(4, 1, 5,1)
+game_map.draw_rectangle_obstacle(4, 3, 1,3)
+game_map.draw_rectangle_obstacle(2, 5, 1,3)
+game_map.draw_rectangle_obstacle(0, 0, 5,1)
+game_map.draw_rectangle_obstacle(0, 0, 1,5)
+
+
+
 
 
 
