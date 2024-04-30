@@ -9,8 +9,14 @@ from map import Map
 pygame.init()
 
 # Paramètres de la fenêtre
-WINDOW_SIZE = (600, 600)
-CELL_SIZE = 30  # Définir la taille des cellules
+largeur_fenetre = 600
+hauteur_fenetre = 600
+DIMENSION_MAP = (20,20)   # Nombre de cellules en (largeur,hauteur) : exemple (23,20)
+
+WINDOW_SIZE = (largeur_fenetre, hauteur_fenetre)
+CELL_COLUMN_SIZE = round(WINDOW_SIZE[0] // DIMENSION_MAP[0])  # Définir la hauteur des cellules en pixels
+CELL_ROW_SIZE = round(WINDOW_SIZE[1] // DIMENSION_MAP[1])  # Définir la longueur des cellules en pixels
+CELL_SIZE = (CELL_COLUMN_SIZE,CELL_ROW_SIZE)
 
 # Créer la fenêtre
 screen = pygame.display.set_mode(WINDOW_SIZE)
@@ -24,12 +30,12 @@ current_path = os.path.dirname(__file__)  # Chemin du répertoire actuel du fich
 image_path = os.path.join(current_path, 'images')  # Chemin vers le dossier des images
 pacman_image_path = os.path.join(image_path, 'pacman.png')
 Pacman = pygame.image.load(pacman_image_path).convert()
-Pacman = pygame.transform.scale(Pacman, (30, 30))  # Redimensionner à la taille souhaitée
+Pacman = pygame.transform.scale(Pacman, CELL_SIZE)  # Redimensionner pour que pacman fasse la taille d'une case/cellule
 
 # image obstacle
 obstacle_image_path = os.path.join(image_path, 'Tile_1.png')
 obstacle = pygame.image.load(obstacle_image_path).convert()
-obstacle = pygame.transform.scale(obstacle, (30, 30))  # Redimensionner à la taille souhaitée
+obstacle = pygame.transform.scale(obstacle, CELL_SIZE)  # Redimensionner pour que l'obstacle fasse la taille d'une case/cellule
 
 # Position de départ de Pac-Man
 pacman_position = [300, 300]
@@ -47,8 +53,8 @@ def quit_game():
 
 # Vérifier si Pac-Man entre en collision avec un obstacle
 def check_collision(x, y):
-    cell_x = x // CELL_SIZE
-    cell_y = y // CELL_SIZE
+    cell_x = x // CELL_SIZE[0]
+    cell_y = y // CELL_SIZE[1]
 
     # Vérifier si les coordonnées sont dans les limites de la carte
     if cell_x < 0 or cell_x >= len(game_map.map_data[0]) or cell_y < 0 or cell_y >= len(game_map.map_data):

@@ -6,9 +6,9 @@ class Map:
     def __init__(self, window_size, cell_size):
         self.window_size = window_size
         self.cell_size = cell_size
-        self.rows = window_size[1] // cell_size
-        self.cols = window_size[0] // cell_size
-
+        self.cols = window_size[0] // cell_size[0]
+        self.rows = window_size[1] // cell_size[1]
+        
         # Création de la carte avec des cases vides par défaut
         self.map_data = [[0 for _ in range(self.cols)] for _ in range(self.rows)]
 
@@ -18,7 +18,7 @@ class Map:
                 if self.map_data[i][j] == 3:
                     # Dessiner un mur (obstacle)
 
-                    screen.blit(game.obstacle, [j * self.cell_size, i * self.cell_size])
+                    screen.blit(game.obstacle, [j * self.cell_size[0], i * self.cell_size[1]])
                     #obstacle_rect = pg.Rect(j * self.cell_size, i * self.cell_size, self.cell_size, self.cell_size)
                     '''pg.draw.rect(screen, (255, 255, 255), obstacle_rect)
                     '''
