@@ -3,28 +3,112 @@
 import pygame
 import sys
 import os
-from map import Map
+from Map import Map
+from sprite_handler import SpriteHandler
 
-# Initialisation de Pygame
-pygame.init()
+class Game:
+    def __init__(self):
 
-# Paramètres de la fenêtre
-largeur_fenetre = 600
-hauteur_fenetre = 600
-DIMENSION_MAP = (20,20)   # Nombre de cellules en (largeur,hauteur) : exemple (23,20)
+        pygame.init()
 
-WINDOW_SIZE = (largeur_fenetre, hauteur_fenetre)
-CELL_COLUMN_SIZE = round(WINDOW_SIZE[0] // DIMENSION_MAP[0])  # Définir la hauteur des cellules en pixels
-CELL_ROW_SIZE = round(WINDOW_SIZE[1] // DIMENSION_MAP[1])  # Définir la longueur des cellules en pixels
-CELL_SIZE = (CELL_COLUMN_SIZE,CELL_ROW_SIZE)
+        self.DIMENSION_MAP = (50, 23)
+        self.CELL_SIZE = 30
+        self.WINDOW_SIZE = (self.DIMENSION_MAP[0]*self.CELL_SIZE, self.DIMENSION_MAP[1]*self.CELL_SIZE)
 
-# Créer la fenêtre
-screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("Pac-Man")
+        self.screen = pygame.display.set_mode(self.WINDOW_SIZE)
 
-# Instance de la classe Map
-game_map = Map(WINDOW_SIZE, CELL_SIZE)
+        pygame.display.set_caption("Pac-Man")
 
+        self.game_map = Map(self.DIMENSION_MAP, self.CELL_SIZE)
+
+        self.sprite_handler = SpriteHandler(self.CELL_SIZE)
+
+        # self.level = 1
+
+        self.level_1()
+
+    def quit_game(self):
+        pygame.quit()
+        sys.exit()
+
+    def draw_map(self, game_map, screen):
+        for i in range(self.DIMENSION_MAP[0]):
+            for j in range(self.DIMENSION_MAP[1]):
+                if i < len(self.game_map.map_data) and j < len(self.game_map.map_data[0]):
+                    if game_map.map_data[i][j] == 3:
+                        # Dessiner un mur (obstacle)
+                        screen.blit(self.sprite_handler.tile_image(), [j * self.CELL_SIZE, i * self.CELL_SIZE])
+                        #obstacle_rect = pg.Rect(j * self.cell_size, i * self.cell_size, self.cell_size, self.cell_size)
+                        '''pg.draw.rect(screen, (255, 255, 255), obstacle_rect)
+                    '''
+
+    # Boucle principale du jeu
+    def game(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.quit_game()
+                '''
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        pacman_direction = "LEFT"
+                    elif event.key == pygame.K_RIGHT:
+                        pacman_direction = "RIGHT"
+                    elif event.key == pygame.K_UP:
+                        pacman_direction = "UP"
+                    elif event.key == pygame.K_DOWN:
+                        pacman_direction = "DOWN"
+
+            next_position = pacman_position.copy()
+            if pacman_direction == "LEFT":
+                next_position[0] -= pacman_speed
+            elif pacman_direction == "RIGHT":
+                next_position[0] += pacman_speed
+            elif pacman_direction == "UP":
+                next_position[1] -= pacman_speed
+            elif pacman_direction == "DOWN":
+                next_position[1] += pacman_speed
+
+            # Vérifier si Pac-Man entre en collision avec un obstacle
+            if not check_collision(next_position[0], next_position[1]) \
+                    and not check_collision(next_position[0] + Pacman.get_width() - 1, next_position[1]) \
+                    and not check_collision(next_position[0], next_position[1] + Pacman.get_height() - 1) \
+                    and not check_collision(next_position[0] + Pacman.get_width() - 1,
+                                            next_position[1] + Pacman.get_height() - 1):
+                pacman_position = next_position
+
+            # Limiter Pac-Man dans la fenêtre
+            pacman_position[0] = max(0, min(pacman_position[0], WINDOW_SIZE[0] - Pacman.get_width()))
+            pacman_position[1] = max(0, min(pacman_position[1], WINDOW_SIZE[1] - Pacman.get_height()))
+            '''
+            # Effacer l'écran
+            self.screen.fill((0, 0, 0))
+
+            # Dessiner la carte
+            self.draw_map(self.game_map, self.screen)
+
+            '''
+            # Dessiner Pac-Man
+            screen.blit(Pacman, pacman_position)
+            '''
+            # Mettre à jour l'affichage
+            pygame.display.flip()
+
+            # Limiter le nombre d'images par seconde
+            pygame.time.Clock().tick(60)
+
+    def level_1(self):
+        # Mettre en place un obstacle sur la carte
+        self.game_map.draw_rectangle_obstacle(5, 10, 5, 1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
+        self.game_map.draw_angle_obstacle(2, 2, 3, 2, 1,
+                                     "bas")  # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
+        self.game_map.draw_angle_obstacle(10, 20, 3, 2, 3,
+                                     "haut")  # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
+        # game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
+
+
+'''
 # Charger l'image de Pac-Man et redimensionner
 current_path = os.path.dirname(__file__)  # Chemin du répertoire actuel du fichier
 image_path = os.path.join(current_path, 'images')  # Chemin vers le dossier des images
@@ -45,12 +129,12 @@ pacman_speed = 5
 
 # Direction de départ de Pac-Man (vers la droite)
 pacman_direction = "RIGHT"
+'''
 
 # Fonction pour quitter le jeu
-def quit_game():
-    pygame.quit()
-    sys.exit()
 
+
+'''
 # Vérifier si Pac-Man entre en collision avec un obstacle
 def check_collision(x, y):
     cell_x = x // CELL_SIZE[0]
@@ -63,75 +147,15 @@ def check_collision(x, y):
     if game_map.map_data[cell_y][cell_x] == 3:
         return True
     return False
-
-# Boucle principale du jeu
-def game():
-    global pacman_direction
-    global pacman_position
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit_game()
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    pacman_direction = "LEFT"
-                elif event.key == pygame.K_RIGHT:
-                    pacman_direction = "RIGHT"
-                elif event.key == pygame.K_UP:
-                    pacman_direction = "UP"
-                elif event.key == pygame.K_DOWN:
-                    pacman_direction = "DOWN"
-
-        next_position = pacman_position.copy()
-        if pacman_direction == "LEFT":
-            next_position[0] -= pacman_speed
-        elif pacman_direction == "RIGHT":
-            next_position[0] += pacman_speed
-        elif pacman_direction == "UP":
-            next_position[1] -= pacman_speed
-        elif pacman_direction == "DOWN":
-            next_position[1] += pacman_speed
-
-        # Vérifier si Pac-Man entre en collision avec un obstacle
-        if not check_collision(next_position[0], next_position[1]) \
-                and not check_collision(next_position[0] + Pacman.get_width() - 1, next_position[1]) \
-                and not check_collision(next_position[0], next_position[1] + Pacman.get_height() - 1) \
-                and not check_collision(next_position[0] + Pacman.get_width() - 1, next_position[1] + Pacman.get_height() - 1):
-            pacman_position = next_position
-
-        # Limiter Pac-Man dans la fenêtre
-        pacman_position[0] = max(0, min(pacman_position[0], WINDOW_SIZE[0] - Pacman.get_width()))
-        pacman_position[1] = max(0, min(pacman_position[1], WINDOW_SIZE[1] - Pacman.get_height()))
-
-        # Effacer l'écran
-        screen.fill((0, 0, 0))
-
-        # Dessiner la carte
-        game_map.draw_map(screen)
-
-        # Dessiner Pac-Man
-        screen.blit(Pacman, pacman_position)
-
-        # Mettre à jour l'affichage
-        pygame.display.flip()
-
-        # Limiter le nombre d'images par seconde
-        pygame.time.Clock().tick(60)
-
-# Mettre en place un obstacle sur la carte
-game_map.draw_rectangle_obstacle(5, 10, 5,1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
-game_map.draw_angle_obstacle(2,2,3,2,1,"bas") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-game_map.draw_angle_obstacle(10,20,3,2,3,"haut") # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-#game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
+    
+    '''
 
 
 
+'''
 if __name__ == "__main__":
     game()
-
+'''
 
 
 

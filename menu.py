@@ -2,7 +2,7 @@
 
 import pygame
 import sys
-from game import game
+from game import Game
 
 # Initialisation de Pygame
 pygame.init()
@@ -1662,7 +1662,8 @@ def quit_game():
 
 # Fonction pour lancer le jeu principal
 def start_game():
-    game()
+    game = Game()
+    game.game()
 
 
 
