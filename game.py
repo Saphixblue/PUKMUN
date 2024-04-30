@@ -11,7 +11,7 @@ class Game:
 
         pygame.init()
 
-        self.DIMENSION_MAP = (50, 23)
+        self.DIMENSION_MAP = (27, 22)
         self.CELL_SIZE = 30
         self.WINDOW_SIZE = (self.DIMENSION_MAP[0]*self.CELL_SIZE, self.DIMENSION_MAP[1]*self.CELL_SIZE)
 
