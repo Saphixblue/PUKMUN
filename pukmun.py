@@ -63,14 +63,13 @@ class Pukmun:
     # Update action
     # Update deplacement
     def pukmun_update_action(self, game_map):
-        if self.pukmun_check_case(game_map):
+        if self.pukmun_check_case():
             if self.fantome == 0:
                 if self.ivre == 0:
                     self.pukmun_deplacement_normal(game_map)
 
         self.pukmun_update_coordonnees_pixels(game_map)
         self.pukmun_update_case(game_map)
-        self.pukmun_update_coordonnees_cases(game_map)
 
     def pukmun_update_deplacement(self, game_map):
         if self.action == "LEFT":
@@ -111,7 +110,7 @@ class Pukmun:
                 if not self.pukmun_check_collision_obstacle_down(game_map):
                     self.action = "DOWN"
 
-    def pukmun_check_case(self, game_map):
+    def pukmun_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
             return True
         return False
@@ -166,40 +165,22 @@ class Pukmun:
         self.direction_sprite = "UP"
         self.pukmun_update_case(game_map)
 
-# Revoir ça
     def pukmun_update_case(self, game_map):
-        if self.coordonnees_pixels[0] == (self.coordonnees_cases[0] - 1) * self.CELL_SIZE:
-            self.coordonnees_cases[0] = self.coordonnees_cases[0] - 1
-        if self.coordonnees_pixels[0] == (self.coordonnees_cases[0] + 1) * self.CELL_SIZE:
-            self.coordonnees_cases[0] = self.coordonnees_cases[0] + 1
-
-        if self.coordonnees_pixels[1] == (self.coordonnees_cases[1] - 1) * self.CELL_SIZE:
-            self.coordonnees_cases[1] = self.coordonnees_cases[1] - 1
-        elif self.coordonnees_pixels[1] == (self.coordonnees_cases[1] + 1) * self.CELL_SIZE:
-            self.coordonnees_cases[1] = self.coordonnees_cases[1] + 1
-        self.pukmun_update_coordonnees_cases(game_map)
+        if self.coordonnees_pixels[0] % self.CELL_SIZE == 0:
+            self.coordonnees_cases[0] = int(self.coordonnees_pixels[0]) // self.CELL_SIZE
+        if self.coordonnees_pixels[1] % self.CELL_SIZE == 0:
+            self.coordonnees_cases[1] = int(self.coordonnees_pixels[1]) // self.CELL_SIZE
 
     def pukmun_update_coordonnees_pixels(self, game_map):
         if self.coordonnees_pixels[0] < 0:
-            self.coordonnees_pixels = [(game_map.DIMENSION_MAP[0] - 1) * self.CELL_SIZE, self.coordonnees_pixels[1]]
+            self.coordonnees_pixels[0] = (game_map.DIMENSION_MAP[0] - 1) * self.CELL_SIZE
         elif self.coordonnees_pixels[0] > (game_map.DIMENSION_MAP[0] - 1) * self.CELL_SIZE:
-            self.coordonnees_pixels = [0, self.coordonnees_pixels[1]]
+            self.coordonnees_pixels[0] = 0
 
         if self.coordonnees_pixels[1] < 0:
-            self.coordonnees_pixels = [self.coordonnees_pixels[0], (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE]
+            self.coordonnees_pixels[1] = (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE
         elif self.coordonnees_pixels[1] > (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE:
-            self.coordonnees_pixels = [self.coordonnees_pixels[0], 0]
-
-    def pukmun_update_coordonnees_cases(self, game_map):
-        if self.coordonnees_cases[0] < 0:
-            self.coordonnees_cases = [game_map.DIMENSION_MAP[0] - 1, self.coordonnees_cases[1]]
-        elif self.coordonnees_cases[0] > game_map.DIMENSION_MAP[0] - 1:
-            self.coordonnees_cases = [0, self.coordonnees_cases[1]]
-
-        if self.coordonnees_cases[1] < 0:
-            self.coordonnees_cases = [self.coordonnees_cases[0], game_map.DIMENSION_MAP[1] - 1]
-        elif self.coordonnees_cases[1] > game_map.DIMENSION_MAP[1] - 1:
-            self.coordonnees_cases = [self.coordonnees_cases[0], 0]
+            self.coordonnees_pixels[1] = 0
 
     def pukmun_update_sprite(self, frame):
         frame = frame % 20
