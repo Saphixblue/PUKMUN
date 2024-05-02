@@ -173,14 +173,14 @@ class Pukmun:
 
     def pukmun_update_coordonnees_pixels(self, game_map):
         if self.coordonnees_pixels[0] < 0:
-            self.coordonnees_pixels[0] = (game_map.DIMENSION_MAP[0] - 1) * self.CELL_SIZE
+            self.coordonnees_pixels[0] = (game_map.DIMENSION_MAP[0] - 1) * self.CELL_SIZE + self.vitesse
         elif self.coordonnees_pixels[0] > (game_map.DIMENSION_MAP[0] - 1) * self.CELL_SIZE:
-            self.coordonnees_pixels[0] = 0
+            self.coordonnees_pixels[0] = 0 - self.vitesse
 
         if self.coordonnees_pixels[1] < 0:
-            self.coordonnees_pixels[1] = (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE
+            self.coordonnees_pixels[1] = (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE + self.vitesse
         elif self.coordonnees_pixels[1] > (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE:
-            self.coordonnees_pixels[1] = 0
+            self.coordonnees_pixels[1] = 0 - self.vitesse
 
     def pukmun_update_sprite(self, frame):
         frame = frame % 20

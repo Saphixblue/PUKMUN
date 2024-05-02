@@ -13,7 +13,7 @@ class Game:
 
         pygame.init()
 
-        self.DIMENSION_MAP = (10, 10) # (colonnes, lignes)
+        self.DIMENSION_MAP = (25, 22) # (colonnes, lignes)
         self.CELL_SIZE = 30
         self.WINDOW_SIZE = (self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE)
 
@@ -34,7 +34,7 @@ class Game:
 
         self.level_1()
 
-        self.pukmun = Pukmun([9, 9], self.CELL_SIZE)
+        self.pukmun = Pukmun([0, 10], self.CELL_SIZE)
 
     # Fonction pour quitter le jeu
     def quit_game(self):
@@ -68,6 +68,7 @@ class Game:
             self.game_map.draw_map(self.screen)
 
             if pygame.time.get_ticks() // (1000 // self.fps) % self.fps != self.frame:
+                self.pukmun.pukmun_update_case(self.game_map)
                 self.pukmun.pukmun_update_action(self.game_map)
                 self.pukmun.pukmun_update_deplacement(self.game_map)
                 # self.pukmun.pukmun_update_deplacement_sprite(self.game_map)
@@ -75,8 +76,9 @@ class Game:
 
 
                 print(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
-                print(self.pukmun.coordonnees_cases)
                 print(self.pukmun.coordonnees_pixels)
+                print(self.pukmun.coordonnees_cases)
+
 
 
                 if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 0:
@@ -103,9 +105,10 @@ class Game:
                                           "bas")  # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
         self.game_map.draw_angle_obstacle(10, 20, 3, 2, 3,
                                           "haut")  # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-        self.game_map.draw_rectangle_obstacle(1, 0, 1, 1)
+        self.game_map.draw_rectangle_obstacle(0, 0, 2, 1)
         self.game_map.draw_rectangle_obstacle(12, 9, 1, 9)
         self.game_map.draw_rectangle_obstacle(14, 9, 1, 8)
+        self.game_map.draw_rectangle_obstacle(1, 9, 1, 8)
         # self.game_map.draw_rectangle_obstacle(12, 9, 1, 9)
         # game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
 
