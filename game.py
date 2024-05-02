@@ -36,6 +36,8 @@ class Game:
 
         self.pukmun = Pukmun([0, 10], self.CELL_SIZE)
 
+        self.score = 0
+
     # Fonction pour quitter le jeu
     def quit_game(self):
         pygame.quit()
@@ -74,15 +76,18 @@ class Game:
                 # self.pukmun.pukmun_update_deplacement_sprite(self.game_map)
                 self.pukmun.pukmun_update_sprite(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
 
-
+                '''
                 print(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
                 print(self.pukmun.coordonnees_pixels)
                 print(self.pukmun.coordonnees_cases)
+                '''
+                print(self.score)
 
 
 
                 if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 0:
                     self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
+                    self.score += 10
 
                 # Update de la valeur de la frame
                 self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps

@@ -83,32 +83,31 @@ class Pukmun:
         # print([self.coordonnees_cases[0] * self.CELL_SIZE, self.coordonnees_cases[1] * self.CELL_SIZE] != self.coordonnees_pixels)
 
     def pukmun_deplacement_normal(self, game_map):
-        if self.controle == self.action:
-            if self.action == "LEFT":
-                if self.pukmun_check_collision_obstacle_left(game_map):
-                    self.action = "STOP"
-            elif self.action == "RIGHT":
-                if self.pukmun_check_collision_obstacle_right(game_map):
-                    self.action = "STOP"
-            elif self.action == "UP":
-                if self.pukmun_check_collision_obstacle_up(game_map):
-                    self.action = "STOP"
-            elif self.action == "DOWN":
-                if self.pukmun_check_collision_obstacle_down(game_map):
-                    self.action = "STOP"
-        else:
-            if self.controle == "LEFT":
-                if not self.pukmun_check_collision_obstacle_left(game_map):
-                    self.action = "LEFT"
-            elif self.controle == "RIGHT":
-                if not self.pukmun_check_collision_obstacle_right(game_map):
-                    self.action = "RIGHT"
-            elif self.controle == "UP":
-                if not self.pukmun_check_collision_obstacle_up(game_map):
-                    self.action = "UP"
-            elif self.controle == "DOWN":
-                if not self.pukmun_check_collision_obstacle_down(game_map):
-                    self.action = "DOWN"
+        if self.controle == "LEFT":
+            if not self.pukmun_check_collision_obstacle_left(game_map):
+                self.action = "LEFT"
+        elif self.controle == "RIGHT":
+            if not self.pukmun_check_collision_obstacle_right(game_map):
+                self.action = "RIGHT"
+        elif self.controle == "UP":
+            if not self.pukmun_check_collision_obstacle_up(game_map):
+                self.action = "UP"
+        elif self.controle == "DOWN":
+            if not self.pukmun_check_collision_obstacle_down(game_map):
+                self.action = "DOWN"
+
+        if self.action == "LEFT":
+            if self.pukmun_check_collision_obstacle_left(game_map):
+                self.action = "STOP"
+        elif self.action == "RIGHT":
+            if self.pukmun_check_collision_obstacle_right(game_map):
+                self.action = "STOP"
+        elif self.action == "UP":
+            if self.pukmun_check_collision_obstacle_up(game_map):
+                self.action = "STOP"
+        elif self.action == "DOWN":
+            if self.pukmun_check_collision_obstacle_down(game_map):
+                self.action = "STOP"
 
     def pukmun_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
