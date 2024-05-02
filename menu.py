@@ -1662,6 +1662,7 @@ def quit_game():
 
 # Fonction pour lancer le jeu principal
 def start_game():
+    # pygame.quit()
     game = Game()
     game.game()
 

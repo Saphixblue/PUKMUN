@@ -1,14 +1,21 @@
 # map.py
+from sprite_handler import SpriteHandler
+
 
 class Map:
     def __init__(self, DIMENSION_MAP, CELL_SIZE):
 
         self.DIMENSION_MAP = DIMENSION_MAP
         self.CELL_SIZE = CELL_SIZE
-        self.WINDOW_SIZE = (self.DIMENSION_MAP[0]*self.CELL_SIZE, self.DIMENSION_MAP[1]*self.CELL_SIZE)
+        self.WINDOW_SIZE = (self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE)
 
         # Création de la carte avec des cases vides par défaut
-        self.map_data = [[0 for _ in range(self.DIMENSION_MAP[0])] for _ in range(self.DIMENSION_MAP[1])]
+        self.map_data = [[0 for _ in range(self.DIMENSION_MAP[1])] for _ in range(self.DIMENSION_MAP[0])]
+
+        sprite_handler = SpriteHandler(self.CELL_SIZE)
+
+        self.petit_graille_image = sprite_handler.petit_graille_image()
+        self.tile_image = sprite_handler.tile_image()
 
     def draw_rectangle_obstacle(self, x, y, longueur, largeur):
         for i in range(longueur):
@@ -27,3 +34,12 @@ class Map:
                 direction = j
             if 0 <= x + position_angle - 1 < self.DIMENSION_MAP[0] and 0 <= y + direction + 1 < self.DIMENSION_MAP[1]:
                 self.map_data[x + position_angle - 1][y + direction + 1] = 3
+
+    def draw_map(self, screen):
+        for i in range(self.DIMENSION_MAP[0]):
+            for j in range(self.DIMENSION_MAP[1]):
+                #if i < len(self.map_data[j]):
+                if self.map_data[i][j] == 0:
+                    screen.blit(self.petit_graille_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
+                elif self.map_data[i][j] == 3:
+                    screen.blit(self.tile_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
