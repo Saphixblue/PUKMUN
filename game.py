@@ -4,7 +4,7 @@ import pygame
 import sys
 import os
 from Map import Map
-from level_1 import Level1
+from levels.level_1 import Level1
 from pukmun import Pukmun
 from sprite_handler import SpriteHandler
 
