@@ -36,6 +36,10 @@ class SpriteHandler:
         trou_image = self.load_image('Trou_2.png')
         return trou_image
 
+    def porte_image(self):
+        porte_image = self.load_image('Tile_vide.png')
+        return porte_image
+
     def pukmun_mange_0_DL_image(self):
         pukmun_mange_0_DL_image = self.load_image('Pukmun_mange_0_DL.png')
         return pukmun_mange_0_DL_image

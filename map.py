@@ -15,7 +15,11 @@ class Map:
         sprite_handler = SpriteHandler(self.CELL_SIZE)
 
         self.petit_graille_image = sprite_handler.petit_graille_image()
+        self.gros_graille_image = sprite_handler.gros_graille_image()
+        self.tile_vide_image = sprite_handler.tile_vide_image()
         self.tile_image = sprite_handler.tile_image()
+        self.trou_image = sprite_handler.trou_image()
+        self.porte_image = sprite_handler.porte_image()
 
     def draw_rectangle_obstacle(self, x, y, longueur, largeur):
         for i in range(longueur):
@@ -29,17 +33,24 @@ class Map:
                 self.map_data[x + i][y] = 3
         for j in range(longueur_angle):
             if direction_angle == "haut":
-                direction = -j
+                direction = -(j + 1)
             else:
-                direction = j
+                direction = j + 1
             if 0 <= x + position_angle - 1 < self.DIMENSION_MAP[0] and 0 <= y + direction + 1 < self.DIMENSION_MAP[1]:
-                self.map_data[x + position_angle - 1][y + direction + 1] = 3
+                self.map_data[x + position_angle - 1][y + direction] = 3
 
     def draw_map(self, screen):
         for i in range(self.DIMENSION_MAP[0]):
             for j in range(self.DIMENSION_MAP[1]):
-                #if i < len(self.map_data[j]):
                 if self.map_data[i][j] == 0:
                     screen.blit(self.petit_graille_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
+                elif self.map_data[i][j] == 1:
+                    screen.blit(self.gros_graille_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
+                elif self.map_data[i][j] == 2:
+                    screen.blit(self.tile_vide_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
                 elif self.map_data[i][j] == 3:
                     screen.blit(self.tile_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
+                elif self.map_data[i][j] == 4:
+                    screen.blit(self.trou_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
+                elif self.map_data[i][j] == 5:
+                    screen.blit(self.porte_image, [i * self.CELL_SIZE, j * self.CELL_SIZE])
