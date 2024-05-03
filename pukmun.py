@@ -65,8 +65,9 @@ class Pukmun:
     def pukmun_update_action(self, game_map):
         if self.pukmun_check_case():
             if self.fantome == 0:
-                if self.ivre == 0:
-                    self.pukmun_deplacement_normal(game_map)
+                self.pukmun_deplacement(game_map)
+            elif self.fantome == 1:
+                self.pukmun_deplacement_fantome(game_map)
 
         self.pukmun_update_coordonnees_pixels(game_map)
         self.pukmun_update_case(game_map)
@@ -82,7 +83,18 @@ class Pukmun:
             self.pukmun_haut(game_map)
         # print([self.coordonnees_cases[0] * self.CELL_SIZE, self.coordonnees_cases[1] * self.CELL_SIZE] != self.coordonnees_pixels)
 
-    def pukmun_deplacement_normal(self, game_map):
+    def pukmun_update_controle_ivre(self):
+        if self.ivre == 1:
+            if self.controle == "LEFT":
+                self.controle = "RIGHT"
+            elif self.controle == "RIGHT":
+                self.controle = "LEFT"
+            elif self.controle == "UP":
+                self.controle = "DOWN"
+            elif self.controle == "DOWN":
+                self.controle = "UP"
+
+    def pukmun_deplacement(self, game_map):
         if self.controle == "LEFT":
             if not self.pukmun_check_collision_obstacle_left(game_map):
                 self.action = "LEFT"
@@ -108,6 +120,10 @@ class Pukmun:
         elif self.action == "DOWN":
             if self.pukmun_check_collision_obstacle_down(game_map):
                 self.action = "STOP"
+
+    # TODO
+    def pukmun_deplacement_fantome(self, game_map):
+        print("a")
 
     def pukmun_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
@@ -138,7 +154,7 @@ class Pukmun:
     def pukmun_check_collision_obstacle_down(self, game_map):
         next_y = self.coordonnees_cases[1] + 1 if self.coordonnees_cases[1] != game_map.DIMENSION_MAP[1] - 1 else 0
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0]:
-            if game_map.map_data[self.coordonnees_cases[0]][next_y] == 3:
+            if game_map.map_data[self.coordonnees_cases[0]][next_y] == 3 or game_map.map_data[self.coordonnees_cases[0]][next_y] == 5:
                 return True
         return False
 

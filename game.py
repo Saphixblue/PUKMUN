@@ -67,6 +67,7 @@ class Game:
                         self.pukmun.controle = "UP"
                     elif event.key == pygame.K_s:
                         self.pukmun.controle = "DOWN"
+                    self.pukmun.pukmun_update_controle_ivre()
 
             # Limiter le nombre d'images par seconde
             pygame.time.Clock().tick(60)

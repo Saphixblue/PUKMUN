@@ -36,6 +36,7 @@ class SpriteHandler:
         trou_image = self.load_image('Trou_2.png')
         return trou_image
 
+    # TODO Créer l'image et remplacer
     def porte_image(self):
         porte_image = self.load_image('Tile_vide.png')
         return porte_image
