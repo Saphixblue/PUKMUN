@@ -39,7 +39,6 @@ class Game:
         self.clock.tick(self.fps)
 
         self.frame = 0
-        self.check_frame = 0
 
         self.level_number = 1
 

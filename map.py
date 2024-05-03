@@ -27,7 +27,7 @@ class Map:
                 if 0 <= x + i < self.DIMENSION_MAP[0] and 0 <= y + j < self.DIMENSION_MAP[1]:
                     self.map_data[x + i][y + j] = 3
 
-    def draw_angle_obstacle(self, x, y, longueur, position_angle, longueur_angle, direction_angle):
+    def draw_angle_obstacle(self, x, y, longueur, position_angle=0, longueur_angle=0, direction_angle="haut"):
         for i in range(longueur):
             if 0 <= x + i < self.DIMENSION_MAP[0] and 0 <= y < self.DIMENSION_MAP[1]:
                 self.map_data[x + i][y] = 3
