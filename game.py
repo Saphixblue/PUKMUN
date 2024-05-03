@@ -30,7 +30,7 @@ class Game:
 
         self.game_map = self.level_1.level_1_map
         self.pukmun = self.level_1.pukmun
-        self.level_1.level_1()
+        self.level_1.draw_level_on_map()
 
         self.fps = 60
         self.clock = pygame.time.Clock()

@@ -10,7 +10,7 @@ class Level1:
         # self.enemies =
         # Initialiser un tableau de Fantomes
 
-    def level_1(self):
+    def draw_level_on_map(self):
         # Mettre en place un obstacle sur la carte
         self.level_1_map.draw_rectangle_obstacle(5, 10, 5,
                                               1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
