@@ -4,6 +4,7 @@ import pygame
 import sys
 import os
 from Map import Map
+from level_1 import Level1
 from pukmun import Pukmun
 from sprite_handler import SpriteHandler
 
@@ -21,7 +22,15 @@ class Game:
 
         pygame.display.set_caption("PUKMUN")
 
-        self.game_map = Map(self.DIMENSION_MAP, self.CELL_SIZE)
+        self.level_1 = Level1(self.DIMENSION_MAP, self.CELL_SIZE)
+        # self.level_2
+        # self.level_3
+        # self.level_4
+        # self.level_5
+
+        self.game_map = self.level_1.level_1_map
+        self.pukmun = self.level_1.pukmun
+        self.level_1.level_1()
 
         self.fps = 60
         self.clock = pygame.time.Clock()
@@ -30,11 +39,7 @@ class Game:
         self.frame = 0
         self.check_frame = 0
 
-        # self.level = 1
-
-        self.level_1()
-
-        self.pukmun = Pukmun([0, 10], self.CELL_SIZE)
+        self.level = 1
 
         self.score = 0
 
@@ -42,8 +47,6 @@ class Game:
     def quit_game(self):
         pygame.quit()
         sys.exit()
-
-
 
     # Boucle principale du jeu
     def game(self):
@@ -101,21 +104,6 @@ class Game:
 
             # Limiter le nombre d'images par seconde
             # pygame.time.Clock().tick(60)
-
-    def level_1(self):
-        # Mettre en place un obstacle sur la carte
-        self.game_map.draw_rectangle_obstacle(5, 10, 5,
-                                              1)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
-        self.game_map.draw_angle_obstacle(2, 2, 3, 2, 1,
-                                          "bas")  # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-        self.game_map.draw_angle_obstacle(10, 20, 3, 2, 3,
-                                          "haut")  # dessin angle en (2,2); longueur 3; position angle 2, longueurangle 1; position "bas"
-        self.game_map.draw_rectangle_obstacle(0, 0, 2, 1)
-        self.game_map.draw_rectangle_obstacle(12, 9, 1, 9)
-        self.game_map.draw_rectangle_obstacle(14, 9, 1, 8)
-        self.game_map.draw_rectangle_obstacle(1, 9, 1, 8)
-        # self.game_map.draw_rectangle_obstacle(12, 9, 1, 9)
-        # game_map.draw_rectangle_obstacle(0, 0, 30,30)  # Dessine un rectangle à la case (10;10) longueur 5, largeur 1
 
 '''
 if __name__ == "__main__":
