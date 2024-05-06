@@ -41,6 +41,8 @@ class SpriteHandler:
         porte_image = self.load_image('Tile_vide.png')
         return porte_image
 
+    # TODO: Si on a le temps, créer des sprites pour PUKMUN ivre et fantôme
+
     def pukmun_mange_0_DL_image(self):
         pukmun_mange_0_DL_image = self.load_image('Pukmun_mange_0_DL.png')
         return pukmun_mange_0_DL_image

@@ -1667,7 +1667,7 @@ def start_game():
     game.game()
 
 
-
+# TODO: Rajouter un bouton leaderboard qui appelle displayLeaderBoard() de LeaderBoard
 # Boucle principale du jeu
 def menu():
     global bouton_actif  # Déclaration de la variable bouton_actif comme globale

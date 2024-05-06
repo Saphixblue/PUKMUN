@@ -22,6 +22,9 @@ class Pukmun:
         self.fantome = 0
         self.ivre = 0
 
+        self.shield_controle = "NONE"
+        self.shield_direction = "NONE"
+
         sprite_handler = SpriteHandler(self.CELL_SIZE)
 
         self.pukmun_mange_0_DL_image = sprite_handler.pukmun_mange_0_DL_image()
@@ -58,10 +61,17 @@ class Pukmun:
         self.pukmun_mort_11_image = sprite_handler.pukmun_mort_11_image()
         self.pukmun_mort_12_image = sprite_handler.pukmun_mort_12_image()
 
+        # TODO: Rajouter sprites bouclier
+
         self.sprite = self.pukmun_mange_1_L_image
 
-    # Update action
-    # Update deplacement
+        # TODO
+        # self.shield_sprite
+
+        # TODO: Calibrer la collision box
+        # self.collision_box
+
+
     def pukmun_update_action(self, game_map):
         if self.pukmun_check_case():
             if self.fantome == 0:
@@ -121,7 +131,7 @@ class Pukmun:
             if self.pukmun_check_collision_obstacle_down(game_map):
                 self.action = "STOP"
 
-    # TODO
+    # TODO Déplacement sans collision case par case
     def pukmun_deplacement_fantome(self, game_map):
         print("a")
 
@@ -180,7 +190,7 @@ class Pukmun:
         self.direction_sprite = "UP"
         self.pukmun_update_case(game_map)
 
-    def pukmun_update_case(self, game_map):
+    def pukmun_update_case(self):
         if self.coordonnees_pixels[0] % self.CELL_SIZE == 0:
             self.coordonnees_cases[0] = int(self.coordonnees_pixels[0]) // self.CELL_SIZE
         if self.coordonnees_pixels[1] % self.CELL_SIZE == 0:
@@ -197,6 +207,7 @@ class Pukmun:
         elif self.coordonnees_pixels[1] > (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE:
             self.coordonnees_pixels[1] = 0 - self.vitesse
 
+    # TODO: Si on a le temps, update les sprites en fantome et en ivre
     def pukmun_update_sprite(self, frame):
         frame = frame % 20
         if self.direction_sprite == "LEFT":
@@ -243,3 +254,19 @@ class Pukmun:
                     self.sprite = self.pukmun_mange_2_DR_image
                 elif 12 <= frame < 20:
                     self.sprite = self.pukmun_mange_0_DR_image
+
+    # TODO: Si ivre, inverser les contrôles, puis direction = controle
+    def pukmun_update_controle_shield(self):
+        print("Update contrôle shield")
+
+    # TODO: Afficher sprite du shield sur les coordonnees_pixels de PUKMUN si shield_direction != "NONE"
+    def pukmun_update_shield(self):
+        print("Update shield")
+
+    # TODO: Changer sprite du shield en fonction de direction et powered
+    def pukmun_update_sprite_shield(self):
+        print("Update sprite shield")
+
+    # TODO: Animation de mort de PUKMUN en durée son mort/12 frames (si plus d'1 seconde, basculer cette fonction dans Game)
+    def pukmun_mort(self):
+        print("Mort PUKMUN")

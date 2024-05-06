@@ -1,6 +1,8 @@
 # level_1
 from levels.level_interface import LevelInterface
 from pukmun import Pukmun
+from fantomes.fantome_interface import FantomeInterface
+from fantomes.fantome_ivre import FantomeIvre
 
 
 class Level1(LevelInterface):
@@ -8,7 +10,7 @@ class Level1(LevelInterface):
         super().__init__(DIMENSION_MAP, CELL_SIZE)
         self.pukmun = Pukmun([12, 12], CELL_SIZE)
         # self.fantomes =
-        # Initialiser un tableau de Fantomes
+        # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
 
     def draw_level_on_map(self):
         self.level_map.draw_rectangle_obstacle(12, 1, 1, 3)

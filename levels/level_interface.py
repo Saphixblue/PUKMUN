@@ -9,6 +9,12 @@ class LevelInterface(ABC):
         self.pukmun = None
         self.fantomes = None
 
+        # TODO: Renseigner les coordonnées de départ des fantômes dans leur ordre de sortie
+        # self.depart_fantome_1
+        # self.depart_fantome_2
+        # self.depart_fantome_3
+        # self.depart_fantome_4
+
         # Dessin du pit des fantômes
         self.level_map.draw_angle_obstacle(9, 9, 3, 1, 2, "bas")
         self.level_map.draw_angle_obstacle(10, 11, 6, 6, 2, "haut")
