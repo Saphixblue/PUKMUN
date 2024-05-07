@@ -3,6 +3,10 @@
 import pygame
 import sys
 from levels.level_1 import Level1
+from levels.level_2 import Level2
+from levels.level_3 import Level3
+from levels.level_4 import Level4
+from levels.level_5 import Level5
 
 
 class Game:
@@ -10,30 +14,23 @@ class Game:
 
         pygame.init()
 
-        self.DIMENSION_MAP = (25, 22) # (colonnes, lignes)
+        self.DIMENSION_MAP = (25, 22)  # (colonnes, lignes)
         self.CELL_SIZE = 30
-        self.WINDOW_SIZE = (self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE + self.CELL_SIZE)
+        self.WINDOW_SIZE = (
+        self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE + self.CELL_SIZE)
 
         self.screen = pygame.display.set_mode(self.WINDOW_SIZE)
 
         pygame.display.set_caption("PUKMUN")
 
-        self.level_1 = Level1(self.DIMENSION_MAP, self.CELL_SIZE)
-        # self.level_2
-        # self.level_3
-        # self.level_4
-        # self.level_5
-
         # Niveau actuel
-        self.level = self.level_1
+        self.level = None
 
-        self.game_map = self.level.level_map
-        self.pukmun = self.level.pukmun
-        self.level.draw_level_on_map()
+        self.game_map = None
+        self.pukmun = None
 
         self.fps = 60
         self.clock = pygame.time.Clock()
-        self.clock.tick(self.fps)
 
         self.frame = 0
 
@@ -51,17 +48,45 @@ class Game:
         self.gros_graille = 0
 
         # Détermine le nombre de grailles dans un niveau
+        self.nombre_de_grailles = None
+
+        # Nombre de grailles mangés par PUKMUN
+        self.grailles_manges = 0
+
+        # Nombre de vies restantes de PUKMUN
+        self.lives = 3
+
+    def level_init(self):
+        if self.level_number == 1:
+            self.level = Level1(self.DIMENSION_MAP, self.CELL_SIZE)
+        elif self.level_number == 2:
+            self.level = Level2(self.DIMENSION_MAP, self.CELL_SIZE)
+        elif self.level_number == 3:
+            self.level = Level3(self.DIMENSION_MAP, self.CELL_SIZE)
+        elif self.level_number == 4:
+            self.level = Level4(self.DIMENSION_MAP, self.CELL_SIZE)
+        elif self.level_number == 5:
+            self.level = Level5(self.DIMENSION_MAP, self.CELL_SIZE)
+
+        self.game_map = self.level.level_map
+        self.pukmun = self.level.pukmun
+        self.level.draw_level_on_map()
+
+        self.clock.tick(self.fps)
+
+        self.frame = 0
+
+        # Détermine le nombre de grailles dans un niveau
         self.nombre_de_grailles = 0
         for i in range(self.DIMENSION_MAP[0]):
             for j in range(self.DIMENSION_MAP[1]):
                 if self.game_map.map_data[i][j] == 0 or self.game_map.map_data[i][j] == 1:
                     self.nombre_de_grailles += 1
 
-        # Nombre de grailles mangés pr PUKMUN
+        # Nombre de grailles mangés par PUKMUN
         self.grailles_manges = 0
 
-        # Nombre de vies restantes de PUKMUN
-        self.lives = 3
+        self.start_level()
 
     # Fonction pour quitter le jeu
     def quit_game(self):
@@ -87,6 +112,10 @@ class Game:
                     elif event.key == pygame.K_s:
                         self.pukmun.controle = "DOWN"
                     self.pukmun.pukmun_update_controle_ivre()
+
+            if self.level_start == 1:
+                self.level_init()
+                self.level_start = 0
 
             # Limiter le nombre d'images par seconde
             pygame.time.Clock().tick(60)
@@ -120,7 +149,6 @@ class Game:
                 # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
                 # self.pukmun.powered = 1
 
-
             print(self.score)
 
             # Update de la valeur de la frame
@@ -132,7 +160,11 @@ class Game:
             # Mettre à jour l'affichage
             pygame.display.flip()
 
-    # TODO: Afficher GAME OVER (quelques econdes), si high score --> updateLeaderBoard(), remise du score à zéro puis renvoi du joueur à l'écran titre
+            if self.grailles_manges == self.nombre_de_grailles:
+                self.level_complete()
+                self.level_start = 1
+
+    # TODO: Afficher GAME OVER (quelques secondes), si high score --> updateLeaderBoard(), remise du score à zéro puis renvoi du joueur à l'écran titre
     def game_over(self):
         print("Game over")
 
@@ -142,16 +174,20 @@ class Game:
         print("Perdre une vie")
 
     # TODO: Tous les éléments sont placés; tout est immobile pendant que la musique de début se joue
-    def level_start(self):
-        print("Level start")
+    def start_level(self):
+        print("Start Level")
 
-    # TODO: Si PUKMUN a mangé tous les grailles disponibles, passer au niveau suivant en conservant le score (si niveau 5, revenir au 1)
+    # TODO: Décommenter quand level_start() est fait, et quand tous les niveaux sont implémentés
     def level_complete(self):
-        print("Level complete")
+        self.level_number += 1
+        if self.level_number == 6:
+            self.level_number = 1
 
-    # TODO: A appeler quand PUKMUN tombe dans un trou. Revenir au niveau précédent (si niveau 1, revenir au 5 même si pas de trou dans le 1)
+    # TODO: Décommenter quand level_start() est fait, et quand tous les niveaux sont implémentés
     def previous_level(self):
-        print("Previous level")
+        self.level_number -= 1
+        if self.level_number == 0:
+            self.level_number = 5
 
     # TODO: Renvoie True si PUKMUN a collisionné avec le fantôme passé en paramètre
     def collision_pukmun_fantome(self, fantome):
@@ -159,9 +195,9 @@ class Game:
 
     # Gestion de la collision entre PUKMUN et les fantômes en fonction de leur état
     # TODO: Si PUKMUN n'est pas sous gros graille :
-        # Si fantôme ivre ou fantôme fantôme --> Perd une vie
+    # Si fantôme ivre ou fantôme fantôme --> Perd une vie
     # Sinon :
-        # Si fantôme ivre ou fantôme fantôme --> Le mange, obtient les points et les affiche, fantôme devient mort
+    # Si fantôme ivre ou fantôme fantôme --> Le mange, obtient les points et les affiche, fantôme devient mort
     # Fantôme mafieux --> Dodge
     def gestion_collision_pukmun_fantome(self, fantome):
         print("Gestion collision pukmun_fantome")
@@ -169,8 +205,8 @@ class Game:
     # Gestion de la collision entre PUKMUN et la balle en fonction de leur état
     # TODO: Si bouclier non déployé dans la bonne direction --> Perd une vie
     # Si déployé dans la bonne direction :
-        # Si powered --> golden passe à 1 et balle renvoyée
-        # Sinon --> Balle renvoyée
+    # Si powered --> golden passe à 1 et balle renvoyée
+    # Sinon --> Balle renvoyée
     def gestion_collision_pukmun_balle(self, fantome_mafieux):
         print("Gestion collision pukmun_balle")
 
@@ -179,6 +215,8 @@ class Game:
     # Sinon : Dodge
     def gestion_collision_balle_fantome(self, fantome_mafieux):
         print("Gestion collision pukmun_balle_fantome")
+
+
 '''
 if __name__ == "__main__":
     game()
