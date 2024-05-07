@@ -7,6 +7,7 @@ from levels.level_2 import Level2
 from levels.level_3 import Level3
 from levels.level_4 import Level4
 from levels.level_5 import Level5
+from sound_handler import SoundHandler
 
 
 class Game:
@@ -37,6 +38,8 @@ class Game:
         self.level_number = 1
 
         self.score = 0
+        # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
+        self.score_extra_life = 0
 
         # Permet de compter les secondes
         self.compteur = 0
@@ -55,6 +58,20 @@ class Game:
 
         # Nombre de vies restantes de PUKMUN
         self.lives = 3
+
+        sound_handler = SoundHandler()
+
+        self.intro_sound = sound_handler.intro_sound()
+        self.graille_1_sound = sound_handler.graille_1_sound()
+        self.graille_2_sound = sound_handler.graille_2_sound()
+        self.fantome_deplacement_sound = sound_handler.fantome_deplacement_sound()
+        self.gros_graille_sound = sound_handler.gros_graille_sound()
+        self.graille_fantome_sound = sound_handler.graille_fantome_sound()
+        self.fantome_mort_sound = sound_handler.fantome_mort_sound()
+        self.extra_life_sound = sound_handler.extra_life_sound()
+        self.pukmun_mort_sound = sound_handler.pukmun_mort_sound()
+
+        self.graille = 1
 
     def level_init(self):
         if self.level_number == 1:
@@ -141,15 +158,27 @@ class Game:
             if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 0:
                 self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
                 self.score += 10
+                self.score_extra_life += 10
                 self.grailles_manges += 1
+                if self.graille == 1:
+                    self.graille_1_sound.play()
+                    self.graille = 2
+                elif self.graille == 2:
+                    self.graille_2_sound.play()
+                    self.graille = 1
             if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 1:
                 self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
                 self.score += 10
+                self.score_extra_life += 10
                 self.grailles_manges += 1
                 # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
                 # self.pukmun.powered = 1
 
             print(self.score)
+
+            if self.score_extra_life // 10000 == 1:
+                self.score_extra_life -= 10000
+                self.gagner_une_vie()
 
             # Update de la valeur de la frame
             self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
@@ -172,6 +201,10 @@ class Game:
     # Si plus de vies --> game_over
     def perdre_une_vie(self):
         print("Perdre une vie")
+
+    def gagner_une_vie(self):
+        if self.lives < 5:
+            self.lives += 1
 
     # TODO: Tous les éléments sont placés; tout est immobile pendant que la musique de début se joue
     def start_level(self):
