@@ -80,7 +80,7 @@ class Pukmun:
                 self.pukmun_deplacement_fantome(game_map)
 
         self.pukmun_update_coordonnees_pixels(game_map)
-        self.pukmun_update_case(game_map)
+        self.pukmun_update_case()
 
     def pukmun_update_deplacement(self, game_map):
         if self.action == "LEFT":
@@ -172,23 +172,23 @@ class Pukmun:
         self.coordonnees_pixels = [self.coordonnees_pixels[0] - self.vitesse, self.coordonnees_pixels[1]]
         self.direction_sprite = "LEFT"
         self.orientation_sprite = "LEFT"
-        self.pukmun_update_case(game_map)
+        self.pukmun_update_case()
 
     def pukmun_droite(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0] + self.vitesse, self.coordonnees_pixels[1]]
         self.direction_sprite = "RIGHT"
         self.orientation_sprite = "RIGHT"
-        self.pukmun_update_case(game_map)
+        self.pukmun_update_case()
 
     def pukmun_bas(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0], self.coordonnees_pixels[1] + self.vitesse]
         self.direction_sprite = "DOWN"
-        self.pukmun_update_case(game_map)
+        self.pukmun_update_case()
 
     def pukmun_haut(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0], self.coordonnees_pixels[1] - self.vitesse]
         self.direction_sprite = "UP"
-        self.pukmun_update_case(game_map)
+        self.pukmun_update_case()
 
     def pukmun_update_case(self):
         if self.coordonnees_pixels[0] % self.CELL_SIZE == 0:

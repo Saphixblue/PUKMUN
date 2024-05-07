@@ -36,9 +36,8 @@ class SpriteHandler:
         trou_image = self.load_image('Trou_2.png')
         return trou_image
 
-    # TODO Créer l'image et remplacer
     def porte_image(self):
-        porte_image = self.load_image('Tile_vide.png')
+        porte_image = self.load_image('Porte.png')
         return porte_image
 
     # TODO: Si on a le temps, créer des sprites pour PUKMUN ivre et fantôme
@@ -163,12 +162,9 @@ class SpriteHandler:
         pukmun_mort_12_image = self.load_image('Pukmun_mort_12.png')
         return pukmun_mort_12_image
 
-    # TODO Créer image
-    '''
     def image_vide(self):
-        image_vide = self.load_image('image_vide.png')
+        image_vide = self.load_image('No_sprite.png')
         return image_vide
-    '''
 
     def shield_D_image(self):
         shield_D_image = self.load_image('Shield_D.png')

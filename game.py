@@ -97,7 +97,7 @@ class Game:
             # Dessiner la carte
             self.game_map.draw_map(self.screen)
 
-            self.pukmun.pukmun_update_case(self.game_map)
+            self.pukmun.pukmun_update_case()
             self.pukmun.pukmun_update_action(self.game_map)
             self.pukmun.pukmun_update_deplacement(self.game_map)
             self.pukmun.pukmun_update_sprite(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
