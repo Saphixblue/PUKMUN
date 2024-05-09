@@ -135,7 +135,7 @@ class Game:
                 self.level_start = 0
 
             # Limiter le nombre d'images par seconde
-            pygame.time.Clock().tick(60)
+            self.clock.tick(60)
 
             # Effacer l'écran
             self.screen.fill((0, 0, 0))
