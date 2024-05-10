@@ -20,7 +20,7 @@ class Pukmun:
 
         self.powered = 0
         self.fantome = 0
-        self.ivre = 1
+        self.ivre = 0
 
         self.shield_controle = "NONE"
         self.shield_direction = "NONE"
@@ -194,9 +194,16 @@ class Pukmun:
             if self.pukmun_check_collision_obstacle_down(game_map):
                 self.action = "STOP"
 
-    # TODO Déplacement sans collision case par case
     def pukmun_deplacement_fantome(self, game_map):
-        print("Déplacement fantôme")
+        if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
+            if self.controle == "LEFT":
+                self.action = "LEFT"
+            elif self.controle == "RIGHT":
+                self.action = "RIGHT"
+            elif self.controle == "UP":
+                self.action = "UP"
+            elif self.controle == "DOWN":
+                self.action = "DOWN"
 
     def pukmun_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
