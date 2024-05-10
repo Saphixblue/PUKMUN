@@ -110,29 +110,63 @@ class Game:
         pygame.quit()
         sys.exit()
 
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.quit_game()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    self.pukmun.controle = "LEFT"
+                elif event.key == pygame.K_d:
+                    self.pukmun.controle = "RIGHT"
+                elif event.key == pygame.K_z:
+                    self.pukmun.controle = "UP"
+                elif event.key == pygame.K_s:
+                    self.pukmun.controle = "DOWN"
+                self.pukmun.pukmun_update_controle_ivre()
+
+    def update_game(self):
+        if self.level_start == 1:
+            self.level_init()
+
+        # Update du score et des cases
+        if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 0:
+            self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
+            self.score += 10
+            self.score_extra_life += 10
+            self.grailles_manges += 1
+            if self.graille == 1:
+                self.graille_1_sound.play()
+                self.graille = 2
+            elif self.graille == 2:
+                self.graille_2_sound.play()
+                self.graille = 1
+        if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 1:
+            self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
+            self.score += 10
+            self.score_extra_life += 10
+            self.grailles_manges += 1
+            # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
+            # self.pukmun.powered = 1
+
+            print(self.score)
+
+        if self.score_extra_life // 10000 == 1:
+            self.score_extra_life -= 10000
+            self.gagner_une_vie()
+
+        # Update de la valeur de la frame
+        self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
+
     # TODO: Ajouter début de niveau
     # Boucle principale du jeu
     def game(self):
         running = True
         while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.quit_game()
+            self.handle_events()
 
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:
-                        self.pukmun.controle = "LEFT"
-                    elif event.key == pygame.K_d:
-                        self.pukmun.controle = "RIGHT"
-                    elif event.key == pygame.K_z:
-                        self.pukmun.controle = "UP"
-                    elif event.key == pygame.K_s:
-                        self.pukmun.controle = "DOWN"
-                    self.pukmun.pukmun_update_controle_ivre()
-
-            if self.level_start == 1:
-                self.level_init()
-                self.level_start = 0
+            self.update_game()
 
             # Limiter le nombre d'images par seconde
             self.clock.tick(60)
@@ -153,35 +187,6 @@ class Game:
             print(self.pukmun.coordonnees_pixels)
             print(self.pukmun.coordonnees_cases)
             '''
-
-            # Update du score et des cases
-            if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 0:
-                self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
-                self.score += 10
-                self.score_extra_life += 10
-                self.grailles_manges += 1
-                if self.graille == 1:
-                    self.graille_1_sound.play()
-                    self.graille = 2
-                elif self.graille == 2:
-                    self.graille_2_sound.play()
-                    self.graille = 1
-            if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 1:
-                self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
-                self.score += 10
-                self.score_extra_life += 10
-                self.grailles_manges += 1
-                # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
-                # self.pukmun.powered = 1
-
-            print(self.score)
-
-            if self.score_extra_life // 10000 == 1:
-                self.score_extra_life -= 10000
-                self.gagner_une_vie()
-
-            # Update de la valeur de la frame
-            self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
 
             # Dessiner Pac-Man
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
@@ -206,9 +211,24 @@ class Game:
         if self.lives < 5:
             self.lives += 1
 
+    # TODO: Si possible, afficher 3, 2, 1, Go! pendant la musique sous le pit des fantômes
     # TODO: Tous les éléments sont placés; tout est immobile pendant que la musique de début se joue
     def start_level(self):
-        print("Start Level")
+        # Dessiner la carte
+        self.screen.fill((0, 0, 0))
+        self.game_map.draw_map(self.screen)
+
+        # Placer Pukmun
+        self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
+
+        # TODO: Placer les fantômes
+
+        pygame.display.flip()
+
+        self.intro_sound.play()
+        pygame.time.delay(4000)  # Attendre 4 secondes
+
+        self.level_start = 0
 
     # TODO: Décommenter quand level_start() est fait, et quand tous les niveaux sont implémentés
     def level_complete(self):
@@ -248,6 +268,8 @@ class Game:
     # Sinon : Dodge
     def gestion_collision_balle_fantome(self, fantome_mafieux):
         print("Gestion collision pukmun_balle_fantome")
+
+    # TODO: Fantôme_déplacement (booléen) qui parcourt le tableau de fantômes et retourne True si au moins un est en vie et en train de se déplacer
 
 
 '''
