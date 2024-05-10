@@ -20,7 +20,7 @@ class Pukmun:
 
         self.powered = 0
         self.fantome = 0
-        self.ivre = 0
+        self.ivre = 1
 
         self.shield_controle = "NONE"
         self.shield_direction = "NONE"
@@ -48,6 +48,13 @@ class Pukmun:
         self.pukmun_mange_0_fantome_UL_image = sprite_handler.pukmun_mange_0_fantome_UL_image()
         self.pukmun_mange_0_fantome_UR_image = sprite_handler.pukmun_mange_0_fantome_UR_image()
 
+        self.pukmun_mange_0_fantome_ivre_DL_image = sprite_handler.pukmun_mange_0_fantome_ivre_DL_image()
+        self.pukmun_mange_0_fantome_ivre_DR_image = sprite_handler.pukmun_mange_0_fantome_ivre_DR_image()
+        self.pukmun_mange_0_fantome_ivre_L_image = sprite_handler.pukmun_mange_0_fantome_ivre_L_image()
+        self.pukmun_mange_0_fantome_ivre_R_image = sprite_handler.pukmun_mange_0_fantome_ivre_R_image()
+        self.pukmun_mange_0_fantome_ivre_UL_image = sprite_handler.pukmun_mange_0_fantome_ivre_UL_image()
+        self.pukmun_mange_0_fantome_ivre_UR_image = sprite_handler.pukmun_mange_0_fantome_ivre_UR_image()
+
         self.pukmun_mange_1_DL_image = sprite_handler.pukmun_mange_1_DL_image()
         self.pukmun_mange_1_DR_image = sprite_handler.pukmun_mange_1_DR_image()
         self.pukmun_mange_1_L_image = sprite_handler.pukmun_mange_1_L_image()
@@ -69,6 +76,13 @@ class Pukmun:
         self.pukmun_mange_1_fantome_UL_image = sprite_handler.pukmun_mange_1_fantome_UL_image()
         self.pukmun_mange_1_fantome_UR_image = sprite_handler.pukmun_mange_1_fantome_UR_image()
 
+        self.pukmun_mange_1_fantome_ivre_DL_image = sprite_handler.pukmun_mange_1_fantome_ivre_DL_image()
+        self.pukmun_mange_1_fantome_ivre_DR_image = sprite_handler.pukmun_mange_1_fantome_ivre_DR_image()
+        self.pukmun_mange_1_fantome_ivre_L_image = sprite_handler.pukmun_mange_1_fantome_ivre_L_image()
+        self.pukmun_mange_1_fantome_ivre_R_image = sprite_handler.pukmun_mange_1_fantome_ivre_R_image()
+        self.pukmun_mange_1_fantome_ivre_UL_image = sprite_handler.pukmun_mange_1_fantome_ivre_UL_image()
+        self.pukmun_mange_1_fantome_ivre_UR_image = sprite_handler.pukmun_mange_1_fantome_ivre_UR_image()
+
         self.pukmun_mange_2_DL_image = sprite_handler.pukmun_mange_2_DL_image()
         self.pukmun_mange_2_DR_image = sprite_handler.pukmun_mange_2_DR_image()
         self.pukmun_mange_2_L_image = sprite_handler.pukmun_mange_2_L_image()
@@ -89,6 +103,13 @@ class Pukmun:
         self.pukmun_mange_2_fantome_R_image = sprite_handler.pukmun_mange_2_fantome_R_image()
         self.pukmun_mange_2_fantome_UL_image = sprite_handler.pukmun_mange_2_fantome_UL_image()
         self.pukmun_mange_2_fantome_UR_image = sprite_handler.pukmun_mange_2_fantome_UR_image()
+
+        self.pukmun_mange_2_fantome_ivre_DL_image = sprite_handler.pukmun_mange_2_fantome_ivre_DL_image()
+        self.pukmun_mange_2_fantome_ivre_DR_image = sprite_handler.pukmun_mange_2_fantome_ivre_DR_image()
+        self.pukmun_mange_2_fantome_ivre_L_image = sprite_handler.pukmun_mange_2_fantome_ivre_L_image()
+        self.pukmun_mange_2_fantome_ivre_R_image = sprite_handler.pukmun_mange_2_fantome_ivre_R_image()
+        self.pukmun_mange_2_fantome_ivre_UL_image = sprite_handler.pukmun_mange_2_fantome_ivre_UL_image()
+        self.pukmun_mange_2_fantome_ivre_UR_image = sprite_handler.pukmun_mange_2_fantome_ivre_UR_image()
 
         self.pukmun_mort_1_image = sprite_handler.pukmun_mort_1_image()
         self.pukmun_mort_2_image = sprite_handler.pukmun_mort_2_image()
@@ -175,7 +196,7 @@ class Pukmun:
 
     # TODO Déplacement sans collision case par case
     def pukmun_deplacement_fantome(self, game_map):
-        print("a")
+        print("Déplacement fantôme")
 
     def pukmun_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
@@ -391,8 +412,50 @@ class Pukmun:
                         self.sprite = self.pukmun_mange_0_fantome_DR_image
 
         elif self.ivre == 1 and self.fantome == 1:
-            # TODO
-            print("a")
+            if self.direction_sprite == "LEFT":
+                if 0 <= frame < 4 or 8 <= frame < 12 or self.action == "STOP":
+                    self.sprite = self.pukmun_mange_1_fantome_ivre_L_image
+                elif 4 <= frame < 8:
+                    self.sprite = self.pukmun_mange_2_fantome_ivre_L_image
+                elif 12 <= frame < 20:
+                    self.sprite = self.pukmun_mange_0_fantome_ivre_L_image
+            elif self.direction_sprite == "RIGHT":
+                if 0 <= frame < 4 or 8 <= frame < 12 or self.action == "STOP":
+                    self.sprite = self.pukmun_mange_1_fantome_ivre_R_image
+                elif 4 <= frame < 8:
+                    self.sprite = self.pukmun_mange_2_fantome_ivre_R_image
+                elif 12 <= frame < 20:
+                    self.sprite = self.pukmun_mange_0_fantome_ivre_R_image
+            elif self.direction_sprite == "UP":
+                if self.orientation_sprite == "LEFT":
+                    if 0 <= frame < 4 or 8 <= frame < 12 or self.action == "STOP":
+                        self.sprite = self.pukmun_mange_1_fantome_ivre_UL_image
+                    elif 4 <= frame < 8:
+                        self.sprite = self.pukmun_mange_2_fantome_ivre_UL_image
+                    elif 12 <= frame < 20:
+                        self.sprite = self.pukmun_mange_0_fantome_ivre_UL_image
+                elif self.orientation_sprite == "RIGHT":
+                    if 0 <= frame < 4 or 8 <= frame < 12 or self.action == "STOP":
+                        self.sprite = self.pukmun_mange_1_fantome_ivre_UR_image
+                    elif 4 <= frame < 8:
+                        self.sprite = self.pukmun_mange_2_fantome_ivre_UR_image
+                    elif 12 <= frame < 20:
+                        self.sprite = self.pukmun_mange_0_fantome_ivre_UR_image
+            elif self.direction_sprite == "DOWN":
+                if self.orientation_sprite == "LEFT":
+                    if 0 <= frame < 4 or 8 <= frame < 12 or self.action == "STOP":
+                        self.sprite = self.pukmun_mange_1_fantome_ivre_DL_image
+                    elif 4 <= frame < 8:
+                        self.sprite = self.pukmun_mange_2_fantome_ivre_DL_image
+                    elif 12 <= frame < 20:
+                        self.sprite = self.pukmun_mange_0_fantome_ivre_DL_image
+                elif self.orientation_sprite == "RIGHT":
+                    if 0 <= frame < 4 or 8 <= frame < 12 or self.action == "STOP":
+                        self.sprite = self.pukmun_mange_1_fantome_ivre_DR_image
+                    elif 4 <= frame < 8:
+                        self.sprite = self.pukmun_mange_2_fantome_ivre_DR_image
+                    elif 12 <= frame < 20:
+                        self.sprite = self.pukmun_mange_0_fantome_ivre_DR_image
 
 
     # TODO: Si ivre, inverser les contrôles, puis direction = controle

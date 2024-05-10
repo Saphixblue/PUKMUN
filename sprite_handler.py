@@ -116,6 +116,30 @@ class SpriteHandler:
         pukmun_mange_0_fantome_UR_image = self.load_image('Pukmun_mange_0_fantome_UR.png')
         return pukmun_mange_0_fantome_UR_image
 
+    def pukmun_mange_0_fantome_ivre_DL_image(self):
+        pukmun_mange_0_fantome_ivre_DL_image = self.load_image('Pukmun_mange_0_fantome_ivre_DL.png')
+        return pukmun_mange_0_fantome_ivre_DL_image
+
+    def pukmun_mange_0_fantome_ivre_DR_image(self):
+        pukmun_mange_0_fantome_ivre_DR_image = self.load_image('Pukmun_mange_0_fantome_ivre_DR.png')
+        return pukmun_mange_0_fantome_ivre_DR_image
+
+    def pukmun_mange_0_fantome_ivre_L_image(self):
+        pukmun_mange_0_fantome_ivre_L_image = self.load_image('Pukmun_mange_0_fantome_ivre_L.png')
+        return pukmun_mange_0_fantome_ivre_L_image
+
+    def pukmun_mange_0_fantome_ivre_R_image(self):
+        pukmun_mange_0_fantome_ivre_R_image = self.load_image('Pukmun_mange_0_fantome_ivre_R.png')
+        return pukmun_mange_0_fantome_ivre_R_image
+
+    def pukmun_mange_0_fantome_ivre_UL_image(self):
+        pukmun_mange_0_fantome_ivre_UL_image = self.load_image('Pukmun_mange_0_fantome_ivre_UL.png')
+        return pukmun_mange_0_fantome_ivre_UL_image
+
+    def pukmun_mange_0_fantome_ivre_UR_image(self):
+        pukmun_mange_0_fantome_ivre_UR_image = self.load_image('Pukmun_mange_0_fantome_ivre_UR.png')
+        return pukmun_mange_0_fantome_ivre_UR_image
+
     def pukmun_mange_1_DL_image(self):
         pukmun_mange_1_DL_image = self.load_image('Pukmun_mange_1_DL.png')
         return pukmun_mange_1_DL_image
@@ -188,6 +212,30 @@ class SpriteHandler:
         pukmun_mange_1_fantome_UR_image = self.load_image('Pukmun_mange_1_fantome_UR.png')
         return pukmun_mange_1_fantome_UR_image
 
+    def pukmun_mange_1_fantome_ivre_DL_image(self):
+        pukmun_mange_1_fantome_ivre_DL_image = self.load_image('Pukmun_mange_1_fantome_ivre_DL.png')
+        return pukmun_mange_1_fantome_ivre_DL_image
+
+    def pukmun_mange_1_fantome_ivre_DR_image(self):
+        pukmun_mange_1_fantome_ivre_DR_image = self.load_image('Pukmun_mange_1_fantome_ivre_DR.png')
+        return pukmun_mange_1_fantome_ivre_DR_image
+
+    def pukmun_mange_1_fantome_ivre_L_image(self):
+        pukmun_mange_1_fantome_ivre_L_image = self.load_image('Pukmun_mange_1_fantome_ivre_L.png')
+        return pukmun_mange_1_fantome_ivre_L_image
+
+    def pukmun_mange_1_fantome_ivre_R_image(self):
+        pukmun_mange_1_fantome_ivre_R_image = self.load_image('Pukmun_mange_1_fantome_ivre_R.png')
+        return pukmun_mange_1_fantome_ivre_R_image
+
+    def pukmun_mange_1_fantome_ivre_UL_image(self):
+        pukmun_mange_1_fantome_ivre_UL_image = self.load_image('Pukmun_mange_1_fantome_ivre_UL.png')
+        return pukmun_mange_1_fantome_ivre_UL_image
+
+    def pukmun_mange_1_fantome_ivre_UR_image(self):
+        pukmun_mange_1_fantome_ivre_UR_image = self.load_image('Pukmun_mange_1_fantome_ivre_UR.png')
+        return pukmun_mange_1_fantome_ivre_UR_image
+
     def pukmun_mange_2_DL_image(self):
         pukmun_mange_2_DL_image = self.load_image('Pukmun_mange_2_DL.png')
         return pukmun_mange_2_DL_image
@@ -259,6 +307,30 @@ class SpriteHandler:
     def pukmun_mange_2_fantome_UR_image(self):
         pukmun_mange_2_fantome_UR_image = self.load_image('Pukmun_mange_2_fantome_UR.png')
         return pukmun_mange_2_fantome_UR_image
+
+    def pukmun_mange_2_fantome_ivre_DL_image(self):
+        pukmun_mange_2_fantome_ivre_DL_image = self.load_image('Pukmun_mange_2_fantome_ivre_DL.png')
+        return pukmun_mange_2_fantome_ivre_DL_image
+
+    def pukmun_mange_2_fantome_ivre_DR_image(self):
+        pukmun_mange_2_fantome_ivre_DR_image = self.load_image('Pukmun_mange_2_fantome_ivre_DR.png')
+        return pukmun_mange_2_fantome_ivre_DR_image
+
+    def pukmun_mange_2_fantome_ivre_L_image(self):
+        pukmun_mange_2_fantome_ivre_L_image = self.load_image('Pukmun_mange_2_fantome_ivre_L.png')
+        return pukmun_mange_2_fantome_ivre_L_image
+
+    def pukmun_mange_2_fantome_ivre_R_image(self):
+        pukmun_mange_2_fantome_ivre_R_image = self.load_image('Pukmun_mange_2_fantome_ivre_R.png')
+        return pukmun_mange_2_fantome_ivre_R_image
+
+    def pukmun_mange_2_fantome_ivre_UL_image(self):
+        pukmun_mange_2_fantome_ivre_UL_image = self.load_image('Pukmun_mange_2_fantome_ivre_UL.png')
+        return pukmun_mange_2_fantome_ivre_UL_image
+
+    def pukmun_mange_2_fantome_ivre_UR_image(self):
+        pukmun_mange_2_fantome_ivre_UR_image = self.load_image('Pukmun_mange_2_fantome_ivre_UR.png')
+        return pukmun_mange_2_fantome_ivre_UR_image
 
     def pukmun_mort_1_image(self):
         pukmun_mort_1_image = self.load_image('Pukmun_mort_1.png')
