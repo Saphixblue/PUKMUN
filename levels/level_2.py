@@ -13,4 +13,36 @@ class Level2(LevelInterface):
         # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
 
     def draw_level_on_map(self):
-        print("Level 2")
+        self.level_map.draw_angle_obstacle(2, 2, 7, 1, 1, "bas")
+        self.level_map.draw_rectangle_obstacle(10, 2, 5, 2)
+        self.level_map.draw_angle_obstacle(16, 2, 7, 7, 1, "bas")
+
+        self.level_map.draw_angle_obstacle(4, 4, 5, 1, 1, "bas")
+        self.level_map.draw_angle_obstacle(16, 4, 5, 5, 1, "bas")
+
+        self.level_map.draw_angle_obstacle(6, 5, 3, 3, 2, "bas")
+        self.level_map.draw_angle_obstacle(10, 5, 5)
+        self.level_map.draw_angle_obstacle(16, 5, 3, 1, 2, "bas")
+
+        self.level_map.draw_angle_obstacle(2, 7, 5, 1, 2)
+        self.level_map.draw_angle_obstacle(10, 7, 5)
+        self.level_map.draw_angle_obstacle(18, 7, 5, 5, 2)
+
+        self.level_map.draw_rectangle_obstacle(7, 9, 1, 5)
+        self.level_map.draw_rectangle_obstacle(17, 9, 1, 5)
+
+        self.level_map.draw_angle_obstacle(9, 13, 7)
+
+        self.level_map.draw_angle_obstacle(2, 15, 3, 1, 1, "bas")
+        self.level_map.draw_angle_obstacle(6, 15, 6, 3, 4, "bas")
+        self.level_map.draw_angle_obstacle(13, 15, 6, 4, 4, "bas")
+        self.level_map.draw_angle_obstacle(20, 15, 3, 3, 1, "bas")
+
+        self.level_map.draw_angle_obstacle(4, 17, 3, 3, 2, "bas")
+        self.level_map.draw_angle_obstacle(12, 17, 1)
+        self.level_map.draw_angle_obstacle(18, 17, 3, 1, 2, "bas")
+
+        self.level_map.draw_angle_obstacle(2, 19, 3, 1, 1)
+        self.level_map.draw_angle_obstacle(10, 19, 2, 1, 2)
+        self.level_map.draw_angle_obstacle(13, 19, 2, 2, 2)
+        self.level_map.draw_angle_obstacle(20, 19, 3, 3, 1)
