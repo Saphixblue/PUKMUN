@@ -19,8 +19,8 @@ class Pukmun:
         self.direction_sprite = "LEFT"  # deplacement
 
         self.powered = 0
-        self.fantome = 0
-        self.ivre = 0
+        self.fantome = 1
+        self.ivre = 1
 
         self.shield_controle = "NONE"
         self.shield_direction = "NONE"

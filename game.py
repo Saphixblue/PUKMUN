@@ -35,7 +35,7 @@ class Game:
 
         self.frame = 0
 
-        self.level_number = 1
+        self.level_number = 3
 
         self.score = 0
         # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
@@ -118,13 +118,16 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     self.pukmun.controle = "LEFT"
+                    self.pukmun.pukmun_update_controle_ivre()
                 elif event.key == pygame.K_d:
                     self.pukmun.controle = "RIGHT"
+                    self.pukmun.pukmun_update_controle_ivre()
                 elif event.key == pygame.K_z:
                     self.pukmun.controle = "UP"
+                    self.pukmun.pukmun_update_controle_ivre()
                 elif event.key == pygame.K_s:
                     self.pukmun.controle = "DOWN"
-                self.pukmun.pukmun_update_controle_ivre()
+                    self.pukmun.pukmun_update_controle_ivre()
 
     def update_game(self):
         if self.level_start == 1:
