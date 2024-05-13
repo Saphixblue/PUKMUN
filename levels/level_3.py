@@ -33,17 +33,23 @@ class Level3(LevelInterface):
         self.level_map.draw_angle_obstacle(8, 7, 4, 1, 4, "bas")
         self.level_map.draw_angle_obstacle(13, 7, 4, 4, 4, "bas")
 
-        self.level_map.draw_rectangle_obstacle(6, 9, 1, 5)
-        self.level_map.draw_rectangle_obstacle(18, 9, 1, 5)
+        # self.level_map.draw_rectangle_obstacle(6, 9, 1, 5)
+        # self.level_map.draw_rectangle_obstacle(18, 9, 1, 5)
+        self.level_map.draw_angle_obstacle(6, 9, 1)
+        self.level_map.draw_angle_obstacle(18, 9, 1)
 
         # self.level_map.draw_angle_obstacle(0, 11, 6)
         # self.level_map.draw_angle_obstacle(19, 11, 6)
+        self.level_map.draw_angle_obstacle(7, 11, 1)
+        self.level_map.draw_angle_obstacle(17, 11, 1)
 
         self.level_map.draw_rectangle_obstacle(10, 12, 1, 2)
         self.level_map.draw_rectangle_obstacle(14, 12, 1, 2)
 
+        self.level_map.draw_angle_obstacle(6, 13, 1)
         self.level_map.draw_rectangle_obstacle(8, 13, 1, 3)
         self.level_map.draw_rectangle_obstacle(16, 13, 1, 3)
+        self.level_map.draw_angle_obstacle(18, 13, 1)
 
         self.level_map.draw_rectangle_obstacle(1, 14, 2, 3)
         self.level_map.draw_rectangle_obstacle(22, 14, 2, 3)
@@ -57,11 +63,13 @@ class Level3(LevelInterface):
         self.level_map.draw_angle_obstacle(17, 17, 2, 1, 2)
 
         self.level_map.draw_rectangle_obstacle(1, 18, 2, 3)
-        self.level_map.draw_rectangle_obstacle(13, 18, 1, 2)
+        self.level_map.draw_rectangle_obstacle(12, 18, 1, 2)
         self.level_map.draw_rectangle_obstacle(22, 18, 2, 3)
 
         self.level_map.draw_angle_obstacle(4, 19, 2, 1, 2)
-        self.level_map.draw_angle_obstacle(7, 19, 3, 3, 1)
-        self.level_map.draw_rectangle_obstacle(11, 19, 1, 2)
-        self.level_map.draw_angle_obstacle(15, 19, 3, 1, 1, "bas")
+        self.level_map.draw_angle_obstacle(7, 19, 2, 2, 1, "bas")
+        self.level_map.draw_rectangle_obstacle(10, 19, 1, 2)
+        # self.level_map.draw_angle_obstacle(7, 19, 3, 3, 1)
+        self.level_map.draw_rectangle_obstacle(14, 19, 1, 2)
+        self.level_map.draw_angle_obstacle(16, 19, 2, 1, 1, "bas")
         self.level_map.draw_angle_obstacle(19, 19, 2, 2, 2)
