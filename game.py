@@ -35,7 +35,7 @@ class Game:
 
         self.frame = 0
 
-        self.level_number = 3
+        self.level_number = 1
 
         self.score = 0
         # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
@@ -111,6 +111,7 @@ class Game:
         sys.exit()
 
     def handle_events(self):
+        self.pukmun.shield_direction = "NONE"
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit_game()
@@ -128,6 +129,22 @@ class Game:
                 elif event.key == pygame.K_s:
                     self.pukmun.controle = "DOWN"
                     self.pukmun.pukmun_update_controle_ivre()
+
+            # Peut-être gérer différemment ici, mais ça fonctionne pas mal
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT]:
+                self.pukmun.shield_controle = "LEFT"
+            elif keys[pygame.K_RIGHT]:
+                self.pukmun.shield_controle = "RIGHT"
+            elif keys[pygame.K_UP]:
+                self.pukmun.shield_controle = "UP"
+            elif keys[pygame.K_DOWN]:
+                self.pukmun.shield_controle = "DOWN"
+            else:
+                self.pukmun.shield_controle = "NONE"
+
+        self.pukmun.pukmun_update_controle_shield()
 
     def update_game(self):
         if self.level_start == 1:
@@ -151,7 +168,7 @@ class Game:
             self.score_extra_life += 10
             self.grailles_manges += 1
             # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
-            # self.pukmun.powered = 1
+            self.pukmun.powered = 1
 
             print(self.score)
 
@@ -167,9 +184,9 @@ class Game:
     def game(self):
         running = True
         while running:
-            self.handle_events()
-
             self.update_game()
+
+            self.handle_events()
 
             # Limiter le nombre d'images par seconde
             self.clock.tick(60)
@@ -184,6 +201,8 @@ class Game:
             self.pukmun.pukmun_update_action(self.game_map)
             self.pukmun.pukmun_update_deplacement(self.game_map)
             self.pukmun.pukmun_update_sprite(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
+            self.pukmun.pukmun_update_controle_shield()
+            self.pukmun.pukmun_update_sprite_shield()
 
             '''
             print(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
@@ -193,6 +212,8 @@ class Game:
 
             # Dessiner Pac-Man
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
+            if self.pukmun.shield_sprite is not None:
+                self.screen.blit(self.pukmun.shield_sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
 
             # Mettre à jour l'affichage
             pygame.display.flip()
