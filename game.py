@@ -35,7 +35,7 @@ class Game:
 
         self.frame = 0
 
-        self.level_number = 1
+        self.level_number = 3
 
         self.score = 0
         # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
@@ -199,10 +199,18 @@ class Game:
 
             self.pukmun.pukmun_update_case()
             self.pukmun.pukmun_update_action(self.game_map)
-            self.pukmun.pukmun_update_deplacement(self.game_map)
+            self.pukmun.pukmun_update_deplacement()
             self.pukmun.pukmun_update_sprite(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
             self.pukmun.pukmun_update_controle_shield()
             self.pukmun.pukmun_update_sprite_shield()
+
+            for fantome in self.level.fantomes:
+                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+                fantome.fantome_update_case()
+                fantome.fantome_update_action(self.game_map)
+                fantome.fantome_update_deplacement(self.game_map)
+                fantome.fantome_update_sprite()
+
 
             '''
             print(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
@@ -214,6 +222,10 @@ class Game:
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
             if self.pukmun.shield_sprite is not None:
                 self.screen.blit(self.pukmun.shield_sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
+
+            # Dessiner les fantômes
+            for fantome in self.level.fantomes:
+                self.screen.blit(fantome.sprite,(fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]))
 
             # Mettre à jour l'affichage
             pygame.display.flip()
@@ -246,6 +258,8 @@ class Game:
         self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
 
         # TODO: Placer les fantômes
+        for fantome in self.level.fantomes:
+            self.screen.blit(fantome.sprite, (fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]))
 
         pygame.display.flip()
 

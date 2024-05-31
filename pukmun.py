@@ -1,4 +1,4 @@
-#pukmun.py
+# pukmun.py
 from sprite_handler import SpriteHandler
 
 
@@ -124,7 +124,6 @@ class Pukmun:
         self.pukmun_mort_11_image = sprite_handler.pukmun_mort_11_image()
         self.pukmun_mort_12_image = sprite_handler.pukmun_mort_12_image()
 
-        # TODO: Rajouter sprites bouclier
         self.image_vide = sprite_handler.image_vide()
 
         self.shield_L_image = sprite_handler.shield_L_image()
@@ -142,28 +141,27 @@ class Pukmun:
 
         # TODO: Calibrer la collision box
         self.coordonnees_collision_box = [self.coordonnees_pixels[0]+2, self.coordonnees_pixels[1]+2]
-        self.taille_collision_box = (16*CELL_SIZE)/30
-
+        self.taille_collision_box = [(16*CELL_SIZE)/30, (16*CELL_SIZE)/30]  # [Longueur, largeur]
 
     def pukmun_update_action(self, game_map):
         if self.pukmun_check_case():
             if self.fantome == 0:
                 self.pukmun_deplacement(game_map)
             elif self.fantome == 1:
-                self.pukmun_deplacement_fantome(game_map)
+                self.pukmun_deplacement_fantome()
 
         self.pukmun_update_coordonnees_pixels(game_map)
         self.pukmun_update_case()
 
-    def pukmun_update_deplacement(self, game_map):
+    def pukmun_update_deplacement(self):
         if self.action == "LEFT":
-            self.pukmun_gauche(game_map)
+            self.pukmun_gauche()
         elif self.action == "RIGHT":
-            self.pukmun_droite(game_map)
+            self.pukmun_droite()
         elif self.action == "DOWN":
-            self.pukmun_bas(game_map)
+            self.pukmun_bas()
         elif self.action == "UP":
-            self.pukmun_haut(game_map)
+            self.pukmun_haut()
         # print([self.coordonnees_cases[0] * self.CELL_SIZE, self.coordonnees_cases[1] * self.CELL_SIZE] != self.coordonnees_pixels)
 
     def pukmun_update_controle_ivre(self):
@@ -204,7 +202,7 @@ class Pukmun:
             if self.pukmun_check_collision_obstacle_down(game_map):
                 self.action = "STOP"
 
-    def pukmun_deplacement_fantome(self, game_map):
+    def pukmun_deplacement_fantome(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
             if self.controle == "LEFT":
                 self.action = "LEFT"
@@ -248,24 +246,24 @@ class Pukmun:
                 return True
         return False
 
-    def pukmun_gauche(self, game_map):
+    def pukmun_gauche(self):
         self.coordonnees_pixels = [self.coordonnees_pixels[0] - self.vitesse, self.coordonnees_pixels[1]]
         self.direction_sprite = "LEFT"
         self.orientation_sprite = "LEFT"
         self.pukmun_update_case()
 
-    def pukmun_droite(self, game_map):
+    def pukmun_droite(self):
         self.coordonnees_pixels = [self.coordonnees_pixels[0] + self.vitesse, self.coordonnees_pixels[1]]
         self.direction_sprite = "RIGHT"
         self.orientation_sprite = "RIGHT"
         self.pukmun_update_case()
 
-    def pukmun_bas(self, game_map):
+    def pukmun_bas(self):
         self.coordonnees_pixels = [self.coordonnees_pixels[0], self.coordonnees_pixels[1] + self.vitesse]
         self.direction_sprite = "DOWN"
         self.pukmun_update_case()
 
-    def pukmun_haut(self, game_map):
+    def pukmun_haut(self):
         self.coordonnees_pixels = [self.coordonnees_pixels[0], self.coordonnees_pixels[1] - self.vitesse]
         self.direction_sprite = "UP"
         self.pukmun_update_case()
@@ -490,8 +488,6 @@ class Pukmun:
     def pukmun_update_shield(self):
         print("Update_shield")
         # if self.shield_sprite is not None:
-
-
 
     def pukmun_update_sprite_shield(self):
         if self.powered == 0:

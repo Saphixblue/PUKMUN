@@ -1,6 +1,7 @@
 # level_interface
 from abc import ABC, abstractmethod
 
+
 class FantomeInterface(ABC):
     def __init__(self, DEPART, DIMENSION_MAP, CELL_SIZE):
         self.DEPART = DEPART
@@ -22,6 +23,7 @@ class FantomeInterface(ABC):
         self.sprite = None
 
         self.collision_box = None
+        self.taille_collision_box = None
 
     # Appelle fantome_deplacement() si sur une case, puis update coordonnees et case
     @abstractmethod
@@ -36,6 +38,9 @@ class FantomeInterface(ABC):
     # Update action en fonction du controle ( ATTENTION sûrement pas nécessaire si géré dans comportement)
     @abstractmethod
     def fantome_deplacement(self, game_map):
+        pass
+
+    def fantome_deplacement_weak(self, game_map):
         pass
 
     # Renvoie True si sur une case
@@ -100,15 +105,16 @@ class FantomeInterface(ABC):
 
     # Détaille le comportement général du fantôme (appelle les autres fonctions comportement en fonction de l'état du fantôme)
     @abstractmethod
-    def comportement(self, game_map):
+    def fantome_comportement(self, game_map, coordonnees_pukmun):
         pass
 
     # Détaille le comportement du fantôme lorsqu'il est affaibli
     @abstractmethod
-    def comportement_weak(self, game_map):
+    def fantome_comportement_weak(self, game_map):
         pass
 
     # Détaille le comportement du fantôme lorsqu'il est mort
     @abstractmethod
-    def comportement_dead(self, game_map):
+    def fantome_comportement_dead(self, game_map):
         pass
+

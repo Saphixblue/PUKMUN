@@ -9,6 +9,8 @@ class LevelInterface(ABC):
         self.pukmun = None
         self.fantomes = None
 
+        self.fantomes_depart = [[12, 8], [12, 10], [10, 10], [14, 10]]
+
         # TODO: Renseigner les coordonnées de départ des fantômes dans leur ordre de sortie
         # self.depart_fantome_1
         # self.depart_fantome_2
