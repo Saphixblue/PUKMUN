@@ -225,9 +225,9 @@ class FantomeFantome(FantomeInterface, ABC):
         elif self.weak == 1:
             print("Sprite weak")
 
-    def fantome_comportement(self, game_map, coordonnees_pukmun):
-        x_diff = self.coordonnees_cases[0] - coordonnees_pukmun[0]
-        y_diff = self.coordonnees_cases[1] - coordonnees_pukmun[1]
+    def fantome_comportement(self, game_map, pukmun_coordonnees_cases):
+        x_diff = self.coordonnees_cases[0] - pukmun_coordonnees_cases[0]
+        y_diff = self.coordonnees_cases[1] - pukmun_coordonnees_cases[1]
 
         left = 0
         right = 0
@@ -238,7 +238,7 @@ class FantomeFantome(FantomeInterface, ABC):
             left = x_diff
             right = self.DIMENSION_MAP[0] - x_diff
         elif x_diff < 0:
-            left = self.DIMENSION_MAP[0] - x_diff
+            left = self.DIMENSION_MAP[0] + x_diff
             right = x_diff
         else:
             left = self.DIMENSION_MAP[0]
@@ -248,41 +248,74 @@ class FantomeFantome(FantomeInterface, ABC):
             up = y_diff
             down = self.DIMENSION_MAP[1] - y_diff
         elif y_diff < 0:
-            up = self.DIMENSION_MAP[1] - y_diff
+            up = self.DIMENSION_MAP[1] + y_diff
             down = y_diff
         else:
             up = self.DIMENSION_MAP[1]
             down = self.DIMENSION_MAP[1]
 
         if min(left, right, up, down) == left:
-            if self.action != "RIGHT":
-                self.controle = "LEFT"
+            self.controle = "LEFT"
         elif min(left, right, up, down) == right:
-            if self.action != "LEFT":
-                self.controle = "RIGHT"
+            self.controle = "RIGHT"
         elif min(left, right, up, down) == up:
-            if self.action != "DOWN":
-                self.controle = "UP"
+            self.controle = "UP"
         elif min(left, right, up, down) == down:
-            if self.action != "UP":
-                self.controle = "DOWN"
+            self.controle = "DOWN"
+
+        rdm = random.random()
 
         if self.controle == "LEFT" or self.controle == "RIGHT":
-            if random.random() < 0.05:
+            if rdm < 0.05:
                 self.controle = "UP"
-            elif random.random() < 0.10:
+            elif rdm < 0.10:
                 self.controle = "DOWN"
         elif self.controle == "UP" or self.controle == "DOWN":
-            if random.random() < 0.05:
+            if rdm < 0.05:
                 self.controle = "LEFT"
-            elif random.random() < 0.10:
+            elif rdm < 0.10:
                 self.controle = "RIGHT"
-
 
     def fantome_comportement_weak(self, game_map):
         print("Fantôme Comportement Weak")
 
-
     def fantome_comportement_dead(self, game_map):
         print("Fantôme Comportement Dead")
+
+    def fantome_check_collision_pukmun(self, game_map, pukmun_coordonnees_pixels):
+        x_diff = self.coordonnees_pixels[0] - pukmun_coordonnees_pixels[0]
+        y_diff = self.coordonnees_pixels[1] - pukmun_coordonnees_pixels[1]
+
+        collision_horizontale = False
+        collision_verticale = False
+
+        if x_diff > 0:
+            if self.orientation_sprite == "LEFT":
+                if (self.coordonnees_pixels[0] + self.CELL_SIZE/20) <= (pukmun_coordonnees_pixels[0] + self.CELL_SIZE - self.CELL_SIZE/10) <= (self.coordonnees_pixels[0] + self.CELL_SIZE - self.CELL_SIZE/5):
+                    collision_horizontale = True
+            elif self.orientation_sprite == "RIGHT":
+                if (self.coordonnees_pixels[0] + self.CELL_SIZE / 5) <= (pukmun_coordonnees_pixels[0] + self.CELL_SIZE - self.CELL_SIZE / 10) <= (self.coordonnees_pixels[0] + self.CELL_SIZE - self.CELL_SIZE / 20):
+                    collision_horizontale = True
+        elif x_diff < 0:
+            if self.orientation_sprite == "LEFT":
+                if (self.coordonnees_pixels[0] + self.CELL_SIZE / 20) <= (pukmun_coordonnees_pixels[0] + self.CELL_SIZE / 10) <= (self.coordonnees_pixels[0] + self.CELL_SIZE - self.CELL_SIZE / 5):
+                    collision_horizontale = True
+            elif self.orientation_sprite == "RIGHT":
+                if (self.coordonnees_pixels[0] + self.CELL_SIZE / 5) <= (pukmun_coordonnees_pixels[0] + self.CELL_SIZE / 10) <= (self.coordonnees_pixels[0] + self.CELL_SIZE - self.CELL_SIZE / 20):
+                    collision_horizontale = True
+        else:
+            collision_horizontale = True
+
+        if y_diff > 0:
+            if (self.coordonnees_pixels[1] + ((3*self.CELL_SIZE)/20)) <= (pukmun_coordonnees_pixels[1] + self.CELL_SIZE - self.CELL_SIZE / 10) <= (self.coordonnees_pixels[1] + self.CELL_SIZE - self.CELL_SIZE / 10):
+                collision_verticale = True
+        elif y_diff < 0:
+            if (self.coordonnees_pixels[1] + ((3*self.CELL_SIZE)/20)) <= (pukmun_coordonnees_pixels[1] + self.CELL_SIZE / 10) <= (self.coordonnees_pixels[1] + self.CELL_SIZE - self.CELL_SIZE / 10):
+                collision_verticale = True
+        else:
+            collision_verticale = True
+
+        if collision_horizontale and collision_verticale:
+            return True
+        return False
 

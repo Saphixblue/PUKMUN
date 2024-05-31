@@ -10,6 +10,14 @@ class Level3(LevelInterface):
         super().__init__(DIMENSION_MAP, CELL_SIZE)
         self.pukmun = Pukmun([12, 12], CELL_SIZE)
         self.fantomes = [FantomeFantome([self.fantomes_depart[0][0], self.fantomes_depart[0][1]], DIMENSION_MAP, CELL_SIZE), FantomeFantome([self.fantomes_depart[1][0], self.fantomes_depart[1][1]], DIMENSION_MAP, CELL_SIZE), FantomeFantome([self.fantomes_depart[2][0], self.fantomes_depart[2][1]], DIMENSION_MAP, CELL_SIZE), FantomeFantome([self.fantomes_depart[3][0], self.fantomes_depart[3][1]], DIMENSION_MAP, CELL_SIZE)]
+        self.fantomes[2].compteur_sortie = 4
+        self.fantomes[3].compteur_sortie = 7
+
+        self.fantomes[2].controle = None
+        self.fantomes[2].action = None
+
+        self.fantomes[3].controle = None
+        self.fantomes[3].action = None
         # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
 
     def draw_level_on_map(self):

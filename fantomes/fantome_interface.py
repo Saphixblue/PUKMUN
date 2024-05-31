@@ -25,6 +25,9 @@ class FantomeInterface(ABC):
         self.collision_box = None
         self.taille_collision_box = None
 
+        self.compteur_sortie = 0
+        self.compteur_frame_sortie = 59
+
     # Appelle fantome_deplacement() si sur une case, puis update coordonnees et case
     @abstractmethod
     def fantome_update_action(self, game_map):
@@ -105,7 +108,7 @@ class FantomeInterface(ABC):
 
     # Détaille le comportement général du fantôme (appelle les autres fonctions comportement en fonction de l'état du fantôme)
     @abstractmethod
-    def fantome_comportement(self, game_map, coordonnees_pukmun):
+    def fantome_comportement(self, game_map, pukmun_coordonnees_cases):
         pass
 
     # Détaille le comportement du fantôme lorsqu'il est affaibli
@@ -116,5 +119,9 @@ class FantomeInterface(ABC):
     # Détaille le comportement du fantôme lorsqu'il est mort
     @abstractmethod
     def fantome_comportement_dead(self, game_map):
+        pass
+
+    @abstractmethod
+    def fantome_check_collision_pukmun(self, game_map, pukmun_coordonnees_pixels):
         pass
 

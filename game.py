@@ -1,5 +1,3 @@
-# game.py
-
 import pygame
 import sys
 from levels.level_1 import Level1
@@ -9,10 +7,9 @@ from levels.level_4 import Level4
 from levels.level_5 import Level5
 from sound_handler import SoundHandler
 
-
 class Game:
     def __init__(self):
-
+        pygame.mixer.pre_init(44100, -16, 2, 512)
         pygame.init()
 
         self.DIMENSION_MAP = (25, 22)  # (colonnes, lignes)
@@ -73,6 +70,15 @@ class Game:
 
         self.graille = 1
 
+        self.perte_vie = 0
+        self.fin_de_jeu = 0
+
+        self.initial = 1
+
+        # Set volumes
+        self.graille_1_sound.set_volume(1.0)
+        self.graille_2_sound.set_volume(1.0)
+
     def level_init(self):
         if self.level_number == 1:
             self.level = Level1(self.DIMENSION_MAP, self.CELL_SIZE)
@@ -85,7 +91,8 @@ class Game:
         elif self.level_number == 5:
             self.level = Level5(self.DIMENSION_MAP, self.CELL_SIZE)
 
-        self.game_map = self.level.level_map
+        if self.initial:
+            self.game_map = self.level.level_map
         self.pukmun = self.level.pukmun
         self.level.draw_level_on_map()
 
@@ -149,6 +156,7 @@ class Game:
     def update_game(self):
         if self.level_start == 1:
             self.level_init()
+            self.initial = 0
 
         # Update du score et des cases
         if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 0:
@@ -175,6 +183,10 @@ class Game:
         if self.score_extra_life // 10000 == 1:
             self.score_extra_life -= 10000
             self.gagner_une_vie()
+
+        for fantome in self.level.fantomes:
+            if fantome.fantome_check_collision_pukmun(self.game_map, self.pukmun.coordonnees_pixels):
+                self.gestion_collision_pukmun_fantome(fantome)
 
         # Update de la valeur de la frame
         self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
@@ -205,18 +217,17 @@ class Game:
             self.pukmun.pukmun_update_sprite_shield()
 
             for fantome in self.level.fantomes:
-                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+                if fantome.compteur_sortie != 0 and fantome.compteur_frame_sortie == self.frame:
+                    fantome.compteur_sortie -= 1
+                if fantome.compteur_sortie == 0:
+                    fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
                 fantome.fantome_update_case()
                 fantome.fantome_update_action(self.game_map)
                 fantome.fantome_update_deplacement(self.game_map)
+
+                fantome.fantome_check_collision_pukmun(self.game_map, self.pukmun.coordonnees_pixels)
+
                 fantome.fantome_update_sprite()
-
-
-            '''
-            print(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
-            print(self.pukmun.coordonnees_pixels)
-            print(self.pukmun.coordonnees_cases)
-            '''
 
             # Dessiner Pac-Man
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
@@ -233,14 +244,52 @@ class Game:
             if self.grailles_manges == self.nombre_de_grailles:
                 self.level_complete()
                 self.level_start = 1
+                self.initial = 1
 
     # TODO: Afficher GAME OVER (quelques secondes), si high score --> updateLeaderBoard(), remise du score à zéro puis renvoi du joueur à l'écran titre
     def game_over(self):
         print("Game over")
+        # Afficher "Game Over" à l'écran 3 secondes
+
+        # Revenir au menu
 
     # TODO: Faire disparaître toutes les entités, faire disparaître tous les sons du jeu, jouer l'animation + son de mort de PUKMUN et lui retirer une vie.
     # Si plus de vies --> game_over
     def perdre_une_vie(self):
+        # Limiter le nombre d'images par seconde
+        self.clock.tick(60)
+
+        # Figer le jeu pendant une demi-seconde
+        self.pukmun.sprite = self.pukmun.pukmun_mort_1_image
+        pygame.time.delay(500)
+
+        # Effacer l'écran et redessiner la carte sans les fantômes
+        self.screen.fill((0, 0, 0))
+        self.game_map.draw_map(self.screen)
+
+        # Jouer le son de mort de Pukmun
+        self.pukmun_mort_sound.play()
+
+        # Afficher l'animation de mort de Pukmun
+        for frame in range(60):  # 60 frames pour l'animation de mort
+            self.pukmun.pukmun_mort(frame)
+            self.screen.fill((0, 0, 0))
+            self.game_map.draw_map(self.screen)
+            self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
+            pygame.display.flip()
+            pygame.time.delay(16)  # Ajuster le délai pour une animation fluide
+        self.pukmun.sprite = self.pukmun.image_vide
+
+        # Réduire le nombre de vies de Pukmun
+        self.lives -= 1
+
+        # Vérifier si le jeu est terminé
+        if self.lives <= 0:
+            self.game_over()
+        else:
+            # Redémarrer le niveau
+            self.level_start = 1
+            self.level_init()
         print("Perdre une vie")
 
     def gagner_une_vie(self):
@@ -280,10 +329,6 @@ class Game:
         if self.level_number == 0:
             self.level_number = 5
 
-    # TODO: Renvoie True si PUKMUN a collisionné avec le fantôme passé en paramètre
-    def collision_pukmun_fantome(self, fantome):
-        print("Collision pukmun_fantome")
-
     # Gestion de la collision entre PUKMUN et les fantômes en fonction de leur état
     # TODO: Si PUKMUN n'est pas sous gros graille :
     # Si fantôme ivre ou fantôme fantôme --> Perd une vie
@@ -291,7 +336,8 @@ class Game:
     # Si fantôme ivre ou fantôme fantôme --> Le mange, obtient les points et les affiche, fantôme devient mort
     # Fantôme mafieux --> Dodge
     def gestion_collision_pukmun_fantome(self, fantome):
-        print("Gestion collision pukmun_fantome")
+        # Si PUKMUN pas sous gros graille
+        self.perdre_une_vie()
 
     # Gestion de la collision entre PUKMUN et la balle en fonction de leur état
     # TODO: Si bouclier non déployé dans la bonne direction --> Perd une vie
@@ -308,7 +354,6 @@ class Game:
         print("Gestion collision pukmun_balle_fantome")
 
     # TODO: Fantôme_déplacement (booléen) qui parcourt le tableau de fantômes et retourne True si au moins un est en vie et en train de se déplacer
-
 
 '''
 if __name__ == "__main__":

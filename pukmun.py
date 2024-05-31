@@ -514,5 +514,28 @@ class Pukmun:
                 self.shield_sprite = None
 
     # TODO: Animation de mort de PUKMUN en durée son mort/12 frames (si plus d'1 seconde, basculer cette fonction dans Game)
-    def pukmun_mort(self):
-        print("Mort PUKMUN")
+    def pukmun_mort(self, frame):
+        if 0 <= frame < 5:
+            self.sprite = self.pukmun_mort_1_image
+        elif 5 <= frame < 10:
+            self.sprite = self.pukmun_mort_2_image
+        elif 10 <= frame < 15:
+            self.sprite = self.pukmun_mort_3_image
+        elif 15 <= frame < 20:
+            self.sprite = self.pukmun_mort_4_image
+        elif 20 <= frame < 25:
+            self.sprite = self.pukmun_mort_5_image
+        elif 25 <= frame < 30:
+            self.sprite = self.pukmun_mort_6_image
+        elif 30 <= frame < 35:
+            self.sprite = self.pukmun_mort_7_image
+        elif 35 <= frame < 40:
+            self.sprite = self.pukmun_mort_8_image
+        elif 40 <= frame < 45:
+            self.sprite = self.pukmun_mort_9_image
+        elif 45 <= frame < 50:
+            self.sprite = self.pukmun_mort_10_image
+        elif 50 <= frame < 55:
+            self.sprite = self.pukmun_mort_11_image
+        elif 55 <= frame < 60:
+            self.sprite = self.pukmun_mort_12_image
