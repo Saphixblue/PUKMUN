@@ -29,6 +29,7 @@ class Game:
 
         self.fps = 60
         self.clock = pygame.time.Clock()
+        self.running = True
 
         self.frame = 0
 
@@ -201,8 +202,8 @@ class Game:
     # TODO: Ajouter début de niveau
     # Boucle principale du jeu
     def game(self):
-        running = True
-        while running:
+        self.running = True
+        while self.running:
             self.update_game()
 
             self.handle_events()
@@ -257,8 +258,36 @@ class Game:
     def game_over(self):
         print("Game over")
         # Afficher "Game Over" à l'écran 3 secondes
+        # Définition de la taille maximale du texte
+        max_text_size = self.CELL_SIZE
+
+        # Création de la police avec la taille maximale
+        font = pygame.font.Font(None, max_text_size)
+
+        # Rendu du texte "GAME OVER"
+        game_over_text = font.render("GAME OVER", True, (255, 0, 0))
+
+        # Calcul de la position du texte pour le centrer
+        text_rect = game_over_text.get_rect(center=(self.DIMENSION_MAP[0] * self.CELL_SIZE // 2, 10.5 * self.CELL_SIZE))
+
+        # Affichage du texte sur l'écran
+        self.screen.blit(game_over_text, text_rect)
+
+        # Mise à jour de l'affichage
+        pygame.display.flip()
+
+        # Attente de 2 secondes
+        pygame.time.delay(2000)
+
+        # Mise à jour de l'affichage
+        pygame.display.flip()
+
+        # Attente de 3 secondes
+        pygame.time.delay(3000)
 
         # Revenir au menu
+        self.running = False
+        self.return_to_menu()
 
     # TODO: Faire disparaître toutes les entités, faire disparaître tous les sons du jeu, jouer l'animation + son de mort de PUKMUN et lui retirer une vie.
     # Si plus de vies --> game_over
@@ -268,6 +297,7 @@ class Game:
 
         # Figer le jeu pendant une demi-seconde
         self.pukmun.sprite = self.pukmun.pukmun_mort_1_image
+        pygame.mixer.stop()
         pygame.time.delay(500)
 
         # Effacer l'écran et redessiner la carte sans les fantômes
@@ -361,7 +391,17 @@ class Game:
     def gestion_collision_balle_fantome(self, fantome_mafieux):
         print("Gestion collision pukmun_balle_fantome")
 
-    # TODO: Fantôme_déplacement (booléen) qui parcourt le tableau de fantômes et retourne True si au moins un est en vie et en train de se déplacer
+    def return_to_menu(self):
+        # Fermeture du jeu
+        pygame.quit()
+
+        # Code pour revenir au menu
+        import subprocess
+        subprocess.run(["python", "menu.py"])
+
+        sys.exit()
+
+
 
 '''
 if __name__ == "__main__":
