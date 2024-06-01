@@ -53,7 +53,6 @@ class FantomeFantome(FantomeInterface, ABC):
 
     # TODO: Override toutes les fonctions de l'interface
 
-
     def fantome_update_action(self, game_map):
         if self.fantome_check_case():
             if self.weak == 0:
@@ -63,7 +62,6 @@ class FantomeFantome(FantomeInterface, ABC):
 
         self.fantome_update_coordonnees_pixels(game_map)
         self.fantome_update_case()
-
 
     def fantome_update_deplacement(self, game_map):
         if self.action == "LEFT":
@@ -75,7 +73,6 @@ class FantomeFantome(FantomeInterface, ABC):
         elif self.action == "UP":
             self.fantome_haut(game_map)
 
-
     def fantome_deplacement(self, game_map):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
             if self.controle == "LEFT":
@@ -86,7 +83,6 @@ class FantomeFantome(FantomeInterface, ABC):
                 self.action = "UP"
             elif self.controle == "DOWN":
                 self.action = "DOWN"
-
 
     # TODO: Revoir si c'est vraiment nécessaire
     def fantome_deplacement_weak(self, game_map):
@@ -116,12 +112,10 @@ class FantomeFantome(FantomeInterface, ABC):
             if self.fantome_check_collision_obstacle_down(game_map):
                 self.action = "STOP"
 
-
     def fantome_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
             return True
         return False
-
 
     def fantome_check_collision_obstacle_left(self, game_map):
         next_x = self.coordonnees_cases[0] - 1 if self.coordonnees_cases[0] != 0 else game_map.DIMENSION_MAP[0] - 1
@@ -130,7 +124,6 @@ class FantomeFantome(FantomeInterface, ABC):
                 return True
         return False
 
-
     def fantome_check_collision_obstacle_right(self, game_map):
         next_x = self.coordonnees_cases[0] + 1 if self.coordonnees_cases[0] != game_map.DIMENSION_MAP[0] - 1 else 0
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0]:
@@ -138,14 +131,12 @@ class FantomeFantome(FantomeInterface, ABC):
                 return True
         return False
 
-
     def fantome_check_collision_obstacle_up(self, game_map):
         next_y = self.coordonnees_cases[1] - 1 if self.coordonnees_cases[1] != 0 else game_map.DIMENSION_MAP[1] - 1
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0]:
             if game_map.map_data[self.coordonnees_cases[0]][next_y] == 3:
                 return True
         return False
-
 
     def fantome_check_collision_obstacle_down(self, game_map):
         next_y = self.coordonnees_cases[1] + 1 if self.coordonnees_cases[1] != game_map.DIMENSION_MAP[1] - 1 else 0
@@ -155,13 +146,11 @@ class FantomeFantome(FantomeInterface, ABC):
                 return True
         return False
 
-
     def fantome_gauche(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0] - self.vitesse, self.coordonnees_pixels[1]]
         self.direction_sprite = "LEFT"
         self.orientation_sprite = "LEFT"
         self.fantome_update_case()
-
 
     def fantome_droite(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0] + self.vitesse, self.coordonnees_pixels[1]]
@@ -169,25 +158,21 @@ class FantomeFantome(FantomeInterface, ABC):
         self.orientation_sprite = "RIGHT"
         self.fantome_update_case()
 
-
     def fantome_haut(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0], self.coordonnees_pixels[1] - self.vitesse]
         self.direction_sprite = "UP"
         self.fantome_update_case()
-
 
     def fantome_bas(self, game_map):
         self.coordonnees_pixels = [self.coordonnees_pixels[0], self.coordonnees_pixels[1] + self.vitesse]
         self.direction_sprite = "DOWN"
         self.fantome_update_case()
 
-
     def fantome_update_case(self):
         if self.coordonnees_pixels[0] % self.CELL_SIZE == 0:
             self.coordonnees_cases[0] = int(self.coordonnees_pixels[0]) // self.CELL_SIZE
         if self.coordonnees_pixels[1] % self.CELL_SIZE == 0:
             self.coordonnees_cases[1] = int(self.coordonnees_pixels[1]) // self.CELL_SIZE
-
 
     def fantome_update_coordonnees_pixels(self, game_map):
         if self.coordonnees_pixels[0] < 0:
@@ -199,7 +184,6 @@ class FantomeFantome(FantomeInterface, ABC):
             self.coordonnees_pixels[1] = (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE + self.vitesse
         elif self.coordonnees_pixels[1] > (game_map.DIMENSION_MAP[1] - 1) * self.CELL_SIZE:
             self.coordonnees_pixels[1] = 0 - self.vitesse
-
 
     # TODO: Gestion sprites weak et dead
     # TODO: Update collision box ici
@@ -221,7 +205,20 @@ class FantomeFantome(FantomeInterface, ABC):
                     elif self.orientation_sprite == "RIGHT":
                         self.sprite = self.fantome_fantome_DR_image
             elif self.dead == 1:
-                print("Sprite dead")
+                if self.direction_sprite == "LEFT":
+                    self.sprite = self.fantome_fantome_mort_L_image
+                elif self.direction_sprite == "RIGHT":
+                    self.sprite = self.fantome_fantome_mort_R_image
+                elif self.direction_sprite == "UP":
+                    if self.orientation_sprite == "LEFT":
+                        self.sprite = self.fantome_fantome_mort_UL_image
+                    elif self.orientation_sprite == "RIGHT":
+                        self.sprite = self.fantome_fantome_mort_UR_image
+                elif self.direction_sprite == "DOWN":
+                    if self.orientation_sprite == "LEFT":
+                        self.sprite = self.fantome_fantome_mort_DL_image
+                    elif self.orientation_sprite == "RIGHT":
+                        self.sprite = self.fantome_fantome_mort_DR_image
         elif self.weak == 1:
             print("Sprite weak")
 
