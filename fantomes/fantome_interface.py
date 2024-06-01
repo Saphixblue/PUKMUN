@@ -106,7 +106,7 @@ class FantomeInterface(ABC):
 
     # Update le sprite du fantôme en fonction de son état, son orientation et sa direction
     @abstractmethod
-    def fantome_update_sprite(self):
+    def fantome_update_sprite(self, frame, compteur):
         pass
 
     # Détaille le comportement général du fantôme (appelle les autres fonctions comportement en fonction de l'état du fantôme)
@@ -116,12 +116,12 @@ class FantomeInterface(ABC):
 
     # Détaille le comportement du fantôme lorsqu'il est affaibli
     @abstractmethod
-    def fantome_comportement_weak(self, game_map):
+    def fantome_comportement_weak(self, game_map, pukmun_coordonnees_cases):
         pass
 
     # Détaille le comportement du fantôme lorsqu'il est mort
     @abstractmethod
-    def fantome_comportement_dead(self, game_map):
+    def fantome_comportement_dead(self, game_map, pukmun_coordonnees_cases):
         pass
 
     @abstractmethod

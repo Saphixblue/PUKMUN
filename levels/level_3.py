@@ -18,6 +18,7 @@ class Level3(LevelInterface):
 
         self.fantomes[3].controle = None
         self.fantomes[3].action = None
+
         # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
 
     def draw_level_on_map(self):

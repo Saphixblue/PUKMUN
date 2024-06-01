@@ -6,6 +6,7 @@ from levels.level_3 import Level3
 from levels.level_4 import Level4
 from levels.level_5 import Level5
 from sound_handler import SoundHandler
+from sprite_handler import SpriteHandler
 
 
 class Game:
@@ -39,8 +40,12 @@ class Game:
         # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
         self.score_extra_life = 0
 
+        self.points_mange_fantome = 200
+
         # Permet de compter les secondes
         self.compteur = 0
+
+        self.compteur_frames = 59
 
         # Détermine si l'on est au début d'un niveau (1) ou non (0)
         self.level_start = 1
@@ -56,6 +61,13 @@ class Game:
 
         # Nombre de vies restantes de PUKMUN
         self.lives = 3
+
+        sprite_handler = SpriteHandler(self.CELL_SIZE)
+
+        self.puntos_200_image = sprite_handler.puntos_200_image()
+        self.puntos_400_image = sprite_handler.puntos_400_image()
+        self.puntos_800_image = sprite_handler.puntos_800_image()
+        self.puntos_1600_image = sprite_handler.puntos_1600_image()
 
         self.sound_handler = SoundHandler()
 
@@ -83,6 +95,12 @@ class Game:
         self.graille_1_sound.set_volume(self.son)
         self.graille_2_sound.set_volume(self.son)
 
+        # Tableaux pour les images des puntos, leurs compteurs et leurs coordonnées
+        self.images_puntos = []
+        self.compteurs_puntos = []
+        self.compteurs_frames_puntos = []
+        self.coordonnees_puntos = []
+
     def level_init(self):
         if self.level_number == 1:
             self.level = Level1(self.DIMENSION_MAP, self.CELL_SIZE)
@@ -95,24 +113,31 @@ class Game:
         elif self.level_number == 5:
             self.level = Level5(self.DIMENSION_MAP, self.CELL_SIZE)
 
+        self.pukmun = self.level.pukmun
+
         if self.initial:
             self.game_map = self.level.level_map
-        self.pukmun = self.level.pukmun
+
         self.level.draw_level_on_map()
 
         self.clock.tick(self.fps)
 
         self.frame = 0
 
-        # Détermine le nombre de grailles dans un niveau
-        self.nombre_de_grailles = 0
-        for i in range(self.DIMENSION_MAP[0]):
-            for j in range(self.DIMENSION_MAP[1]):
-                if self.game_map.map_data[i][j] == 0 or self.game_map.map_data[i][j] == 1:
-                    self.nombre_de_grailles += 1
+        if self.initial:
+            # Détermine le nombre de grailles dans un niveau
+            self.nombre_de_grailles = 0
+            for i in range(self.DIMENSION_MAP[0]):
+                for j in range(self.DIMENSION_MAP[1]):
+                    if self.game_map.map_data[i][j] == 0 or self.game_map.map_data[i][j] == 1:
+                        self.nombre_de_grailles += 1
 
-        # Nombre de grailles mangés par PUKMUN
-        self.grailles_manges = 0
+            # Nombre de grailles mangés par PUKMUN
+            self.grailles_manges = 0
+
+        self.gros_graille = 0
+        self.compteur = 0
+        self.compteur_frames = 59
 
         self.start_level()
 
@@ -179,9 +204,16 @@ class Game:
             self.score += 50
             self.score_extra_life += 50
             self.grailles_manges += 1
-            self.gros_graille_sound.play()
-            # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
-            # self.pukmun.powered = 1
+            # self.gros_graille_sound.play()
+
+            self.gros_graille = 1
+            self.compteur = 8
+            self.compteur_frames = self.frame
+
+            for fantome in self.level.fantomes:
+                if fantome.compteur_sortie == 0 and fantome.dead == 0:
+                    fantome.weak = 1
+            self.pukmun.powered = 1
 
         if self.score_extra_life // 10000 == 1:
             self.score_extra_life -= 10000
@@ -198,6 +230,9 @@ class Game:
 
         if deplacement_fantome and not self.sound_handler.get_fantome_deplacement_channel().get_busy():
             self.sound_handler.get_fantome_deplacement_channel().play(self.fantome_deplacement_sound)
+
+        if self.gros_graille == 1 and not self.sound_handler.get_fantome_weak_channel().get_busy():
+            self.sound_handler.get_fantome_weak_channel().play(self.gros_graille_sound)
 
         # Update de la valeur de la frame
         self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
@@ -227,8 +262,19 @@ class Game:
             self.pukmun.pukmun_update_controle_shield()
             self.pukmun.pukmun_update_sprite_shield()
 
+            if self.compteur != 0 and self.compteur_frames - 1 == self.frame:
+                self.compteur -= 1
+            if self.compteur == 0:
+                self.gros_graille = 0
+
+            if self.gros_graille == 0:
+                for fantome in self.level.fantomes:
+                    fantome.weak = 0
+                    self.pukmun.powered = 0
+                    self.points_mange_fantome = 200
+
             for fantome in self.level.fantomes:
-                if fantome.compteur_sortie != 0 and fantome.compteur_frame_sortie == self.frame:
+                if fantome.compteur_sortie != 0 and fantome.compteur_frame_sortie - 1 == self.frame:
                     fantome.compteur_sortie -= 1
                 if fantome.compteur_sortie == 0:
                     fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
@@ -238,7 +284,7 @@ class Game:
 
                 fantome.fantome_check_collision_pukmun(self.game_map, self.pukmun.coordonnees_pixels)
 
-                fantome.fantome_update_sprite()
+                fantome.fantome_update_sprite(self.frame, self.compteur)
 
             # Dessiner Pac-Man
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
@@ -248,6 +294,20 @@ class Game:
             # Dessiner les fantômes
             for fantome in self.level.fantomes:
                 self.screen.blit(fantome.sprite,(fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]))
+
+            # Afficher toutes les images du score et décrémenter leurs timers
+            for i in range(len(self.images_puntos) - 1, -1, -1):
+                image_puntos = self.images_puntos[i]
+                position_puntos = self.coordonnees_puntos[i]
+                compteur_frame_puntos = self.compteurs_frames_puntos[i] - 1
+                self.screen.blit(image_puntos, position_puntos)
+                if compteur_frame_puntos == self.frame:
+                    self.compteurs_puntos[i] -= 1
+                if self.compteurs_puntos[i] == 0:
+                    self.images_puntos.pop(i)
+                    self.coordonnees_puntos.pop(i)
+                    self.compteurs_puntos.pop(i)
+                    self.compteurs_frames_puntos.pop(i)
 
             # Mettre à jour l'affichage
             pygame.display.flip()
@@ -280,12 +340,6 @@ class Game:
         pygame.display.flip()
 
         # Attente de 2 secondes
-        pygame.time.delay(2000)
-
-        # Mise à jour de l'affichage
-        pygame.display.flip()
-
-        # Attente de 3 secondes
         pygame.time.delay(3000)
 
         # Revenir au menu
@@ -353,19 +407,24 @@ class Game:
 
         pygame.display.flip()
 
-        self.intro_sound.play()
-        pygame.time.delay(4000)  # Attendre 4 secondes
+        if self.initial:
+            self.intro_sound.play()
+            pygame.time.delay(4000)  # Attendre 4 secondes
+        else:
+            pygame.time.delay(1000)
 
         self.level_start = 0
 
     # TODO: Décommenter quand level_start() est fait, et quand tous les niveaux sont implémentés
     def level_complete(self):
+        self.initial = 1
         self.level_number += 1
         if self.level_number == 6:
             self.level_number = 1
 
     # TODO: Décommenter quand level_start() est fait, et quand tous les niveaux sont implémentés
     def previous_level(self):
+        self.initial = 1
         self.level_number -= 1
         if self.level_number == 0:
             self.level_number = 5
@@ -378,7 +437,35 @@ class Game:
     # Fantôme mafieux --> Dodge
     def gestion_collision_pukmun_fantome(self, fantome):
         # Si PUKMUN pas sous gros graille
-        self.perdre_une_vie()
+        if fantome.dead == 0:
+            if fantome.weak == 0:
+                self.perdre_une_vie()
+            else:
+                fantome.dead = 1
+                fantome.weak = 0
+                self.graille_fantome_sound.play()
+                self.fantome_mort_sound.play()
+
+                if self.points_mange_fantome == 200:
+                    self.images_puntos.append(self.puntos_200_image)
+                elif self.points_mange_fantome == 400:
+                    self.images_puntos.append(self.puntos_400_image)
+                elif self.points_mange_fantome == 800:
+                    self.images_puntos.append(self.puntos_800_image)
+                elif self.points_mange_fantome == 1600:
+                    self.images_puntos.append(self.puntos_1600_image)
+
+                self.compteurs_frames_puntos.append(self.frame)
+                self.compteurs_puntos.append(3)
+                self.coordonnees_puntos.append([fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]])
+
+                self.score += self.points_mange_fantome
+                if self.points_mange_fantome == 200:
+                    self.points_mange_fantome = 400
+                elif self.points_mange_fantome == 400:
+                    self.points_mange_fantome = 800
+                elif self.points_mange_fantome == 800:
+                    self.points_mange_fantome = 1600
 
     # Gestion de la collision entre PUKMUN et la balle en fonction de leur état
     # TODO: Si bouclier non déployé dans la bonne direction --> Perd une vie
