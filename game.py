@@ -8,7 +8,7 @@ from levels.level_5 import Level5
 from sound_handler import SoundHandler
 
 class Game:
-    def __init__(self):
+    def __init__(self, son, langue):
         pygame.mixer.pre_init(44100, -16, 2, 512)
         pygame.init()
 

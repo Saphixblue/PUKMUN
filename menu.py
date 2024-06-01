@@ -311,7 +311,10 @@ boutons = ["jouer", "option", "quitter", "score"]
 boutons_score = ["retour"]
 boutons_options = ["langue", "mute", "son", "retour", "quitter"]
 boutons_langues = ["français", "anglais", "arabe", "italien", "espagnol", "chinois", "retour", "quitter"]
-boutons_son = ["mute", "plus", "moins", "retour", "quitter"] 
+boutons_son = ["mute", "plus", "moins", "retour", "quitter"]
+
+langue = "fr"
+son = 1.0
 
 # Fonction pour afficher les boutons
 def afficher_bouton(image, position):
@@ -590,11 +593,12 @@ def afficher_menu_son_c():
                     bouton_actif_son_c = (bouton_actif_son_c - 1) % len(boutons_son)
                 elif event.key == pygame.K_RETURN:
                     if bouton_actif_son_c == 0:
-                        print("Mute")
+                        global son
+                        son = 0.0
                     elif bouton_actif_son_c == 1:
-                        print("Moins")
+                        sound_down()
                     elif bouton_actif_son_c == 2:
-                        print("Plus")
+                        sound_up()
                     elif bouton_actif_son_c == 3:
                         pygame.quit()
                         sys.exit()
@@ -665,11 +669,12 @@ def afficher_menu_son_e():
                     bouton_actif_son_e = (bouton_actif_son_e - 1) % len(boutons_son)
                 elif event.key == pygame.K_RETURN:
                     if bouton_actif_son_e == 0:
-                        print("Mute")
+                        global son
+                        son = 0.0
                     elif bouton_actif_son_e == 1:
-                        print("Moins")
+                        sound_down()
                     elif bouton_actif_son_e == 2:
-                        print("Plus")
+                        sound_up()
                     elif bouton_actif_son_e == 3:
                         pygame.quit()
                         sys.exit()
@@ -739,11 +744,12 @@ def afficher_menu_son_i():
                     bouton_actif_son_i = (bouton_actif_son_i - 1) % len(boutons_son)
                 elif event.key == pygame.K_RETURN:
                     if bouton_actif_son_i == 0:
-                        print("Mute")
+                        global son
+                        son = 0.0
                     elif bouton_actif_son_i == 1:
-                        print("Moins")
+                        sound_down()
                     elif bouton_actif_son_i == 2:
-                        print("Plus")
+                        sound_up()
                     elif bouton_actif_son_i == 3:
                         pygame.quit()
                         sys.exit()
@@ -814,11 +820,12 @@ def afficher_menu_son_ar():
                     bouton_actif_son_ar = (bouton_actif_son_ar - 1) % len(boutons_son)
                 elif event.key == pygame.K_RETURN:
                     if bouton_actif_son_ar == 0:
-                        print("Mute")
+                        global son
+                        son = 0.0
                     elif bouton_actif_son_ar == 1:
-                        print("Moins")
+                        sound_down()
                     elif bouton_actif_son_ar == 2:
-                        print("Plus")
+                        sound_up()
                     elif bouton_actif_son_ar == 3:
                         pygame.quit()
                         sys.exit()
@@ -888,11 +895,12 @@ def afficher_menu_son_an():
                     bouton_actif_son_an = (bouton_actif_son_an - 1) % len(boutons_son)
                 elif event.key == pygame.K_RETURN:
                     if bouton_actif_son_an == 0:
-                        print("Mute")
+                        global son
+                        son = 0.0
                     elif bouton_actif_son_an == 1:
-                        print("Moins")
+                        sound_down()
                     elif bouton_actif_son_an == 2:
-                        print("Plus")
+                        sound_up()
                     elif bouton_actif_son_an == 3:
                         pygame.quit()
                         sys.exit()
@@ -962,11 +970,12 @@ def afficher_menu_son():
                     bouton_actif_son = (bouton_actif_son- 1) % len(boutons_son)
                 elif event.key == pygame.K_RETURN:
                     if bouton_actif_son == 0:
-                        print("Mute")
+                        global son
+                        son = 0.0
                     elif bouton_actif_son == 1:
-                        print("Moins")
+                        sound_down()
                     elif bouton_actif_son == 2:
-                        print("Plus")
+                        sound_up()
                     elif bouton_actif_son == 3:
                         pygame.quit()
                         sys.exit()
@@ -1010,7 +1019,15 @@ def afficher_menu_son():
         pygame.display.flip()
 
 
+def sound_up():
+    global son
+    if son < 10:
+        son += 1
 
+def sound_down():
+    global son
+    if son > 0:
+        son -= 1
 
 
 # Ajoutez la variable globale pour l'écran des options
@@ -1018,6 +1035,8 @@ bouton_actif_langue = 0
 
 
 def afficher_menu_langue_c():
+    global langue
+    langue = "c"
 
     pygame.init()
     largeur = 800
@@ -1119,6 +1138,8 @@ def afficher_menu_langue_c():
 
 
 def afficher_menu_langue_e():
+    global langue
+    langue = "e"
 
     pygame.init()
     largeur = 800
@@ -1221,6 +1242,8 @@ def afficher_menu_langue_e():
 
 
 def afficher_menu_langue_i():
+    global langue
+    langue = "i"
 
     pygame.init()
     largeur = 800
@@ -1321,6 +1344,8 @@ def afficher_menu_langue_i():
 
 
 def afficher_menu_langue_ar():
+    global langue
+    langue = "ar"
 
     pygame.init()
     largeur = 800
@@ -1422,6 +1447,9 @@ def afficher_menu_langue_ar():
 
 def afficher_menu_langue_an():
 
+    global langue
+    langue = "an"
+
     pygame.init()
     largeur = 800
     hauteur = 600
@@ -1522,6 +1550,8 @@ def afficher_menu_langue_an():
 
 # Fonction pour afficher le menu des options
 def afficher_menu_langue():
+    global langue
+    langue = "fr"
 
     pygame.init()
     largeur = 800
@@ -2364,16 +2394,20 @@ def quit_game():
     sys.exit()
 '''
 
+
 # Fonction pour lancer le jeu principal
 def start_game():
     # pygame.quit()
-    game = Game()
+    global son
+    global langue
+    game = Game(son, langue)
     game.game()
-
 
 
 # Boucle principale du jeu
 def menu():
+    langue = "fr"
+    son = 1.0
     global bouton_actif  # Déclaration de la variable bouton_actif comme globale
     bouton_actif = 0
     while True:
