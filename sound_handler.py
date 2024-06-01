@@ -9,6 +9,9 @@ class SoundHandler:
         self.current_path = os.path.dirname(__file__)
         self.sound_path = os.path.join(self.current_path, 'sons')
 
+        # Création d'un canal spécifique pour le son de déplacement du fantôme
+        self.fantome_deplacement_channel = pygame.mixer.Channel(1)
+
     def load_son(self, sound_name):
         sound_path = os.path.join(self.sound_path, sound_name)
         son = pygame.mixer.Sound(sound_path)
@@ -50,5 +53,9 @@ class SoundHandler:
     def pukmun_mort_sound(self):
         pukmun_mort_sound = self.load_son('pukmun_mort.mp3')
         return pukmun_mort_sound
+
+    # Méthode pour renvoyer le canal spécifique pour le son de déplacement des fantômes
+    def get_fantome_deplacement_channel(self):
+        return self.fantome_deplacement_channel
 
     # TODO: Trouver des sons pour la dodge du mafieux, le tir du mafieux, le reflect de la balle et le fantôme ivre qui s'énerve

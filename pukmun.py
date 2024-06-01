@@ -537,5 +537,8 @@ class Pukmun:
             self.sprite = self.pukmun_mort_10_image
         elif 50 <= frame < 55:
             self.sprite = self.pukmun_mort_11_image
-        elif 55 <= frame < 60:
+        elif 55 <= frame < 59:
             self.sprite = self.pukmun_mort_12_image
+
+        if frame == 59:
+            self.sprite = self.image_vide

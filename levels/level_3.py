@@ -81,3 +81,5 @@ class Level3(LevelInterface):
         self.level_map.draw_rectangle_obstacle(14, 19, 1, 2)
         self.level_map.draw_angle_obstacle(16, 19, 2, 1, 1, "bas")
         self.level_map.draw_angle_obstacle(19, 19, 2, 2, 2)
+
+        self.level_map.map_data[7][12] = 1

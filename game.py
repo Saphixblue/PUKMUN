@@ -56,17 +56,17 @@ class Game:
         # Nombre de vies restantes de PUKMUN
         self.lives = 3
 
-        sound_handler = SoundHandler()
+        self.sound_handler = SoundHandler()
 
-        self.intro_sound = sound_handler.intro_sound()
-        self.graille_1_sound = sound_handler.graille_1_sound()
-        self.graille_2_sound = sound_handler.graille_2_sound()
-        self.fantome_deplacement_sound = sound_handler.fantome_deplacement_sound()
-        self.gros_graille_sound = sound_handler.gros_graille_sound()
-        self.graille_fantome_sound = sound_handler.graille_fantome_sound()
-        self.fantome_mort_sound = sound_handler.fantome_mort_sound()
-        self.extra_life_sound = sound_handler.extra_life_sound()
-        self.pukmun_mort_sound = sound_handler.pukmun_mort_sound()
+        self.intro_sound = self.sound_handler.intro_sound()
+        self.graille_1_sound = self.sound_handler.graille_1_sound()
+        self.graille_2_sound = self.sound_handler.graille_2_sound()
+        self.fantome_deplacement_sound = self.sound_handler.fantome_deplacement_sound()
+        self.gros_graille_sound = self.sound_handler.gros_graille_sound()
+        self.graille_fantome_sound = self.sound_handler.graille_fantome_sound()
+        self.fantome_mort_sound = self.sound_handler.fantome_mort_sound()
+        self.extra_life_sound = self.sound_handler.extra_life_sound()
+        self.pukmun_mort_sound = self.sound_handler.pukmun_mort_sound()
 
         self.graille = 1
 
@@ -172,21 +172,28 @@ class Game:
                 self.graille = 1
         if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 1:
             self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] = 2
-            self.score += 10
-            self.score_extra_life += 10
+            self.score += 50
+            self.score_extra_life += 50
             self.grailles_manges += 1
+            self.gros_graille_sound.play()
             # TODO: Parcourir le tableau de fantômes, mettre weak à 1 et compteur à 8 (8 secondes d'effet pour le gros graille)
-            self.pukmun.powered = 1
-
-            print(self.score)
+            # self.pukmun.powered = 1
 
         if self.score_extra_life // 10000 == 1:
             self.score_extra_life -= 10000
+            self.extra_life_sound.play()
             self.gagner_une_vie()
 
+        deplacement_fantome = False
+
         for fantome in self.level.fantomes:
+            if fantome.dead == 0 and fantome.weak == 0:
+                deplacement_fantome = True
             if fantome.fantome_check_collision_pukmun(self.game_map, self.pukmun.coordonnees_pixels):
                 self.gestion_collision_pukmun_fantome(fantome)
+
+        if deplacement_fantome and not self.sound_handler.get_fantome_deplacement_channel().get_busy():
+            self.sound_handler.get_fantome_deplacement_channel().play(self.fantome_deplacement_sound)
 
         # Update de la valeur de la frame
         self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
@@ -278,10 +285,11 @@ class Game:
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
             pygame.display.flip()
             pygame.time.delay(16)  # Ajuster le délai pour une animation fluide
-        self.pukmun.sprite = self.pukmun.image_vide
 
         # Réduire le nombre de vies de Pukmun
         self.lives -= 1
+
+        pygame.time.delay(500)
 
         # Vérifier si le jeu est terminé
         if self.lives <= 0:
