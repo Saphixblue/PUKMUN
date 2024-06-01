@@ -28,6 +28,9 @@ class FantomeInterface(ABC):
         self.compteur_sortie = 0
         self.compteur_frame_sortie = 59
 
+        self.compteur_weak_mort = 0
+        self.compteur_frame_weak_mort = 59
+
     # Appelle fantome_deplacement() si sur une case, puis update coordonnees et case
     @abstractmethod
     def fantome_update_action(self, game_map):

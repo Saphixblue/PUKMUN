@@ -7,6 +7,7 @@ from levels.level_4 import Level4
 from levels.level_5 import Level5
 from sound_handler import SoundHandler
 
+
 class Game:
     def __init__(self, son, langue):
         pygame.mixer.pre_init(44100, -16, 2, 512)
@@ -14,8 +15,7 @@ class Game:
 
         self.DIMENSION_MAP = (25, 22)  # (colonnes, lignes)
         self.CELL_SIZE = 30
-        self.WINDOW_SIZE = (
-        self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE + self.CELL_SIZE)
+        self.WINDOW_SIZE = (self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE + self.CELL_SIZE)
 
         self.screen = pygame.display.set_mode(self.WINDOW_SIZE)
 
@@ -76,9 +76,12 @@ class Game:
 
         self.initial = 1
 
+        self.langue = langue
+        self.son = son
+
         # Set volumes
-        self.graille_1_sound.set_volume(1.0)
-        self.graille_2_sound.set_volume(1.0)
+        self.graille_1_sound.set_volume(self.son)
+        self.graille_2_sound.set_volume(self.son)
 
     def level_init(self):
         if self.level_number == 1:

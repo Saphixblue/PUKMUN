@@ -220,7 +220,9 @@ class FantomeFantome(FantomeInterface, ABC):
                     elif self.orientation_sprite == "RIGHT":
                         self.sprite = self.fantome_fantome_mort_DR_image
         elif self.weak == 1:
-            print("Sprite weak")
+            if self.orientation_sprite == "LEFT":
+                # 2 dernières secondes du compteur = clignote
+                self.sprite = self.fantome_fantome_weak_blue_L
 
     def fantome_comportement(self, game_map, pukmun_coordonnees_cases):
         x_diff = self.coordonnees_cases[0] - pukmun_coordonnees_cases[0]
