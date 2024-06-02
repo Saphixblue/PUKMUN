@@ -39,6 +39,12 @@ class Map:
             if 0 <= x + position_angle - 1 < self.DIMENSION_MAP[0] and 0 <= y + direction + 1 < self.DIMENSION_MAP[1]:
                 self.map_data[x + position_angle - 1][y + direction] = 3
 
+    def draw_hole(self, x, y, longueur=1, largeur=1):
+        for i in range(longueur):
+            for j in range(largeur):
+                if 0 <= x + i < self.DIMENSION_MAP[0] and 0 <= y + j < self.DIMENSION_MAP[1]:
+                    self.map_data[x + i][y + j] = 4
+
     def draw_map(self, screen):
         for i in range(self.DIMENSION_MAP[0]):
             for j in range(self.DIMENSION_MAP[1]):
