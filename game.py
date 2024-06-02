@@ -412,6 +412,9 @@ class Game:
         # Jouer le son de mort de Pukmun
         self.pukmun_mort_sound.play()
 
+        # Réduire le nombre de vies de Pukmun
+        self.lives -= 1
+
         # Afficher l'animation de mort de Pukmun
         for frame in range(60):  # 60 frames pour l'animation de mort
             self.pukmun.pukmun_mort(frame)
@@ -420,9 +423,6 @@ class Game:
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
             self.affichage()
             pygame.time.delay(16)  # Ajuster le délai pour une animation fluide
-
-        # Réduire le nombre de vies de Pukmun
-        self.lives -= 1
 
         pygame.time.delay(500)
 
