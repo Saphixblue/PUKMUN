@@ -82,6 +82,7 @@ class Game:
         self.fantome_mort_sound = self.sound_handler.fantome_mort_sound()
         self.extra_life_sound = self.sound_handler.extra_life_sound()
         self.pukmun_mort_sound = self.sound_handler.pukmun_mort_sound()
+        self.pukmun_eating_fruit = self.sound_handler.pukmun_eating_fruit_sound()
 
         self.graille = 1
 
@@ -206,7 +207,7 @@ class Game:
             self.score += 50
             self.score_extra_life += 50
             self.grailles_manges += 1
-            # self.gros_graille_sound.play()
+            self.pukmun_eating_fruit.play()
 
             self.gros_graille = 1
             self.compteur = 8

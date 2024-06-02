@@ -55,6 +55,10 @@ class SoundHandler:
         pukmun_mort_sound = self.load_son('pukmun_mort.mp3')
         return pukmun_mort_sound
 
+    def pukmun_eating_fruit_sound(self):
+        pukmun_eating_fruit_sound = self.load_son('pukmun_eating_fruit.wav')
+        return pukmun_eating_fruit_sound
+
     # Méthode pour renvoyer le canal spécifique pour le son de déplacement des fantômes
     def get_fantome_deplacement_channel(self):
         return self.fantome_deplacement_channel
