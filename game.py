@@ -278,6 +278,9 @@ class Game:
                     fantome.compteur_sortie -= 1
                 if fantome.compteur_sortie == 0:
                     fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+                    if fantome.dead == 1 and fantome.coordonnees_cases[0] == 12 and fantome.coordonnees_cases[1] == 10:
+                        fantome.dead = 0
+
                 fantome.fantome_update_case()
                 fantome.fantome_update_action(self.game_map)
                 fantome.fantome_update_deplacement(self.game_map)

@@ -9,7 +9,11 @@ class FantomeInterface(ABC):
         self.CELL_SIZE = CELL_SIZE
         self.coordonnees_cases = DEPART
         self.coordonnees_pixels = [DEPART[0] * self.CELL_SIZE, DEPART[1] * self.CELL_SIZE]
-        self.vitesse = 2.5
+
+        self.vitesse_vivant = 2.5
+        self.vitesse_weak = 1.25
+        self.vitesse_mort = 5
+        self.vitesse = self.vitesse_vivant
 
         self.controle = "NONE"
         self.action = "NONE"
@@ -121,7 +125,7 @@ class FantomeInterface(ABC):
 
     # Détaille le comportement du fantôme lorsqu'il est mort
     @abstractmethod
-    def fantome_comportement_dead(self, game_map, pukmun_coordonnees_cases):
+    def fantome_comportement_dead(self, game_map):
         pass
 
     @abstractmethod

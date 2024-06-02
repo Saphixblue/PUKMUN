@@ -19,7 +19,9 @@ class FantomeFantome(FantomeInterface, ABC):
 
         sprite_handler = SpriteHandler(self.CELL_SIZE)
 
-        self.vitesse = 1.25
+        self.vitesse_vivant = 1.25
+        self.vitesse = self.vitesse_vivant
+
 
         # TODO: Importer tous les sprites
         self.fantome_fantome_DL_image = sprite_handler.fantome_fantome_DL_image()
@@ -142,7 +144,7 @@ class FantomeFantome(FantomeInterface, ABC):
         next_y = self.coordonnees_cases[1] + 1 if self.coordonnees_cases[1] != game_map.DIMENSION_MAP[1] - 1 else 0
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0]:
             if game_map.map_data[self.coordonnees_cases[0]][next_y] == 3 or \
-                    game_map.map_data[self.coordonnees_cases[0]][next_y] == 5:
+                    (self.dead == 0 and game_map.map_data[self.coordonnees_cases[0]][next_y] == 5):
                 return True
         return False
 
@@ -242,6 +244,7 @@ class FantomeFantome(FantomeInterface, ABC):
     def fantome_comportement(self, game_map, pukmun_coordonnees_cases):
         if self.weak == 0:
             if self.dead == 0:
+                self.vitesse = self.vitesse_vivant
                 x_diff = self.coordonnees_cases[0] - pukmun_coordonnees_cases[0]
                 y_diff = self.coordonnees_cases[1] - pukmun_coordonnees_cases[1]
 
@@ -257,8 +260,8 @@ class FantomeFantome(FantomeInterface, ABC):
                     left = self.DIMENSION_MAP[0] + x_diff
                     right = -x_diff
                 else:
-                    left = self.DIMENSION_MAP[0]
-                    right = self.DIMENSION_MAP[0] # Si le fantôme atteint la coordonnée de PUKMUN, on le force à bouger selon l'autre axe
+                    left = self.DIMENSION_MAP[0] - 1
+                    right = self.DIMENSION_MAP[0] - 1  # Si le fantôme atteint la coordonnée de PUKMUN, on le force à bouger selon l'autre axe
 
                 if y_diff > 0:
                     up = y_diff
@@ -267,8 +270,17 @@ class FantomeFantome(FantomeInterface, ABC):
                     up = self.DIMENSION_MAP[1] + y_diff
                     down = -y_diff
                 else:
-                    up = self.DIMENSION_MAP[1]
-                    down = self.DIMENSION_MAP[1]
+                    up = self.DIMENSION_MAP[1] - 1
+                    down = self.DIMENSION_MAP[1] - 1
+
+                if self.action == "LEFT":
+                    right = 99
+                if self.action == "RIGHT":
+                    left = 99
+                if self.action == "UP":
+                    down = 99
+                if self.action == "DOWN":
+                    up = 99
 
                 if min(left, right, up, down) == left:
                     self.controle = "LEFT"
@@ -292,8 +304,10 @@ class FantomeFantome(FantomeInterface, ABC):
                     elif rdm < 0.10:
                         self.controle = "RIGHT"
             else:
-                self.fantome_comportement_dead(game_map, pukmun_coordonnees_cases)
+                self.vitesse = self.vitesse_mort
+                self.fantome_comportement_dead(game_map)
         else:
+            self.vitesse = self.vitesse_weak
             self.fantome_comportement_weak(game_map, pukmun_coordonnees_cases)
 
     def fantome_comportement_weak(self, game_map, pukmun_coordonnees_cases):
@@ -325,38 +339,33 @@ class FantomeFantome(FantomeInterface, ABC):
             up = self.DIMENSION_MAP[1] - 1
             down = self.DIMENSION_MAP[1] - 1
 
-        # On encourage le fantôme à continuer sur sa lancée
+        # On encourage le fantôme à continuer sur sa lancée s'il n'y a pas d'intersection
 
-        if self.action == "LEFT":
-            left = self.DIMENSION_MAP[0]
-        elif self.action == "RIGHT":
-            right = self.DIMENSION_MAP[0]
-        elif self.action == "UP":
-            up = self.DIMENSION_MAP[1]
-        elif self.action == "DOWN":
-            down = self.DIMENSION_MAP[1]
+        if self.action == "LEFT" and self.fantome_check_collision_obstacle_up(game_map) and self.fantome_check_collision_obstacle_down(game_map):
+            left = 100
+        elif self.action == "RIGHT" and self.fantome_check_collision_obstacle_up(game_map) and self.fantome_check_collision_obstacle_down(game_map):
+            right = 100
+        elif self.action == "UP" and self.fantome_check_collision_obstacle_left(game_map) and self.fantome_check_collision_obstacle_right(game_map):
+            up = 100
+        elif self.action == "DOWN" and self.fantome_check_collision_obstacle_left(game_map) and self.fantome_check_collision_obstacle_right(game_map):
+            down = 100
 
         if self.fantome_check_collision_obstacle_left(game_map):
-            left = -2
+            left = -1
             if self.action == "LEFT":
-                right = -1
-                print("Test")
-                print("left = ", left)
-                print("right = ", right)
-                print("up = ", up)
-                print("down = ", down)
+                right = 0
         if self.fantome_check_collision_obstacle_right(game_map):
-            right = -2
+            right = -1
             if self.action == "RIGHT":
-                left = -1
+                left = 0
         if self.fantome_check_collision_obstacle_up(game_map):
-            up = -2
+            up = -1
             if self.action == "UP":
-                down = -1
+                down = 0
         if self.fantome_check_collision_obstacle_down(game_map):
-            down = -2
+            down = -1
             if self.action == "DOWN":
-                up = -1
+                up = 0
 
         if max(left, right, up, down) == left:
             self.controle = "LEFT"
@@ -367,8 +376,71 @@ class FantomeFantome(FantomeInterface, ABC):
         if max(left, right, up, down) == down:
             self.controle = "DOWN"
 
-    def fantome_comportement_dead(self, game_map, pukmun_coordonnees_cases):
-        print("Fantôme Comportement Dead")
+    def fantome_comportement_dead(self, game_map):
+        x_diff = self.coordonnees_cases[0] - 12
+        y_diff = self.coordonnees_cases[1] - 10
+
+        left = 100
+        right = 100
+        up = 100
+        down = 100
+
+        # Calcul des distances pour les mouvements horizontaux
+        if x_diff > 0:
+            left = x_diff
+            if self.coordonnees_cases[1] == 11:
+                right = self.DIMENSION_MAP[0] - x_diff
+            else:
+                right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
+        elif x_diff < 0:
+            if self.coordonnees_cases[1] == 11:
+                left = self.DIMENSION_MAP[0] + x_diff
+            else:
+                left = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
+            right = -x_diff
+        else:
+            left = right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]  # Si sur la même colonne, éviter mouvement horizontal
+
+        # Calcul des distances pour les mouvements verticaux
+        if y_diff > 0:
+            up = y_diff
+            down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
+        elif y_diff < 0:
+            up = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
+            down = -y_diff
+        else:
+            up = down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]  # Si sur la même ligne, éviter mouvement vertical
+
+        # Encourager la direction actuelle
+        if self.action == "LEFT":
+            right = 99
+        elif self.action == "RIGHT":
+            left = 99
+        elif self.action == "UP":
+            down = 99
+        elif self.action == "DOWN":
+            up = 99
+
+        # Vérifier les collisions avec les obstacles
+        if self.fantome_check_collision_obstacle_left(game_map):
+            left = 100
+        if self.fantome_check_collision_obstacle_right(game_map):
+            right = 100
+        if self.fantome_check_collision_obstacle_up(game_map):
+            up = 100
+        if self.fantome_check_collision_obstacle_down(game_map):
+            down = 100
+
+        # Choisir la direction avec la plus petite distance
+        min_distance = min(left, right, up, down)
+        if min_distance == left:
+            self.controle = "LEFT"
+        elif min_distance == right:
+            self.controle = "RIGHT"
+        elif min_distance == up:
+            self.controle = "UP"
+        elif min_distance == down:
+            self.controle = "DOWN"
 
     def fantome_check_collision_pukmun(self, game_map, pukmun_coordonnees_pixels):
         x_diff = self.coordonnees_pixels[0] - pukmun_coordonnees_pixels[0]
