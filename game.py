@@ -354,7 +354,7 @@ class Game:
                     self.compteurs_frames_puntos.pop(i)
 
             # Mettre à jour l'affichage
-            pygame.display.flip()
+            self.affichage()
 
             if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 4:
                 self.previous_level()
@@ -385,7 +385,7 @@ class Game:
         self.screen.blit(game_over_text, text_rect)
 
         # Mise à jour de l'affichage
-        pygame.display.flip()
+        self.affichage()
 
         # Attente de 2 secondes
         pygame.time.delay(3000)
@@ -418,7 +418,7 @@ class Game:
             self.screen.fill((0, 0, 0))
             self.game_map.draw_map(self.screen)
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
-            pygame.display.flip()
+            self.affichage()
             pygame.time.delay(16)  # Ajuster le délai pour une animation fluide
 
         # Réduire le nombre de vies de Pukmun
@@ -438,6 +438,39 @@ class Game:
         if self.lives < 5:
             self.lives += 1
 
+    def afficher_score(self):
+        # Définition de la taille maximale du texte
+        max_text_size = self.CELL_SIZE
+
+        # Création de la police avec la taille maximale
+        font = pygame.font.Font(None, max_text_size)
+
+        # Rendu du score
+        score_text = font.render(f"{self.score}", True, (255, 255, 255))
+
+        # Calcul de la position du texte
+        text_rect = score_text.get_rect(center=(self.CELL_SIZE * 6, self.CELL_SIZE * 22.5))
+
+        # Affichage du texte sur l'écran
+        self.screen.blit(score_text, text_rect)
+
+    def afficher_vies(self):
+        if self.lives >= 1:
+            self.screen.blit(self.pukmun.pukmun_mange_1_L_image, (self.CELL_SIZE * 0, self.CELL_SIZE * 22))
+            if self.lives >= 2:
+                self.screen.blit(self.pukmun.pukmun_mange_1_L_image, (self.CELL_SIZE * 1, self.CELL_SIZE * 22))
+                if self.lives >= 3:
+                    self.screen.blit(self.pukmun.pukmun_mange_1_L_image, (self.CELL_SIZE * 2, self.CELL_SIZE * 22))
+                    if self.lives >= 4:
+                        self.screen.blit(self.pukmun.pukmun_mange_1_L_image, (self.CELL_SIZE * 3, self.CELL_SIZE * 22))
+                        if self.lives == 5:
+                            self.screen.blit(self.pukmun.pukmun_mange_1_L_image, (self.CELL_SIZE * 4, self.CELL_SIZE * 22))
+
+    def affichage(self):
+        self.afficher_vies()
+        self.afficher_score()
+        pygame.display.flip()
+
     # TODO: Si possible, afficher 3, 2, 1, Go! pendant la musique sous le pit des fantômes
     # TODO: Tous les éléments sont placés; tout est immobile pendant que la musique de début se joue
     def start_level(self):
@@ -452,7 +485,7 @@ class Game:
         for fantome in self.level.fantomes:
             self.screen.blit(fantome.sprite, (fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]))
 
-        pygame.display.flip()
+        self.affichage()
 
         if self.initial:
             self.intro_sound.play()
