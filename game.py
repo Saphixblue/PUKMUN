@@ -449,7 +449,7 @@ class Game:
         score_text = font.render(f"{self.score}", True, (255, 255, 255))
 
         # Calcul de la position du texte
-        text_rect = score_text.get_rect(center=(self.CELL_SIZE * 6, self.CELL_SIZE * 22.5))
+        text_rect = score_text.get_rect(center=(self.CELL_SIZE * 23, self.CELL_SIZE * 22.5))
 
         # Affichage du texte sur l'écran
         self.screen.blit(score_text, text_rect)
