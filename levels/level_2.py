@@ -2,7 +2,7 @@
 from levels.level_interface import LevelInterface
 from pukmun import Pukmun
 from fantomes.fantome_interface import FantomeInterface
-from fantomes.fantome_mafieux import FantomeMafieux
+from fantomes.fantome_ivre import FantomeIvre
 
 
 class Level2(LevelInterface):
@@ -11,6 +11,20 @@ class Level2(LevelInterface):
         self.pukmun = Pukmun([12, 12], CELL_SIZE)
         # self.fantomes =
         # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
+        '''self.fantomes = [
+            FantomeIvre([self.fantomes_depart[0][0], self.fantomes_depart[0][1]], DIMENSION_MAP, CELL_SIZE),
+            FantomeIvre([self.fantomes_depart[1][0], self.fantomes_depart[1][1]], DIMENSION_MAP, CELL_SIZE),
+            FantomeIvre([self.fantomes_depart[2][0], self.fantomes_depart[2][1]], DIMENSION_MAP, CELL_SIZE),
+            FantomeIvre([self.fantomes_depart[3][0], self.fantomes_depart[3][1]], DIMENSION_MAP, CELL_SIZE)]'''
+
+        self.fantomes[2].compteur_sortie = 4
+        self.fantomes[3].compteur_sortie = 7
+
+        self.fantomes[2].controle = None
+        self.fantomes[2].action = None
+
+        self.fantomes[3].controle = None
+        self.fantomes[3].action = None
 
     def draw_level_on_map(self):
         self.level_map.draw_angle_obstacle(2, 2, 7, 1, 1, "bas")
@@ -46,3 +60,5 @@ class Level2(LevelInterface):
         self.level_map.draw_angle_obstacle(10, 19, 2, 1, 2)
         self.level_map.draw_angle_obstacle(13, 19, 2, 2, 2)
         self.level_map.draw_angle_obstacle(20, 19, 3, 3, 1)
+
+        # Gros grailles

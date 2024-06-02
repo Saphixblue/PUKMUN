@@ -150,7 +150,17 @@ class Game:
 
         self.gros_graille = 0
         self.compteur = 0
-        self.compteur_frames = 59
+        self.compteur_frame = 59
+        self.pukmun.compteur_fantome = 0
+        self.pukmun.compteur_frame_fantome = 0
+        self.pukmun.compteur_ivre = 0
+        self.pukmun.compteur_frame_ivre = 0
+
+        for i in range(len(self.images_puntos) - 1, -1, -1):
+            self.images_puntos.pop(i)
+            self.coordonnees_puntos.pop(i)
+            self.compteurs_puntos.pop(i)
+            self.compteurs_frames_puntos.pop(i)
 
         self.start_level()
 
@@ -222,9 +232,11 @@ class Game:
             self.gros_graille = 1
             self.compteur = 8
             self.compteur_frame = self.frame
+            self.pukmun.compteur_fantome = self.compteur
+            self.pukmun.compteur_frame_fantome = self.compteur_frame
 
             for fantome in self.level.fantomes:
-                fantome.fantome_update_coordonnees_pixels(self.game_map)
+                # fantome.fantome_update_coordonnees_pixels(self.game_map)
                 fantome.fantome_update_case()
                 if fantome.compteur_sortie == 0 and fantome.dead == 0:
                     fantome.weak = 1
@@ -252,7 +264,6 @@ class Game:
         # Update de la valeur de la frame
         self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
 
-    # TODO: Ajouter début de niveau
     # Boucle principale du jeu
     def game(self):
         self.running = True
@@ -301,6 +312,7 @@ class Game:
                     self.points_mange_fantome = 200
 
             for fantome in self.level.fantomes:
+                # fantome.fantome_update_coordonnees_pixels(self.game_map)
                 fantome.fantome_update_case()
                 fantome.fantome_update_action(self.game_map)
                 fantome.fantome_update_deplacement(self.game_map)
@@ -343,6 +355,11 @@ class Game:
 
             # Mettre à jour l'affichage
             pygame.display.flip()
+
+            if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 4:
+                self.previous_level()
+                self.level_start = 1
+                self.initial = 1
 
             if self.grailles_manges == self.nombre_de_grailles:
                 self.level_complete()

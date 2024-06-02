@@ -1,5 +1,7 @@
 # fantome_ivre.py
 from fantomes.fantome_interface import FantomeInterface
+from sprite_handler import SpriteHandler
+
 
 # Le fantôme ivre se déplace aléatoirement dans le labyrinthe. (Comment exactement ? Peut-il revenir sur ses pas ? Si oui, quand ?)
 
@@ -19,16 +21,41 @@ class FantomeIvre(FantomeInterface):
     def __init__(self, DEPART, DIMENSION_MAP, CELL_SIZE):
         super().__init__(DEPART, DIMENSION_MAP, CELL_SIZE)
 
-        # TODO: Importer tous les sprites
+        sprite_handler = SpriteHandler(self.CELL_SIZE)
 
-        # TODO: Update le sprite
-        # self.sprite
+        self.fantome_ivre_DL_image = sprite_handler.fantome_ivre_DL_image()
+        self.fantome_ivre_DR_image = sprite_handler.fantome_ivre_DR_image()
+        self.fantome_ivre_L_image = sprite_handler.fantome_ivre_L_image()
+        self.fantome_ivre_R_image = sprite_handler.fantome_ivre_R_image()
+        self.fantome_ivre_UL_image = sprite_handler.fantome_ivre_UL_image()
+        self.fantome_ivre_UR_image = sprite_handler.fantome_ivre_UR_image()
+
+        self.fantome_ivre_nrv_DL_image = sprite_handler.fantome_ivre_nrv_DL_image()
+        self.fantome_ivre_nrv_DR_image = sprite_handler.fantome_ivre_nrv_DR_image()
+        self.fantome_ivre_nrv_L_image = sprite_handler.fantome_ivre_nrv_L_image()
+        self.fantome_ivre_nrv_R_image = sprite_handler.fantome_ivre_nrv_R_image()
+        self.fantome_ivre_nrv_UL_image = sprite_handler.fantome_ivre_nrv_UL_image()
+        self.fantome_ivre_nrv_UR_image = sprite_handler.fantome_ivre_nrv_UR_image()
+
+        self.fantome_ivre_weak_blue_L_image = sprite_handler.fantome_ivre_weak_blue_L_image()
+        self.fantome_ivre_weak_blue_R_image = sprite_handler.fantome_ivre_weak_blue_R_image()
+        self.fantome_ivre_weak_white_L_image = sprite_handler.fantome_ivre_weak_white_L_image()
+        self.fantome_ivre_weak_white_R_image = sprite_handler.fantome_ivre_weak_white_R_image()
+
+        self.fantome_ivre_mort_DL_image = sprite_handler.fantome_ivre_mort_DL_image()
+        self.fantome_ivre_mort_DR_image = sprite_handler.fantome_ivre_mort_DR_image()
+        self.fantome_ivre_mort_L_image = sprite_handler.fantome_ivre_mort_L_image()
+        self.fantome_ivre_mort_R_image = sprite_handler.fantome_ivre_mort_R_image()
+        self.fantome_ivre_mort_UL_image = sprite_handler.fantome_ivre_mort_UL_image()
+        self.fantome_ivre_mort_UR_image = sprite_handler.fantome_ivre_mort_UR_image()
+
+        self.sprite = self.fantome_ivre_DL_image
 
         # TODO: Calibrer la collision box
         # self.collision_box
 
         self.rage = 0
-        self.vitesse_rage = 4 * self.vitesse
+        self.vitesse_rage = 2 * self.vitesse
 
     # TODO: Override toutes les méthodes de l'interface
 
@@ -89,7 +116,26 @@ class FantomeIvre(FantomeInterface):
     # TODO
     # Détaille le comportement du fantôme quand il est enragé
     def comportement_rage(self, game_map):
-        print("Comportement rage")
+        if self.action == "LEFT":
+            if not self.fantome_check_collision_obstacle_left(game_map):
+                self.controle = "LEFT"
+            else:
+                self.rage = 0
+        if self.action == "RIGHT":
+            if not self.fantome_check_collision_obstacle_right(game_map):
+                self.controle = "RIGHT"
+            else:
+                self.rage = 0
+        if self.action == "UP":
+            if not self.fantome_check_collision_obstacle_up(game_map):
+                self.controle = "UP"
+            else:
+                self.rage = 0
+        if self.action == "DOWN":
+            if not self.fantome_check_collision_obstacle_down(game_map):
+                self.controle = "DOWN"
+            else:
+                self.rage = 0
 
     # TODO (Doit sûrement être basculée dans game)
     # Renvoie True si PUKMUN est sur la même ligne ou colonne sans obstacle entre eux

@@ -83,4 +83,8 @@ class Level3(LevelInterface):
         self.level_map.draw_angle_obstacle(16, 19, 2, 1, 1, "bas")
         self.level_map.draw_angle_obstacle(19, 19, 2, 2, 2)
 
-        self.level_map.map_data[7][12] = 1
+        # Gros grailles
+        self.level_map.map_data[1][17] = 1
+        self.level_map.map_data[23][17] = 1
+        self.level_map.map_data[9][8] = 1
+        self.level_map.map_data[15][8] = 1
