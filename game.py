@@ -84,6 +84,7 @@ class Game:
         self.extra_life_sound = self.sound_handler.extra_life_sound()
         self.pukmun_mort_sound = self.sound_handler.pukmun_mort_sound()
         self.pukmun_eating_fruit = self.sound_handler.pukmun_eating_fruit_sound()
+        self.pukmun_reflect_bullet_sound = self.sound_handler.pukmun_reflect_bullet_sound()
 
         self.graille = 1
 
@@ -106,6 +107,7 @@ class Game:
         self.extra_life_sound.set_volume(self.son)
         self.pukmun_mort_sound.set_volume(self.son)
         self.pukmun_eating_fruit.set_volume(self.son)
+        self.pukmun_reflect_bullet_sound.set_volume(self.son)
 
         # Tableaux pour les images des puntos, leurs compteurs et leurs coordonnées
         self.images_puntos = []

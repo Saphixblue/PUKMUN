@@ -59,6 +59,10 @@ class SoundHandler:
         pukmun_eating_fruit_sound = self.load_son('pukmun_eating_fruit.wav')
         return pukmun_eating_fruit_sound
 
+    def pukmun_reflect_bullet_sound(self):
+        pukmun_reflect_bullet_sound = self.load_son('pukmun_reflect_bullet.wav')
+        return pukmun_reflect_bullet_sound
+
     # Méthode pour renvoyer le canal spécifique pour le son de déplacement des fantômes
     def get_fantome_deplacement_channel(self):
         return self.fantome_deplacement_channel
