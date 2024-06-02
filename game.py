@@ -1,5 +1,7 @@
 import pygame
 import sys
+
+from fantomes.fantome_fantome import FantomeFantome
 from levels.level_1 import Level1
 from levels.level_2 import Level2
 from levels.level_3 import Level3
@@ -454,15 +456,16 @@ class Game:
         # Si PUKMUN pas sous gros graille
         if fantome.dead == 0:
             if fantome.weak == 0:
-                self.perdre_une_vie()
+                if isinstance(fantome, FantomeFantome):
+                    self.perdre_une_vie()
             else:
                 fantome.dead = 1
                 fantome.weak = 0
-                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
 
-                self.pukmun.fantome = 1
-                self.pukmun.compteur_fantome = self.compteur
-                self.pukmun.compteur_frame_fantome = self.compteur_frame
+                if isinstance(fantome, FantomeFantome):
+                    self.pukmun.fantome = 1
+                    self.pukmun.compteur_fantome = self.compteur
+                    self.pukmun.compteur_frame_fantome = self.compteur_frame
 
                 self.graille_fantome_sound.play()
                 self.fantome_mort_sound.play()
@@ -487,6 +490,8 @@ class Game:
                     self.points_mange_fantome = 800
                 elif self.points_mange_fantome == 800:
                     self.points_mange_fantome = 1600
+
+                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
 
     # Gestion de la collision entre PUKMUN et la balle en fonction de leur état
     # TODO: Si bouclier non déployé dans la bonne direction --> Perd une vie
