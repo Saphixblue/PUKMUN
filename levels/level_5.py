@@ -15,4 +15,46 @@ class Level5(LevelInterface):
         # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
 
     def draw_level_on_map(self):
-        print("Level 5")
+        self.level_map.draw_angle_obstacle(1,1,6,6,2,"bas")
+        self.level_map.draw_angle_obstacle(9,1,2,1,1,"bas")
+        self.level_map.draw_rectangle_obstacle(12,1,1,3)
+        self.level_map.draw_angle_obstacle(14,1,2,2,1,"bas")
+        self.level_map.draw_angle_obstacle(18,1,6,1,2,"bas")
+
+        self.level_map.draw_angle_obstacle(2,3,3)
+        self.level_map.draw_angle_obstacle(20,3,3)
+
+        self.level_map.draw_angle_obstacle(9,4,3)
+        self.level_map.draw_angle_obstacle(13,4,3)
+
+        self.level_map.draw_angle_obstacle(2,5,3)
+        self.level_map.draw_rectangle_obstacle(12,5,1,3)
+        self.level_map.draw_angle_obstacle(20,5,3)
+
+        self.level_map.draw_angle_obstacle(1,7,6,6,2)
+        self.level_map.draw_angle_obstacle(9,7,2,1,1)
+        self.level_map.draw_angle_obstacle(14,7,2,2,1)
+        self.level_map.draw_angle_obstacle(18,7,6,1,2)
+
+        self.level_map.draw_rectangle_obstacle(7,9,1,3)
+        self.level_map.draw_rectangle_obstacle(17,9,1,3)
+
+        self.level_map.draw_angle_obstacle(7,13,11)
+
+        self.level_map.draw_angle_obstacle(2,15,6,6,1)
+        self.level_map.draw_rectangle_obstacle(10,15,1,3)
+        self.level_map.draw_angle_obstacle(16,15,6,1,1)
+
+        self.level_map.draw_angle_obstacle(1,17,3)
+        self.level_map.draw_angle_obstacle(6,17,3)
+        self.level_map.draw_angle_obstacle(11,17,4,4,2)
+        self.level_map.draw_angle_obstacle(16,17,3)
+        self.level_map.draw_angle_obstacle(21,17,3)
+
+        self.level_map.draw_angle_obstacle(2,19,4,4,3)
+        self.level_map.draw_rectangle_obstacle(7,19,1,2)
+        self.level_map.draw_angle_obstacle(9,19,3,3,1)
+        self.level_map.draw_angle_obstacle(13,19,3,1,1)
+        self.level_map.draw_rectangle_obstacle(17,19,1,2)
+        self.level_map.draw_angle_obstacle(19,19,4,1,3)
+
