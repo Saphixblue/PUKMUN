@@ -13,6 +13,7 @@ from sprite_handler import SpriteHandler
 
 class Game:
     def __init__(self, son, langue):
+        print(son)
         pygame.mixer.pre_init(44100, -16, 2, 512)
         pygame.init()
 
@@ -95,8 +96,16 @@ class Game:
         self.son = son
 
         # Set volumes
+        self.intro_sound.set_volume(self.son)
         self.graille_1_sound.set_volume(self.son)
         self.graille_2_sound.set_volume(self.son)
+        self.fantome_deplacement_sound.set_volume(self.son)
+        self.gros_graille_sound.set_volume(self.son)
+        self.graille_fantome_sound.set_volume(self.son)
+        self.fantome_mort_sound.set_volume(self.son)
+        self.extra_life_sound.set_volume(self.son)
+        self.pukmun_mort_sound.set_volume(self.son)
+        self.pukmun_eating_fruit.set_volume(self.son)
 
         # Tableaux pour les images des puntos, leurs compteurs et leurs coordonnées
         self.images_puntos = []

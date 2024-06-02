@@ -1021,13 +1021,14 @@ def afficher_menu_son():
 
 def sound_up():
     global son
-    if son < 10:
-        son += 1
+    if son < 1.0:
+        son = round(son + 0.1, 1)
+
 
 def sound_down():
     global son
-    if son > 0:
-        son -= 1
+    if son > 0.0:
+        son = round(son - 0.1, 1)
 
 
 # Ajoutez la variable globale pour l'écran des options
@@ -2400,14 +2401,13 @@ def start_game():
     # pygame.quit()
     global son
     global langue
+    print(son)
     game = Game(son, langue)
     game.game()
 
 
 # Boucle principale du jeu
 def menu():
-    langue = "fr"
-    son = 1.0
     global bouton_actif  # Déclaration de la variable bouton_actif comme globale
     bouton_actif = 0
     while True:
