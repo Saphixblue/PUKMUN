@@ -58,7 +58,10 @@ class FantomeFantome(FantomeInterface, ABC):
     def fantome_update_action(self, game_map):
         if self.fantome_check_case():
             if self.weak == 0:
-                self.fantome_deplacement(game_map)
+                if self.dead == 0:
+                    self.fantome_deplacement(game_map)
+                else:
+                    self.fantome_deplacement(game_map)
             elif self.weak == 1:
                 self.fantome_deplacement_weak(game_map)
 
@@ -113,6 +116,20 @@ class FantomeFantome(FantomeInterface, ABC):
         elif self.action == "DOWN":
             if self.fantome_check_collision_obstacle_down(game_map):
                 self.action = "STOP"'''
+
+    def fantome_deplacement_dead(self, game_map):
+        if self.controle == "LEFT":
+            if not self.fantome_check_collision_obstacle_left(game_map):
+                self.action = "LEFT"
+        elif self.controle == "RIGHT":
+            if not self.fantome_check_collision_obstacle_right(game_map):
+                self.action = "RIGHT"
+        elif self.controle == "UP":
+            if not self.fantome_check_collision_obstacle_up(game_map):
+                self.action = "UP"
+        elif self.controle == "DOWN":
+            if not self.fantome_check_collision_obstacle_down(game_map):
+                self.action = "DOWN"
 
     def fantome_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
@@ -243,7 +260,10 @@ class FantomeFantome(FantomeInterface, ABC):
 
     def fantome_comportement(self, game_map, pukmun_coordonnees_cases):
         if self.weak == 0:
-            if self.dead == 0:
+            if self.dead == 1:
+                self.fantome_comportement_dead(game_map)
+                self.vitesse = self.vitesse_mort
+            else:
                 self.vitesse = self.vitesse_vivant
                 x_diff = self.coordonnees_cases[0] - pukmun_coordonnees_cases[0]
                 y_diff = self.coordonnees_cases[1] - pukmun_coordonnees_cases[1]
@@ -303,9 +323,6 @@ class FantomeFantome(FantomeInterface, ABC):
                         self.controle = "LEFT"
                     elif rdm < 0.10:
                         self.controle = "RIGHT"
-            else:
-                self.vitesse = self.vitesse_mort
-                self.fantome_comportement_dead(game_map)
         else:
             self.vitesse = self.vitesse_weak
             self.fantome_comportement_weak(game_map, pukmun_coordonnees_cases)
@@ -386,50 +403,52 @@ class FantomeFantome(FantomeInterface, ABC):
         x_diff = self.coordonnees_cases[0] - 12
         y_diff = self.coordonnees_cases[1] - 10
 
-        left = 100
-        right = 100
-        up = 100
-        down = 100
+        left = 98
+        right = 98
+        up = 98
+        down = 98
 
         # Calcul des distances pour les mouvements horizontaux
         if x_diff > 0:
             left = x_diff
             if self.coordonnees_cases[1] == 11:
                 right = self.DIMENSION_MAP[0] - x_diff
-            else:
-                right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
+            '''else:
+                right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]'''
         elif x_diff < 0:
             if self.coordonnees_cases[1] == 11:
                 left = self.DIMENSION_MAP[0] + x_diff
-            else:
-                left = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
+            '''else:
+                left = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]'''
             right = -x_diff
-        else:
-            left = right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]  # Si sur la même colonne, éviter mouvement horizontal
+        '''else:
+            left = right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]'''  # Si sur la même colonne, éviter mouvement horizontal
 
         # Calcul des distances pour les mouvements verticaux
         if y_diff > 0:
             up = y_diff
-            down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
+            '''down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]'''
         elif y_diff < 0:
-            up = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
+            '''up = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]'''
             down = -y_diff
-        else:
-            up = down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]  # Si sur la même ligne, éviter mouvement vertical
+        '''else:
+            up = down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]'''  # Si sur la même ligne, éviter mouvement vertical
 
         # Encourager la direction actuelle
         if self.action == "LEFT":
-            left = self.DIMENSION_MAP[0]
+            left = 97
             right = 99
         elif self.action == "RIGHT":
-            right = self.DIMENSION_MAP[0]
+            right = 97
             left = 99
         elif self.action == "UP":
-            up = self.DIMENSION_MAP[1]
+            up = 97
             down = 99
         elif self.action == "DOWN":
-            down = self.DIMENSION_MAP[1]
+            down = 97
             up = 99
+
+        # self.fantome_update_action(game_map)
 
         # Vérifier les collisions avec les obstacles
         if self.fantome_check_collision_obstacle_left(game_map):

@@ -2401,7 +2401,6 @@ def start_game():
     # pygame.quit()
     global son
     global langue
-    print(son)
     game = Game(son, langue)
     game.game()
 

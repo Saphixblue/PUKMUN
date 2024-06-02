@@ -13,7 +13,6 @@ from sprite_handler import SpriteHandler
 
 class Game:
     def __init__(self, son, langue):
-        print(son)
         pygame.mixer.pre_init(44100, -16, 2, 512)
         pygame.init()
 
@@ -222,9 +221,11 @@ class Game:
 
             self.gros_graille = 1
             self.compteur = 8
-            self.compteur_frames = self.frame
+            self.compteur_frame = self.frame
 
             for fantome in self.level.fantomes:
+                fantome.fantome_update_coordonnees_pixels(self.game_map)
+                fantome.fantome_update_case()
                 if fantome.compteur_sortie == 0 and fantome.dead == 0:
                     fantome.weak = 1
             self.pukmun.powered = 1
@@ -300,13 +301,6 @@ class Game:
                     self.points_mange_fantome = 200
 
             for fantome in self.level.fantomes:
-                if fantome.compteur_sortie != 0 and fantome.compteur_frame_sortie - 1 == self.frame:
-                    fantome.compteur_sortie -= 1
-                if fantome.compteur_sortie == 0:
-                    fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
-                    if fantome.dead == 1 and fantome.coordonnees_cases[0] == 12 and fantome.coordonnees_cases[1] == 10:
-                        fantome.dead = 0
-
                 fantome.fantome_update_case()
                 fantome.fantome_update_action(self.game_map)
                 fantome.fantome_update_deplacement(self.game_map)
@@ -314,6 +308,15 @@ class Game:
                 fantome.fantome_check_collision_pukmun(self.game_map, self.pukmun.coordonnees_pixels)
 
                 fantome.fantome_update_sprite(self.frame, self.compteur)
+
+                if fantome.compteur_sortie != 0 and fantome.compteur_frame_sortie - 1 == self.frame:
+                    fantome.compteur_sortie -= 1
+                if fantome.compteur_sortie == 0:
+                    fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+                    if fantome.dead == 1 and fantome.coordonnees_cases[0] == 12 and fantome.coordonnees_cases[1] == 10:
+                        fantome.dead = 0
+
+
 
             # Dessiner Pac-Man
             self.screen.blit(self.pukmun.sprite, (self.pukmun.coordonnees_pixels[0], self.pukmun.coordonnees_pixels[1]))
@@ -348,7 +351,6 @@ class Game:
 
     # TODO: Afficher GAME OVER (quelques secondes), si high score --> updateLeaderBoard(), remise du score à zéro puis renvoi du joueur à l'écran titre
     def game_over(self):
-        print("Game over")
         # Afficher "Game Over" à l'écran 3 secondes
         # Définition de la taille maximale du texte
         max_text_size = self.CELL_SIZE
@@ -414,7 +416,6 @@ class Game:
             # Redémarrer le niveau
             self.level_start = 1
             self.level_init()
-        print("Perdre une vie")
 
     def gagner_une_vie(self):
         if self.lives < 5:
@@ -473,7 +474,7 @@ class Game:
             else:
                 fantome.dead = 1
                 fantome.weak = 0
-
+                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
                 if isinstance(fantome, FantomeFantome):
                     self.pukmun.fantome = 1
                     self.pukmun.compteur_fantome = self.compteur
@@ -503,7 +504,7 @@ class Game:
                 elif self.points_mange_fantome == 800:
                     self.points_mange_fantome = 1600
 
-                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+
 
     # Gestion de la collision entre PUKMUN et la balle en fonction de leur état
     # TODO: Si bouclier non déployé dans la bonne direction --> Perd une vie

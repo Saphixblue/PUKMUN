@@ -12,7 +12,7 @@ class FantomeInterface(ABC):
 
         self.vitesse_vivant = 2.5
         self.vitesse_weak = 1.25
-        self.vitesse_mort = 5
+        self.vitesse_mort = 2.5
         self.vitesse = self.vitesse_vivant
 
         self.controle = "NONE"
