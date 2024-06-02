@@ -321,23 +321,29 @@ class FantomeFantome(FantomeInterface, ABC):
 
         if x_diff > 0:
             left = x_diff
-            right = self.DIMENSION_MAP[0] - x_diff
+            if self.coordonnees_cases[1] == 11:
+                right = self.DIMENSION_MAP[0] - x_diff
+            else:
+                right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
         elif x_diff < 0:
-            left = self.DIMENSION_MAP[0] + x_diff
+            if self.coordonnees_cases[1] == 11:
+                left = self.DIMENSION_MAP[0] + x_diff
+            else:
+                left = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
             right = -x_diff
         else:
-            left = self.DIMENSION_MAP[0] - 1
-            right = self.DIMENSION_MAP[0] - 1 # Si le fantôme atteint la coordonnée de PUKMUN, on le force à bouger selon l'autre axe
+            left = self.DIMENSION_MAP[0] + self.coordonnees_cases[0]
+            right = self.DIMENSION_MAP[0] + self.coordonnees_cases[0] # Si le fantôme atteint la coordonnée de PUKMUN, on le force à bouger selon l'autre axe
 
         if y_diff > 0:
             up = y_diff
-            down = self.DIMENSION_MAP[1] - y_diff
+            down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
         elif y_diff < 0:
-            up = self.DIMENSION_MAP[1] + y_diff
+            up = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
             down = -y_diff
         else:
-            up = self.DIMENSION_MAP[1] - 1
-            down = self.DIMENSION_MAP[1] - 1
+            up = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
+            down = self.DIMENSION_MAP[1] + self.coordonnees_cases[1]
 
         # On encourage le fantôme à continuer sur sa lancée s'il n'y a pas d'intersection
 
@@ -413,12 +419,16 @@ class FantomeFantome(FantomeInterface, ABC):
 
         # Encourager la direction actuelle
         if self.action == "LEFT":
+            left = self.DIMENSION_MAP[0]
             right = 99
         elif self.action == "RIGHT":
+            right = self.DIMENSION_MAP[0]
             left = 99
         elif self.action == "UP":
+            up = self.DIMENSION_MAP[1]
             down = 99
         elif self.action == "DOWN":
+            down = self.DIMENSION_MAP[1]
             up = 99
 
         # Vérifier les collisions avec les obstacles

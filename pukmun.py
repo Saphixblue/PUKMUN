@@ -143,6 +143,12 @@ class Pukmun:
         self.coordonnees_collision_box = [self.coordonnees_pixels[0]+2, self.coordonnees_pixels[1]+2]
         self.taille_collision_box = [(16*CELL_SIZE)/30, (16*CELL_SIZE)/30]  # [Longueur, largeur]
 
+        self.compteur_ivre = 0
+        self.compteur_frame_ivre = 59
+
+        self.compteur_fantome = 0
+        self.compteur_frame_fantome = 59
+
     def pukmun_update_action(self, game_map):
         if self.pukmun_check_case():
             if self.fantome == 0:

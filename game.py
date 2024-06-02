@@ -45,7 +45,7 @@ class Game:
         # Permet de compter les secondes
         self.compteur = 0
 
-        self.compteur_frames = 59
+        self.compteur_frame = 59
 
         # Détermine si l'on est au début d'un niveau (1) ou non (0)
         self.level_start = 1
@@ -255,17 +255,29 @@ class Game:
             # Dessiner la carte
             self.game_map.draw_map(self.screen)
 
+            if self.compteur != 0 and self.compteur_frame - 1 == self.frame:
+                self.compteur -= 1
+            if self.compteur == 0:
+                self.gros_graille = 0
+
+            if self.pukmun.compteur_fantome != 0 and self.pukmun.compteur_frame_fantome - 1 == self.frame:
+                self.pukmun.compteur_fantome -= 1
+            if self.pukmun.compteur_fantome == 0:
+                if self.game_map.map_data[self.pukmun.coordonnees_cases[0]][self.pukmun.coordonnees_cases[1]] == 3:
+                    self.pukmun.compteur_fantome += 1
+                    self.pukmun.compteur_frame_fantome += 12
+                    if self.pukmun.compteur_frame_fantome > 59:
+                        self.pukmun.compteur_frame_fantome -= 59
+                else:
+                    self.pukmun.fantome = 0
+                    self.pukmun.pukmun_update_case()
+
             self.pukmun.pukmun_update_case()
             self.pukmun.pukmun_update_action(self.game_map)
             self.pukmun.pukmun_update_deplacement()
             self.pukmun.pukmun_update_sprite(pygame.time.get_ticks() // (1000 // self.fps) % self.fps)
             self.pukmun.pukmun_update_controle_shield()
             self.pukmun.pukmun_update_sprite_shield()
-
-            if self.compteur != 0 and self.compteur_frames - 1 == self.frame:
-                self.compteur -= 1
-            if self.compteur == 0:
-                self.gros_graille = 0
 
             if self.gros_graille == 0:
                 for fantome in self.level.fantomes:
@@ -446,6 +458,12 @@ class Game:
             else:
                 fantome.dead = 1
                 fantome.weak = 0
+                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+
+                self.pukmun.fantome = 1
+                self.pukmun.compteur_fantome = self.compteur
+                self.pukmun.compteur_frame_fantome = self.compteur_frame
+
                 self.graille_fantome_sound.play()
                 self.fantome_mort_sound.play()
 
