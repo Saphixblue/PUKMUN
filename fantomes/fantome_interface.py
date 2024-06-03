@@ -1,6 +1,7 @@
 # level_interface
 from abc import ABC, abstractmethod
 
+
 class FantomeInterface(ABC):
     def __init__(self, DEPART, DIMENSION_MAP, CELL_SIZE):
         self.DEPART = DEPART
@@ -8,7 +9,11 @@ class FantomeInterface(ABC):
         self.CELL_SIZE = CELL_SIZE
         self.coordonnees_cases = DEPART
         self.coordonnees_pixels = [DEPART[0] * self.CELL_SIZE, DEPART[1] * self.CELL_SIZE]
-        self.vitesse = 2.5
+
+        self.vitesse_vivant = 2.5
+        self.vitesse_weak = 1.25
+        self.vitesse_mort = 5
+        self.vitesse = self.vitesse_vivant
 
         self.controle = "NONE"
         self.action = "NONE"
@@ -21,7 +26,11 @@ class FantomeInterface(ABC):
 
         self.sprite = None
 
-        self.collision_box = None
+        self.compteur_sortie = 0
+        self.compteur_frame_sortie = 59
+
+        self.compteur_weak_mort = 0
+        self.compteur_frame_weak_mort = 59
 
     # Appelle fantome_deplacement() si sur une case, puis update coordonnees et case
     @abstractmethod
@@ -36,6 +45,12 @@ class FantomeInterface(ABC):
     # Update action en fonction du controle ( ATTENTION sûrement pas nécessaire si géré dans comportement)
     @abstractmethod
     def fantome_deplacement(self, game_map):
+        pass
+
+    def fantome_deplacement_weak(self, game_map):
+        pass
+
+    def fantome_deplacement_dead(self, game_map):
         pass
 
     # Renvoie True si sur une case
@@ -95,20 +110,25 @@ class FantomeInterface(ABC):
 
     # Update le sprite du fantôme en fonction de son état, son orientation et sa direction
     @abstractmethod
-    def fantome_update_sprite(self):
+    def fantome_update_sprite(self, frame, compteur):
         pass
 
     # Détaille le comportement général du fantôme (appelle les autres fonctions comportement en fonction de l'état du fantôme)
     @abstractmethod
-    def comportement(self, game_map):
+    def fantome_comportement(self, game_map, pukmun_coordonnees_cases):
         pass
 
     # Détaille le comportement du fantôme lorsqu'il est affaibli
     @abstractmethod
-    def comportement_weak(self, game_map):
+    def fantome_comportement_weak(self, game_map, pukmun_coordonnees_cases):
         pass
 
     # Détaille le comportement du fantôme lorsqu'il est mort
     @abstractmethod
-    def comportement_dead(self, game_map):
+    def fantome_comportement_dead(self, game_map):
         pass
+
+    @abstractmethod
+    def fantome_check_collision_pukmun(self, game_map, pukmun_coordonnees_pixels):
+        pass
+

@@ -9,7 +9,16 @@ class Level3(LevelInterface):
     def __init__(self, DIMENSION_MAP, CELL_SIZE):
         super().__init__(DIMENSION_MAP, CELL_SIZE)
         self.pukmun = Pukmun([12, 12], CELL_SIZE)
-        # self.fantomes =
+        self.fantomes = [FantomeFantome([self.fantomes_depart[0][0], self.fantomes_depart[0][1]], DIMENSION_MAP, CELL_SIZE), FantomeFantome([self.fantomes_depart[1][0], self.fantomes_depart[1][1]], DIMENSION_MAP, CELL_SIZE), FantomeFantome([self.fantomes_depart[2][0], self.fantomes_depart[2][1]], DIMENSION_MAP, CELL_SIZE), FantomeFantome([self.fantomes_depart[3][0], self.fantomes_depart[3][1]], DIMENSION_MAP, CELL_SIZE)]
+        self.fantomes[2].compteur_sortie = 4
+        self.fantomes[3].compteur_sortie = 7
+
+        self.fantomes[2].controle = None
+        self.fantomes[2].action = None
+
+        self.fantomes[3].controle = None
+        self.fantomes[3].action = None
+
         # Initialiser un tableau de Fantomes, les ajouter avec leurs coordonnées de départ
 
     def draw_level_on_map(self):
@@ -73,3 +82,9 @@ class Level3(LevelInterface):
         self.level_map.draw_rectangle_obstacle(14, 19, 1, 2)
         self.level_map.draw_angle_obstacle(16, 19, 2, 1, 1, "bas")
         self.level_map.draw_angle_obstacle(19, 19, 2, 2, 2)
+
+        # Gros grailles
+        self.level_map.map_data[1][17] = 1
+        self.level_map.map_data[23][17] = 1
+        self.level_map.map_data[9][8] = 1
+        self.level_map.map_data[15][8] = 1

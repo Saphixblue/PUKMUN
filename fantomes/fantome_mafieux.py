@@ -49,9 +49,63 @@ class FantomeMafieux(FantomeInterface):
 
     # TODO: Override toutes les méthodes de l'interface
 
+    def fantome_update_action(self, game_map):
+        print("Fantôme Update Action")
+
+    def fantome_update_deplacement(self, game_map):
+        print("Fantôme Update Déplacement")
+
+    def fantome_deplacement(self, game_map):
+        print("Fantôme Déplacement")
+
+    def fantome_check_case(self):
+        print("Fantôme Check Case")
+
+    def fantome_check_collision_obstacle_left(self, game_map):
+        print("Fantôme Check Collision Obstacle Left")
+
+    def fantome_check_collision_obstacle_right(self, game_map):
+        print("Fantôme Check Collision Obstacle Right")
+
+    def fantome_check_collision_obstacle_up(self, game_map):
+        print("Fantôme Check Collision Obstacle Up")
+
+    def fantome_check_collision_obstacle_down(self, game_map):
+        print("Fantôme Check Collision Obstacle Down")
+
+    def fantome_gauche(self, game_map):
+        print("Fantôme Gauche")
+
+    def fantome_droite(self, game_map):
+        print("Fantôme Droite")
+
+    def fantome_haut(self, game_map):
+        print("Fantôme Haut")
+
+    def fantome_bas(self, game_map):
+        print("Fantôme Bas")
+
+    def fantome_update_case(self):
+        print("Fantôme Update Case")
+
+    def fantome_update_coordonnees_pixels(self, game_map):
+        print("Fantôme Update Coordonnées Pixels")
+
+    def fantome_update_sprite(self):
+        print("Fantôme Update Sprite")
+
+    def fantome_comportement(self, game_map):
+        print("Fantôme Comportement")
+
+    def fantome_comportement_weak(self, game_map):
+        print("Fantôme Comportement Weak")
+
+    def fantome_comportement_dead(self, game_map):
+        print("Fantôme Comportement Dead")
+
     # TODO
     # Définit le comportement du fantôme mafieux et de sa balle lors d'un tir
-    def tir(self):
+    def comportement_tir(self):
         print("Tir")
 
     # TODO

@@ -11,3 +11,4 @@ def main():
 # Si c'est le cas, lance la fonction principale main(), définie plus haut.
 if __name__ == "__main__":
     main()
+
