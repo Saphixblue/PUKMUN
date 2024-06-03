@@ -37,7 +37,7 @@ class Game:
 
         self.frame = 0
 
-        self.level_number = 5
+        self.level_number = 1
 
         self.score = 0
         # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
