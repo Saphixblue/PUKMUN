@@ -62,3 +62,7 @@ class Level2(LevelInterface):
         self.level_map.draw_angle_obstacle(20, 19, 3, 3, 1)
 
         # Gros grailles
+        self.level_map.map_data[5][5] = 1
+        self.level_map.map_data[19][5] = 1
+        self.level_map.map_data[7][16] = 1
+        self.level_map.map_data[17][16] = 1
