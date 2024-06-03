@@ -76,3 +76,9 @@ class Level4(LevelInterface):
         self.level_map.draw_hole(4, 20, 3)
         self.level_map.draw_hole(10, 20, 5)
         self.level_map.draw_hole(18, 20, 3)
+
+        # Gros grailles
+        self.level_map.map_data[4][4] = 1
+        self.level_map.map_data[20][4] = 1
+        self.level_map.map_data[1][18] = 1
+        self.level_map.map_data[23][18] = 1
