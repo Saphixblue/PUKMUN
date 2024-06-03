@@ -26,9 +26,6 @@ class FantomeInterface(ABC):
 
         self.sprite = None
 
-        self.collision_box = None
-        self.taille_collision_box = None
-
         self.compteur_sortie = 0
         self.compteur_frame_sortie = 59
 

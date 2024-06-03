@@ -10,7 +10,7 @@ class Pukmun:
         self.coordonnees_cases = DEPART
         self.coordonnees_pixels = [DEPART[0] * self.CELL_SIZE, DEPART[1] * self.CELL_SIZE]
 
-        self.vitesse = 2.5  # En pixels/frame
+        self.vitesse = 2.5  # En pixels/framese
 
         self.controle = "LEFT"
         self.action = "LEFT"
@@ -138,10 +138,6 @@ class Pukmun:
         self.sprite = self.pukmun_mange_1_L_image
 
         self.shield_sprite = None
-
-        # TODO: Calibrer la collision box
-        self.coordonnees_collision_box = [self.coordonnees_pixels[0]+2, self.coordonnees_pixels[1]+2]
-        self.taille_collision_box = [(16*CELL_SIZE)/30, (16*CELL_SIZE)/30]  # [Longueur, largeur]
 
         self.compteur_ivre = 0
         self.compteur_frame_ivre = 59
@@ -489,11 +485,6 @@ class Pukmun:
                 self.shield_controle = "UP"
 
         self.shield_direction = self.shield_controle
-
-    # TODO: Afficher sprite du shield sur les coordonnees_pixels de PUKMUN si shield_direction != "NONE"
-    def pukmun_update_shield(self):
-        print("Update_shield")
-        # if self.shield_sprite is not None:
 
     def pukmun_update_sprite_shield(self):
         if self.powered == 0:
