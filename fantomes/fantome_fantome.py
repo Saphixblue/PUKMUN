@@ -44,7 +44,6 @@ class FantomeFantome(FantomeInterface, ABC):
         self.fantome_fantome_mort_UL_image = sprite_handler.fantome_fantome_mort_UL_image()
         self.fantome_fantome_mort_UR_image = sprite_handler.fantome_fantome_mort_UR_image()
 
-        self.controle = "LEFT"
         self.sprite = self.fantome_fantome_L_image
         # TODO: Update le sprite
         # self.sprite
@@ -61,7 +60,7 @@ class FantomeFantome(FantomeInterface, ABC):
                 if self.dead == 0:
                     self.fantome_deplacement(game_map)
                 else:
-                    self.fantome_deplacement(game_map)
+                    self.fantome_deplacement_dead(game_map)
             elif self.weak == 1:
                 self.fantome_deplacement_weak(game_map)
 
@@ -91,45 +90,55 @@ class FantomeFantome(FantomeInterface, ABC):
 
     # TODO: Revoir si c'est vraiment nécessaire
     def fantome_deplacement_weak(self, game_map):
-        if self.controle == "LEFT":
-            if not self.fantome_check_collision_obstacle_left(game_map):
-                self.action = "LEFT"
-        elif self.controle == "RIGHT":
-            if not self.fantome_check_collision_obstacle_right(game_map):
-                self.action = "RIGHT"
-        elif self.controle == "UP":
-            if not self.fantome_check_collision_obstacle_up(game_map):
-                self.action = "UP"
-        elif self.controle == "DOWN":
-            if not self.fantome_check_collision_obstacle_down(game_map):
-                self.action = "DOWN"
+        if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
+            if self.controle == "LEFT":
+                if not self.fantome_check_collision_obstacle_left(game_map):
+                    self.action = "LEFT"
+            elif self.controle == "RIGHT":
+                if not self.fantome_check_collision_obstacle_right(game_map):
+                    self.action = "RIGHT"
+            elif self.controle == "UP":
+                if not self.fantome_check_collision_obstacle_up(game_map):
+                    self.action = "UP"
+            elif self.controle == "DOWN":
+                if not self.fantome_check_collision_obstacle_down(game_map):
+                    self.action = "DOWN"
 
-        '''if self.action == "LEFT":
-            if self.fantome_check_collision_obstacle_left(game_map):
-                self.action = "STOP"
-        elif self.action == "RIGHT":
-            if self.fantome_check_collision_obstacle_right(game_map):
-                self.action = "STOP"
-        elif self.action == "UP":
-            if self.fantome_check_collision_obstacle_up(game_map):
-                self.action = "STOP"
-        elif self.action == "DOWN":
-            if self.fantome_check_collision_obstacle_down(game_map):
-                self.action = "STOP"'''
+            '''if self.action == "LEFT":
+                if self.fantome_check_collision_obstacle_left(game_map):
+                    self.action = "STOP"
+            elif self.action == "RIGHT":
+                if self.fantome_check_collision_obstacle_right(game_map):
+                    self.action = "STOP"
+            elif self.action == "UP":
+                if self.fantome_check_collision_obstacle_up(game_map):
+                    self.action = "STOP"
+            elif self.action == "DOWN":
+                if self.fantome_check_collision_obstacle_down(game_map):
+                    self.action = "STOP"'''
 
     def fantome_deplacement_dead(self, game_map):
-        if self.controle == "LEFT":
-            if not self.fantome_check_collision_obstacle_left(game_map):
-                self.action = "LEFT"
-        elif self.controle == "RIGHT":
-            if not self.fantome_check_collision_obstacle_right(game_map):
-                self.action = "RIGHT"
-        elif self.controle == "UP":
-            if not self.fantome_check_collision_obstacle_up(game_map):
-                self.action = "UP"
-        elif self.controle == "DOWN":
-            if not self.fantome_check_collision_obstacle_down(game_map):
-                self.action = "DOWN"
+        if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:
+            if self.controle == "LEFT":
+                if not self.fantome_check_collision_obstacle_left(game_map):
+                    self.action = "LEFT"
+                else:
+                    self.controle = "STOP"
+            elif self.controle == "RIGHT":
+                if not self.fantome_check_collision_obstacle_right(game_map):
+                    self.action = "RIGHT"
+                else:
+                    self.controle = "STOP"
+            elif self.controle == "UP":
+                if not self.fantome_check_collision_obstacle_up(game_map):
+                    self.action = "UP"
+                else:
+                    self.controle = "STOP"
+            elif self.controle == "DOWN":
+                if not self.fantome_check_collision_obstacle_down(game_map):
+                    self.action = "DOWN"
+                else:
+                    self.controle = "STOP"
 
     def fantome_check_case(self):
         if self.coordonnees_cases[0] * self.CELL_SIZE == self.coordonnees_pixels[0] and self.coordonnees_cases[1] * self.CELL_SIZE == self.coordonnees_pixels[1]:

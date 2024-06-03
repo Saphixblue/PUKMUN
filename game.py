@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from fantomes.fantome_fantome import FantomeFantome
+from fantomes.fantome_ivre import FantomeIvre
 from levels.level_1 import Level1
 from levels.level_2 import Level2
 from levels.level_3 import Level3
@@ -17,7 +18,7 @@ class Game:
         pygame.init()
 
         self.DIMENSION_MAP = (25, 22)  # (colonnes, lignes)
-        self.CELL_SIZE = 30
+        self.CELL_SIZE = 20
         self.WINDOW_SIZE = (self.DIMENSION_MAP[0] * self.CELL_SIZE, self.DIMENSION_MAP[1] * self.CELL_SIZE + self.CELL_SIZE)
 
         self.screen = pygame.display.set_mode(self.WINDOW_SIZE)
@@ -36,7 +37,7 @@ class Game:
 
         self.frame = 0
 
-        self.level_number = 3
+        self.level_number = 1
 
         self.score = 0
         # Score à incrémenter en même temps que score de base, on lui retire 10000 chaque fois qu'il le dépasse
@@ -84,6 +85,8 @@ class Game:
         self.pukmun_mort_sound = self.sound_handler.pukmun_mort_sound()
         self.pukmun_eating_fruit = self.sound_handler.pukmun_eating_fruit_sound()
         self.pukmun_reflect_bullet_sound = self.sound_handler.pukmun_reflect_bullet_sound()
+        self.nrv_sound = self.sound_handler.nrv_sound()
+        self.tir_sound = self.sound_handler.tir_sound()
 
         self.graille = 1
 
@@ -107,6 +110,8 @@ class Game:
         self.pukmun_mort_sound.set_volume(self.son)
         self.pukmun_eating_fruit.set_volume(self.son)
         self.pukmun_reflect_bullet_sound.set_volume(self.son)
+        self.nrv_sound.set_volume(self.son)
+        self.tir_sound.set_volume(self.son)
 
         # Tableaux pour les images des puntos, leurs compteurs et leurs coordonnées
         self.images_puntos = []
@@ -234,12 +239,15 @@ class Game:
             self.compteur_frame = self.frame
             self.pukmun.compteur_fantome = self.compteur
             self.pukmun.compteur_frame_fantome = self.compteur_frame
+            self.pukmun.compteur_ivre = self.compteur
+            self.pukmun.compteur_frame_ivre = self.compteur_frame
 
             for fantome in self.level.fantomes:
                 # fantome.fantome_update_coordonnees_pixels(self.game_map)
                 fantome.fantome_update_case()
-                if fantome.compteur_sortie == 0 and fantome.dead == 0:
-                    fantome.weak = 1
+                if isinstance(fantome, (FantomeFantome, FantomeIvre)):
+                    if fantome.compteur_sortie == 0 and fantome.dead == 0:
+                        fantome.weak = 1
             self.pukmun.powered = 1
 
         if self.score_extra_life // 10000 == 1:
@@ -257,9 +265,13 @@ class Game:
 
         if deplacement_fantome and not self.sound_handler.get_fantome_deplacement_channel().get_busy():
             self.sound_handler.get_fantome_deplacement_channel().play(self.fantome_deplacement_sound)
+        if not deplacement_fantome:
+            self.sound_handler.get_fantome_deplacement_channel().stop()
 
         if self.gros_graille == 1 and not self.sound_handler.get_fantome_weak_channel().get_busy():
             self.sound_handler.get_fantome_weak_channel().play(self.gros_graille_sound)
+        if self.gros_graille == 0:
+            self.sound_handler.get_fantome_weak_channel().stop()
 
         # Update de la valeur de la frame
         self.frame = pygame.time.get_ticks() // (1000 // self.fps) % self.fps
@@ -298,6 +310,11 @@ class Game:
                     self.pukmun.fantome = 0
                     self.pukmun.pukmun_update_case()
 
+            if self.pukmun.compteur_ivre != 0 and self.pukmun.compteur_frame_ivre - 1 == self.frame:
+                self.pukmun.compteur_ivre -= 1
+            if self.pukmun.compteur_ivre == 0:
+                self.pukmun.ivre = 0
+
             self.pukmun.pukmun_update_case()
             self.pukmun.pukmun_update_action(self.game_map)
             self.pukmun.pukmun_update_deplacement()
@@ -306,12 +323,16 @@ class Game:
             self.pukmun.pukmun_update_sprite_shield()
 
             if self.gros_graille == 0:
-                for fantome in self.level.fantomes:
-                    fantome.weak = 0
-                    self.pukmun.powered = 0
-                    self.points_mange_fantome = 200
+                self.pukmun.powered = 0
+                self.points_mange_fantome = 200
 
             for fantome in self.level.fantomes:
+                if isinstance(fantome, FantomeIvre):
+                    if fantome.voit_pukmun(self.game_map, self.pukmun.coordonnees_pixels):
+                        print("AH")
+                        self.nrv_sound.play()
+                if self.gros_graille == 0:
+                    fantome.weak = 0
                 # fantome.fantome_update_coordonnees_pixels(self.game_map)
                 fantome.fantome_update_case()
                 fantome.fantome_update_action(self.game_map)
@@ -519,42 +540,25 @@ class Game:
         # Si PUKMUN pas sous gros graille
         if fantome.dead == 0:
             if fantome.weak == 0:
-                if isinstance(fantome, FantomeFantome):
+                if isinstance(fantome, (FantomeFantome, FantomeIvre)):
                     self.perdre_une_vie()
             else:
-                fantome.dead = 1
-                fantome.weak = 0
-                fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
-                if isinstance(fantome, FantomeFantome):
-                    self.pukmun.fantome = 1
-                    self.pukmun.compteur_fantome = self.compteur
-                    self.pukmun.compteur_frame_fantome = self.compteur_frame
+                if isinstance(fantome, (FantomeFantome, FantomeIvre)):
+                    fantome.weak = 0
+                    fantome.dead = 1
+                    #fantome.fantome_comportement(self.game_map, self.pukmun.coordonnees_cases)
+                    if isinstance(fantome, FantomeFantome):
+                        self.pukmun.fantome = 1
+                        self.pukmun.compteur_fantome = self.compteur
+                        self.pukmun.compteur_frame_fantome = self.compteur_frame
+                    if isinstance(fantome, FantomeIvre):
+                        self.pukmun.ivre = 1
+                        self.pukmun.compteur_fantome = self.compteur
+                        self.pukmun.compteur_frame_fantome = self.compteur_frame
 
-                self.graille_fantome_sound.play()
-                self.fantome_mort_sound.play()
-
-                if self.points_mange_fantome == 200:
-                    self.images_puntos.append(self.puntos_200_image)
-                elif self.points_mange_fantome == 400:
-                    self.images_puntos.append(self.puntos_400_image)
-                elif self.points_mange_fantome == 800:
-                    self.images_puntos.append(self.puntos_800_image)
-                elif self.points_mange_fantome == 1600:
-                    self.images_puntos.append(self.puntos_1600_image)
-
-                self.compteurs_frames_puntos.append(self.frame)
-                self.compteurs_puntos.append(3)
-                self.coordonnees_puntos.append([fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]])
-
-                self.score += self.points_mange_fantome
-                if self.points_mange_fantome == 200:
-                    self.points_mange_fantome = 400
-                elif self.points_mange_fantome == 400:
-                    self.points_mange_fantome = 800
-                elif self.points_mange_fantome == 800:
-                    self.points_mange_fantome = 1600
-
-
+                    self.graille_fantome_sound.play()
+                    self.fantome_mort_sound.play()
+                    self.points(fantome)
 
     # Gestion de la collision entre PUKMUN et la balle en fonction de leur état
     # TODO: Si bouclier non déployé dans la bonne direction --> Perd une vie
@@ -580,7 +584,28 @@ class Game:
 
         sys.exit()
 
+    def points(self, fantome):
+        if self.points_mange_fantome == 200:
+            self.images_puntos.append(self.puntos_200_image)
+        elif self.points_mange_fantome == 400:
+            self.images_puntos.append(self.puntos_400_image)
+        elif self.points_mange_fantome == 800:
+            self.images_puntos.append(self.puntos_800_image)
+        elif self.points_mange_fantome == 1600:
+            self.images_puntos.append(self.puntos_1600_image)
 
+        self.compteurs_frames_puntos.append(self.frame)
+        self.compteurs_puntos.append(3)
+        self.coordonnees_puntos.append([fantome.coordonnees_pixels[0], fantome.coordonnees_pixels[1]])
+
+        self.score += self.points_mange_fantome
+        self.score_extra_life += self.points_mange_fantome
+        if self.points_mange_fantome == 200:
+            self.points_mange_fantome = 400
+        elif self.points_mange_fantome == 400:
+            self.points_mange_fantome = 800
+        elif self.points_mange_fantome == 800:
+            self.points_mange_fantome = 1600
 
 '''
 if __name__ == "__main__":

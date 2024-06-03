@@ -53,6 +53,9 @@ class FantomeInterface(ABC):
     def fantome_deplacement_weak(self, game_map):
         pass
 
+    def fantome_deplacement_dead(self, game_map):
+        pass
+
     # Renvoie True si sur une case
     @abstractmethod
     def fantome_check_case(self):

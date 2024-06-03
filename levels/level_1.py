@@ -12,10 +12,10 @@ class Level1(LevelInterface):
         self.pukmun = Pukmun([12, 12], CELL_SIZE)
 
         self.fantomes = [
-            FantomeIvre([self.fantomes_depart[0][0], self.fantomes_depart[0][1]], DIMENSION_MAP, CELL_SIZE),
-            FantomeIvre([self.fantomes_depart[1][0], self.fantomes_depart[1][1]], DIMENSION_MAP, CELL_SIZE),
-            FantomeIvre([self.fantomes_depart[2][0], self.fantomes_depart[2][1]], DIMENSION_MAP, CELL_SIZE),
-            FantomeIvre([self.fantomes_depart[3][0], self.fantomes_depart[3][1]], DIMENSION_MAP, CELL_SIZE)]
+            FantomeFantome([self.fantomes_depart[0][0], self.fantomes_depart[0][1]], DIMENSION_MAP, CELL_SIZE),
+            FantomeFantome([self.fantomes_depart[1][0], self.fantomes_depart[1][1]], DIMENSION_MAP, CELL_SIZE),
+            FantomeFantome([self.fantomes_depart[2][0], self.fantomes_depart[2][1]], DIMENSION_MAP, CELL_SIZE),
+            FantomeFantome([self.fantomes_depart[3][0], self.fantomes_depart[3][1]], DIMENSION_MAP, CELL_SIZE)]
 
         self.fantomes[2].compteur_sortie = 4
         self.fantomes[3].compteur_sortie = 7

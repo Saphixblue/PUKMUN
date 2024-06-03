@@ -63,6 +63,14 @@ class SoundHandler:
         pukmun_reflect_bullet_sound = self.load_son('pukmun_reflect_bullet.wav')
         return pukmun_reflect_bullet_sound
 
+    def nrv_sound(self):
+        nrv_sound = self.load_son('nrv.mp3')
+        return nrv_sound
+
+    def tir_sound(self):
+        tir_sound = self.load_son('tir.mp3')
+        return tir_sound
+
     # Méthode pour renvoyer le canal spécifique pour le son de déplacement des fantômes
     def get_fantome_deplacement_channel(self):
         return self.fantome_deplacement_channel
